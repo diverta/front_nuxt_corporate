@@ -1,0 +1,2 @@
+# front_nuxt_corporate
+コーポレートサイト向けテンプレート
