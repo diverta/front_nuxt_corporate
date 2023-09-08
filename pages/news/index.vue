@@ -33,7 +33,7 @@
   </script> -->
 
 <script setup>
-import {ref} from 'vue';
+// const runtime = useRuntimeConfig();
 const subject = "ニュース";
 const { data: news } = await useFetch(
   "https://dev-nuxt-corporate.g.kuroco.app/rcms-api/1/news/list"
