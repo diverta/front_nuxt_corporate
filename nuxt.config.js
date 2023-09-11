@@ -7,6 +7,6 @@ export default {
   },
   devtools: { enabled: true },
   css: [
-    'assets/parts.css',
+    '@/assets/scss/style.scss'
   ],
 }

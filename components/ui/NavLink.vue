@@ -1,6 +1,6 @@
 <template>
   <nav class="l-breadcrumb is-pc">
-    <div class="l-container--middle">
+    <div class="l-container--large">
       <ul>
         <li>
           <NuxtLink to="/">トップ</NuxtLink>

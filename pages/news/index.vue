@@ -1,14 +1,21 @@
 <template>
-    <div class="l-container--wrap">
+  <NuxtLayout>
+    <div class="l-container">
       <UiNavLink :subject="subject" />
-      <div class="l-container--middle l-container--contents">
-        <NewsList :subject="subject" v-bind="news" />
-        <ContentSideBar :itemList="master.list" /> 
-      </div>
+      <section>
+        <UiPagetitle :subject="subject" :subheading="subheading" />
+        <div class="l-container--col-2 l-container--contents">
+          <div class="l-container--col-2__main">
+            <NewsList :subject="subject" v-bind="news" />
+          </div>
+          <ContentSideBar :itemList="master.list" />
+        </div>
+      </section>
     </div>
-  </template>
-  
-  <!-- <script>
+  </NuxtLayout>
+</template>
+
+<!-- <script>
   export default {
     data() {
       return {
@@ -35,11 +42,12 @@
 <script setup>
 // const runtime = useRuntimeConfig();
 const subject = "ニュース";
+const subheading = "News Release";
 const { data: news } = await useFetch(
   "https://dev-nuxt-corporate.g.kuroco.app/rcms-api/1/news/list"
 );
-const { data: master } = await useFetch( // reverse this later gaurav
+const { data: master } = await useFetch(
+  // reverse this later gaurav
   "https://dev-nuxt-corporate.g.kuroco.app/rcms-api/1/master"
-); 
+);
 </script>
-  

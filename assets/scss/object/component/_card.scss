@@ -1,0 +1,61 @@
+.c-card {
+  &__image {
+    position: relative;
+    border-radius: var(--border-radius-large);
+    overflow: hidden;
+    &::before {
+      opacity: 0;
+      position: absolute;
+      display: block;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(1,30,50,.4);
+      content: "";
+      transition: var(--transition-seconds) opacity;
+      z-index: 2;
+      .c-card:hover & {
+        opacity: 1;
+      }
+    }
+    img { 
+      width: 100%;
+      transition: var(--transition-seconds) ease-in;
+      .c-card:hover & {
+        transform: scale(1.1);
+      }
+    }
+    &__badge {
+      @extend .c-badge;
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding: var(--spacing-small) var(--spacing);
+      border-radius: var(--border-radius-large) 0 var(--border-radius-large) 0;
+      z-index: 1;
+    }
+  }
+  &__heading {
+    margin: 0;
+    padding: var(--spacing) 0;
+    font-weight: bold;
+    transition: var(--transition-seconds) color;
+    .c-card:hover & {
+      color: var(--color-primary);
+    }
+  }
+  &-list {
+    display: flex;
+    flex-wrap: wrap;
+    &--col-3 {
+      li {
+        @include pc {
+          flex: 0 0 calc( (100% - ( var(--spacing-large) * 2 )) / 3 );
+          &:not(:nth-of-type(3n+1)) { margin-left: var(--spacing-large); }
+        }
+        @include sp {
+          &:not(:first-child) { margin-top: var(--spacing-large); }
+        }
+      }
+    }
+  }
+}
