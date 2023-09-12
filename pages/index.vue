@@ -283,10 +283,12 @@
 </template>
 
 <script setup>
+const config = useRuntimeConfig();
+
 const { data: news } = await useFetch(
-  "https://dev-nuxt-corporate.g.kuroco.app/rcms-api/1/news/list"
+  `${config.public.baseURL}/rcms-api/1/news/list`
 );
 const { data: ltdNews } = await useFetch(
-  "https://dev-nuxt-corporate.g.kuroco.app/rcms-api/1/ltd-news/list"
+  `${config.public.baseURL}/rcms-api/1/ltd-news/list`
 );
 </script>

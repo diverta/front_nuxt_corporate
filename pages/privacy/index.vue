@@ -8,8 +8,10 @@
 </template>
 
 <script setup>
+const config = useRuntimeConfig();
 const subheading = "Privacy Policy";
+
 const { data: response } = await useFetch(
-  "https://dev-nuxt-corporate.g.kuroco.app/rcms-api/1/content/details/privacy"
+  `${config.public.baseURL}/rcms-api/1/content/details/privacy`
 );
 </script>

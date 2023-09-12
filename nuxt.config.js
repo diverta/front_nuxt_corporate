@@ -2,7 +2,7 @@
 export default {
   runtimeConfig: {
     public: {
-       baseURL: 'https://dev-nuxt-corporate.g.kuroco.app'
+      baseURL: process.env.BASE_URL
     }
   },
   devtools: { enabled: true },

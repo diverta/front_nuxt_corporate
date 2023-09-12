@@ -7,26 +7,10 @@
   </NuxtLayout>
 </template>
 
-<!-- <script>
-export default {
-  data() {
-    return {
-      subheading: "Company",
-    };
-  },
-  async asyncData({ $axios }) {
-    const response = await $axios.$get(`/rcms-api/1/content/details/company`);
-    return {
-      details: response.details,
-    };
-  },
-};
-</script> -->
-
 <script setup>
+const config = useRuntimeConfig();
 const subheading = "Company";
 const { data: response } = await useFetch(
-  "https://dev-nuxt-corporate.g.kuroco.app/rcms-api/1/content/details/company"
+  `${config.public.baseURL}/rcms-api/1/content/details/company`
 );
-// const details = response.details;
 </script>

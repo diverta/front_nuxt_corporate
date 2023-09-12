@@ -17,6 +17,7 @@
 </template>
 
 <script setup>
+const config = useRuntimeConfig();
 const path = [{ label: "ニュース", to: "/news" }];
 const button = [{ label: "ニュースリリース一覧へ戻る", to: "/news/" }];
 const subheading = "News Release";
@@ -24,10 +25,10 @@ const subheading = "News Release";
 const route = useRoute();
 
 const { data: response } = await useFetch(
-  `https://dev-nuxt-corporate.g.kuroco.app/rcms-api/1/news/details/${route.params.id}`
+  `${config.public.baseURL}/rcms-api/1/news/details/${route.params.id}`
 );
 const { data: master } = await useFetch(
   // reverse this later gaurav
-  "https://dev-nuxt-corporate.g.kuroco.app/rcms-api/1/master"
+  `${config.public.baseURL}/rcms-api/1/master`
 );
 </script>
