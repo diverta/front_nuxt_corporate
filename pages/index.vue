@@ -55,8 +55,8 @@
             </div>
           </div>
           <UiCardList
-            v-if="ltdNews && ltdNews.length"
-            :list="ltdNews"
+            v-if="ltdNews.data.list && ltdNews.data.list.length"
+            :list="ltdNews.data.list"
           ></UiCardList>
           <div class="l-container--contents">
             <div

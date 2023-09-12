@@ -15,34 +15,10 @@
   </NuxtLayout>
 </template>
 
-<!-- <script>
-  export default {
-    data() {
-      return {
-        subject: "ニュース",
-      };
-    },
-    watchQuery: ["filter"],
-    async asyncData({ $axios, query }) {
-      return {
-        news: await $axios.$get("/rcms-api/1/news/list", {
-          params: { filter: query.filter },
-        }),
-        master: await $axios.$get("/rcms-api/1/master"),
-      };
-    },
-    computed: {
-      reverseItems() {
-        return this.master.list.slice().reverse();
-      },
-    },
-  };
-  </script> -->
-
 <script setup>
-// const runtime = useRuntimeConfig();
 const subject = "ニュース";
 const subheading = "News Release";
+
 const { data: news } = await useFetch(
   "https://dev-nuxt-corporate.g.kuroco.app/rcms-api/1/news/list"
 );
