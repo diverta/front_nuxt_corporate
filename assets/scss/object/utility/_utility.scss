@@ -72,43 +72,43 @@
 }
 
 @for $value from 0 through 20 {
-  .u-ma-#{$value * 10/2} {
+  .u-ma-#{calc($value * 10 / 2)} {
     margin: 5px * $value !important;
   }
 
-  .u-mt-#{$value * 10/2} {
+  .u-mt-#{calc($value * 10 / 2)} {
     margin-top: 5px * $value !important;
   }
 
-  .u-mr-#{$value * 10/2} {
+  .u-mr-#{calc($value * 10 / 2)} {
     margin-right: 5px * $value !important;
   }
 
-  .u-mb-#{$value * 10/2} {
+  .u-mb-#{calc($value * 10 / 2)} {
     margin-bottom: 5px * $value !important;
   }
 
-  .u-ml-#{$value * 10/2} {
+  .u-ml-#{calc($value * 10 / 2)} {
     margin-left: 5px * $value !important;
   }
 
-  .u-pa-#{$value * 10/2} {
+  .u-pa-#{calc($value * 10 / 2)} {
     padding: 5px * $value !important;
   }
 
-  .u-pt-#{$value * 10/2} {
+  .u-pt-#{calc($value * 10 / 2)} {
     padding-top: 5px * $value !important;
   }
 
-  .u-pr-#{$value * 10/2} {
+  .u-pr-#{calc($value * 10 / 2)} {
     padding-right: 5px * $value !important;
   }
 
-  .u-pb-#{$value * 10/2} {
+  .u-pb-#{calc($value * 10 / 2)} {
     padding-bottom: 5px * $value !important;
   }
 
-  .u-pl-#{$value * 10/2} {
+  .u-pl-#{calc($value * 10 / 2)} {
     padding-left: 5px * $value !important;
   }
 }

@@ -128,8 +128,8 @@
 </template>
 
 <script setup>
-import {computed} from 'vue';
-const Drawer = false;
+import {computed, ref} from 'vue';
+const Drawer = ref(false);
 const userName = computed(()=>{
   return 0; // to change later Gaurav
 })
