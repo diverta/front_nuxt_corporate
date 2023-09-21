@@ -1,30 +1,24 @@
 <template>
-  <NuxtLayout>
-    <div>
-      {{ alertIsOpen }}
-      <UiNavLink
+  <div>
+    {{ alertIsOpen }}
+    <UiNavLink v-if="details != null" :path="path" :subject="details.subject" />
+    <UiPagetitle
+      v-if="details != null"
+      :subject="details.group_nm"
+      :subheading="subheading"
+    />
+    <div class="l-container--large l-container--contents">
+      <ContentDetailBody
         v-if="details != null"
-        :path="path"
-        :subject="details.subject"
+        :details="details"
+        :button="button"
       />
-      <UiPagetitle
-        v-if="details != null"
-        :subject="details.group_nm"
-        :subheading="subheading"
-      />
-      <div class="l-container--large l-container--contents">
-        <ContentDetailBody
-          v-if="details != null"
-          :details="details"
-          :button="button"
-        />
-        <div v-else-if="profileRes.member_id != null">
-          プレミアム会員会員限定コンテンツです。
-        </div>
-        <div v-else>ログインしてください。</div>
+      <div v-else-if="profileRes.member_id != null">
+        プレミアム会員会員限定コンテンツです。
       </div>
+      <div v-else>ログインしてください。</div>
     </div>
-  </NuxtLayout>
+  </div>
 </template>
 
 <script setup>
