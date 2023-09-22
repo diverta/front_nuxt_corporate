@@ -14,15 +14,12 @@
 </template>
 
 <script setup>
-const config = useRuntimeConfig();
 const subject = 'ニュース';
 const subheading = 'News Release';
 
-const { data: news } = await useFetch(
-  `${config.public.baseURL}/rcms-api/1/news/list`
-);
-const { data: master } = await useFetch(
+const { data: news } = await useKurocoApi('/rcms-api/1/news/list');
+const { data: master } = await useKurocoApi(
   // reverse this later gaurav
-  `${config.public.baseURL}/rcms-api/1/master`
+  '/rcms-api/1/master'
 );
 </script>

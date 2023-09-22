@@ -3,6 +3,7 @@
     <UiNavLink :subject="subject" />
     <UiPagetitle :subject="subject" :subheading="subheading" />
     <div class="l-container--small l-container--contents">
+      {{ isLoggedIn }}
       {{ JSON.stringify(authUser, null, 2) }}
       <form @submit.prevent="handleSubmit" class="c-form">
         <UiAlertError v-if="errorMessage" :error="errorMessage" />
@@ -43,8 +44,7 @@
 </template>
 
 <script setup>
-const authUser = useAuthUser();
-const { login, logout, register, profile } = useAuth(); // uses the default signIn function provided by nuxt-auth
+const { authUser, isLoggedIn, login, logout, register, profile } = useAuth(); // uses the default signIn function provided by nuxt-auth
 
 const subject = 'ログイン';
 const subheading = 'Login';
@@ -58,6 +58,7 @@ const handleSubmit = async (e) => {
   try {
     e.preventDefault();
     await login({ ...formData });
+    useRouter().push('/');
   } catch (error) {
     errorMessage.value = 'メールアドレスまたはパスワードが正しくありません。';
   }

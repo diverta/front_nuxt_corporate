@@ -15,18 +15,17 @@
 </template>
 
 <script setup>
-const config = useRuntimeConfig();
 const path = [{ label: 'ニュース', to: '/news' }];
 const button = [{ label: 'ニュースリリース一覧へ戻る', to: '/news/' }];
 const subheading = 'News Release';
 
 const route = useRoute();
 
-const { data: response } = await useFetch(
-  `${config.public.baseURL}/rcms-api/1/news/details/${route.params.id}`
+const { data: response } = await useKurocoApi(
+  `/rcms-api/1/news/details/${route.params.id}`
 );
-const { data: master } = await useFetch(
+const { data: master } = await useKurocoApi(
   // reverse this later gaurav
-  `${config.public.baseURL}/rcms-api/1/master`
+  '/rcms-api/1/master'
 );
 </script>

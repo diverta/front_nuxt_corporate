@@ -33,7 +33,7 @@
           <h2 class="c-heading--lv1">ニュースリリース</h2>
           <NuxtLink to="/news/" class="c-button">一覧を見る</NuxtLink>
         </div>
-        <NewsList v-bind="news" class="u-display-flex-grow-1" />
+        <NewsList v-if="news" v-bind="news" class="u-display-flex-grow-1" />
       </div>
     </section>
     <section class="l-container--contents c-section--bg">
@@ -50,7 +50,7 @@
           </div>
         </div>
         <UiCardList
-          v-if="ltdNews.data.list && ltdNews.data.list.length"
+          v-if="ltdNews?.data?.list?.length"
           :list="ltdNews.data.list"
         ></UiCardList>
         <div class="l-container--contents">
@@ -277,12 +277,6 @@
 </template>
 
 <script setup>
-const config = useRuntimeConfig();
-
-const { data: news } = await useFetch(
-  `${config.public.baseURL}/rcms-api/1/news/list`
-);
-const { data: ltdNews } = await useFetch(
-  `${config.public.baseURL}/rcms-api/1/ltd-news/list`
-);
+const { data: news } = await useKurocoApi('/rcms-api/1/news/list');
+const { data: ltdNews } = await useKurocoApi('/rcms-api/1/ltd-news/list');
 </script>

@@ -1,6 +1,9 @@
-import { useAuthUser } from './useAuthUser';
+import { useKurocoApi } from './useKurocoApi';
 
-// TODO restore profile on initial access with calling profile()
+const useAuthUser = () => {
+  return useState<any | null>('user', () => null);
+};
+
 export const useAuth = () => {
   const authUser = useAuthUser();
   const config = useRuntimeConfig();
@@ -22,7 +25,7 @@ export const useAuth = () => {
     email: string;
     password: string;
   }) => {
-    await $fetch(endpoint.login, {
+    await useKurocoApi(endpoint.login, {
       baseURL,
       method: 'POST',
       body: {
@@ -36,18 +39,18 @@ export const useAuth = () => {
   };
 
   const logout = async () => {
-    const data = await $fetch(endpoint.logout, {
+    const data = await useKurocoApi(endpoint.logout, {
       baseURL,
       method: 'POST',
     });
 
-    setUser(data);
+    setUser(null);
   };
 
   // TODO register
   const register = async (arg: any) => {
     if (!authUser.value) {
-      const data = await $fetch(endpoint.register, {
+      const data = await useKurocoApi(endpoint.register, {
         baseURL,
         method: 'POST',
         body: arg,
@@ -55,21 +58,27 @@ export const useAuth = () => {
     }
   };
 
+  const initialized = ref(false);
   const profile = async () => {
     try {
-      const data = await $fetch(endpoint.profile, {
+      const { data } = await useKurocoApi(endpoint.profile, {
         baseURL,
-        headers: useRequestHeaders(['cookie']) as HeadersInit,
       });
       setUser(data);
     } catch (error) {
       setCookie(null);
     }
 
+    initialized.value = true;
     return authUser;
   };
 
+  const isLoggedIn = computed(() => !!authUser.value?.member_id);
+
   return {
+    initialized,
+    authUser,
+    isLoggedIn,
     login,
     logout,
     register,
