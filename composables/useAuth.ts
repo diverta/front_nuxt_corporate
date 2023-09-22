@@ -49,13 +49,15 @@ export const useAuth = () => {
 
   // TODO register
   const register = async (arg: any) => {
-    if (!authUser.value) {
-      const data = await useKurocoApi(endpoint.register, {
-        baseURL,
-        method: 'POST',
-        body: arg,
-      });
-    }
+    console.log(arg);
+    const data = await useKurocoApi(endpoint.register, {
+      baseURL,
+      method: 'POST',
+      body: arg,
+    });
+
+    await nextTick(profile);
+    return authUser;
   };
 
   const initialized = ref(false);
