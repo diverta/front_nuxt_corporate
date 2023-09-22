@@ -1,5 +1,11 @@
 <template>
-  <div>
+  <NuxtLayout>
     <NuxtPage />
-  </div>
+  </NuxtLayout>
 </template>
+
+<script setup>
+if (process.client) {
+  await useAuth().profile();
+}
+</script>
