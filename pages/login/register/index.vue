@@ -83,6 +83,7 @@ const handleSignup = async (e) => {
   try {
     e.preventDefault();
     await register({ ...user.value });
+    useRouter().push('/');
     signupDone.value = true;
   } catch (error) {
     console.log(error);

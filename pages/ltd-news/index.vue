@@ -25,8 +25,8 @@
           <p>
             会員登録またはマイページから会員ステータスの変更、ログアウトすることで表示の確認ができます。
           </p>
-          <!-- <div v-if="group == null">
-              <NuxtLink to="/login/regist" class="c-button u-pa-15"
+          <div v-if="group == null">
+              <NuxtLink to="/login/register" class="c-button u-pa-15"
                 >会員登録</NuxtLink
               >
             </div>
@@ -39,7 +39,7 @@
               <NuxtLink to="/mypage" class="c-button u-pa-15"
                 >通常会員へ戻す</NuxtLink
               >
-            </div> -->
+            </div>
         </div>
         <div class="l-container--contents">
           <UiCardList v-if="newsList?.length" :list="newsList"></UiCardList>

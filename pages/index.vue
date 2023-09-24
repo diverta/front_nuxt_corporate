@@ -167,7 +167,7 @@
                   充実のサポートを受けることができる
                 </li>
               </ul>
-              <NuxtLink to="/login/regist/" class="c-button"
+              <NuxtLink to="/login/register/" class="c-button"
                 >今すぐ無料会員登録する</NuxtLink
               >
             </div>
