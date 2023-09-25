@@ -7,37 +7,81 @@
         <div class="l-container--col-2 l-container--contents">
           <div class="l-container--col-2__main">
             <div class="c-article">
-              <div v-if="Popup" class="l-container--small"></div>
+              <div v-if="Popup" class="l-container--small">
+                <template v-if="premiumUser">
+                  <div class="c-form-group">
+                    <p>
+                      プレミアム会員をやめ、通常会員に戻ります。<br />よろしいですか？
+                    </p>
+                  </div>
+                  <div class="c-form-group">
+                    <button
+                      type="button"
+                      @click="updateStatus('2')"
+                      class="c-button--primary u-width-100"
+                    >
+                      通常会員に戻る
+                    </button>
+                    <button
+                      type="button"
+                      @click="Popup = false"
+                      class="c-button--primary u-width-100"
+                    >
+                      やっぱりやめる
+                    </button>
+                  </div>
+                </template>
+                <template v-else-if="normalUser">
+                  <div class="c-form-group">
+                    <p>
+                      プレミアム会員にアップデートします。<br />よろしいですか？
+                    </p>
+                  </div>
+                  <div class="c-form-group">
+                    <button
+                      type="button"
+                      @click="updateStatus('1')"
+                      class="c-button--primary u-width-100"
+                    >
+                      アップデートする
+                    </button>
+                    <button
+                      type="button"
+                      @click="Popup = false"
+                      class="c-button--primary u-width-100"
+                    >
+                      やっぱりやめる
+                    </button>
+                  </div>
+                </template>
+              </div>
               <div v-else>
                 <UiAlertSuccess v-if="groupUpdate" :message="message" />
                 <p class="u-ma-0">
-                  ようこそ！{{ response.details.name1 }}
-                  {{ response.details.name2 }}さん
+                  ようこそ！{{ response.details.name1 }} {{ user.name2 }}さん
                 </p>
                 <h2>会員情報</h2>
                 <div class="c-form-group">
                   <dl>
                     <dt>お名前</dt>
-                    <dd>
-                      {{ response.details.name1 }} {{ response.details.name2 }}
-                    </dd>
+                    <dd>{{ user.name1 }} {{ user.name2 }}</dd>
                   </dl>
                   <dl>
                     <dt>メールアドレス</dt>
-                    <dd>{{ response.details.email }}</dd>
+                    <dd>{{ user.email }}</dd>
                   </dl>
                   <dl>
                     <dt>会員ステータス</dt>
-                    <dd>{{ userStatusText }}</dd>
+                    <dd>{{ statusText }}</dd>
                   </dl>
                 </div>
-                <div class="u-text-align-center" v-if="userStatusText">
+                <div class="u-text-align-center" v-if="statusText">
                   <button
                     type="button"
                     class="c-button--primary"
                     @click="Popup = true"
                   >
-                    {{ userButtonText }}
+                    {{ buttonText }}
                   </button>
                 </div>
               </div>
@@ -119,38 +163,61 @@
 <script setup>
 const { authUser, isLoggedIn, logout, inquiry } = useAuth();
 
-const subject = 'マイページ';
-const subheading = 'Mypage';
+const subject = "マイページ";
+const subheading = "Mypage";
 const error = ref(null);
 const Popup = ref(false);
 const groupUpdate = ref(false);
-const message = '会員種別の変更申請を受け付けました。メールをご確認ください。';
+const message = "会員種別の変更申請を受け付けました。メールをご確認ください。";
 
-const { data: response } = await useKurocoApi('/rcms-api/1/member/me', null, {
+const { data: response } = await useKurocoApi("/rcms-api/1/member/me", null, {
   server: false,
 });
 
-const userStatusText = computed(() => {
-  const groupId = response.value?.details?.group_ids?.[0];
-  switch (groupId) {
-    case '104':
-      return '通常会員';
-    case '105':
-      return 'プレミアム会員';
-    default:
-      return '';
-  }
+const user = ref({
+  name1: response.value?.details?.name1 || "",
+  name2: response.value?.details?.name2 || "",
+  email: response.value?.details?.email || "",
+  groupId: response.value?.details?.group_ids?.[0] || "",
 });
 
-const userButtonText = computed(() => {
-  const groupId = response.value?.details?.group_ids?.[0];
-  switch (groupId) {
-    case '104':
-      return 'プレミアム会員にアップデートする';
-    case '105':
-      return '通常会員にもどる';
-    default:
-      return '';
-  }
+const statusText = computed(() => {
+  return user.value.groupId === "104"
+    ? "通常会員"
+    : user.value.groupId === "105"
+    ? "プレミアム会員"
+    : "";
 });
+
+const buttonText = computed(() => {
+  return user.value.groupId === "104"
+    ? "プレミアム会員にアップデートする"
+    : user.value.groupId === "105"
+    ? "通常会員にもどる"
+    : "";
+});
+
+const premiumUser = computed(() => {
+  return user.value.groupId === "105";
+});
+
+const normalUser = computed(() => {
+  return user.value.groupId === "104";
+});
+
+const updateStatus = async (status) => {
+  try {
+    await inquiry({
+      name: user.value.name1 + " " + user.value.name2,
+      email: user.value.email,
+      ext_01: status,
+    });
+    error.value = null;
+    Popup.value = false;
+    groupUpdate.value = true;
+  } catch (err) {
+    console.log(err);
+    error.value = err.response.data.errors;
+  }
+};
 </script>

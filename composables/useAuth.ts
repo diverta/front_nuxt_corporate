@@ -47,7 +47,6 @@ export const useAuth = () => {
     setUser(null);
   };
 
-  // TODO register
   const register = async (arg: any) => {
     console.log(arg);
     const data = await useKurocoApi(endpoint.register, {
@@ -59,6 +58,18 @@ export const useAuth = () => {
     await nextTick(profile);
     return authUser;
   };
+
+  const inquiry = async (arg: any) => {
+    console.log(arg);
+    const data = await useKurocoApi(endpoint.inquiry, {
+      baseURL,
+      method: 'POST',
+      body: arg,
+    });
+
+    await nextTick(profile);
+    return authUser;
+  };  
 
   const initialized = ref(false);
   const profile = async () => {
@@ -85,5 +96,6 @@ export const useAuth = () => {
     logout,
     register,
     profile,
+    inquiry,
   };
 };

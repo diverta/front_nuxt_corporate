@@ -9,6 +9,7 @@ export default defineNuxtConfig({
         logout: '/rcms-api/1/logout',
         register: '/rcms-api/1/member/register',
         profile: '/rcms-api/1/profile',
+        inquiry: '/rcms-api/1/inquiry/3',
       },
     },
   },
