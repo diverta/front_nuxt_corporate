@@ -4,11 +4,12 @@
       <UiNavLink :subject="subject" />
       <section>
         <UiPagetitle :subject="subject" :subheading="subheading" />
+        {{ authUser }}
         <div class="l-container--col-2 l-container--contents">
           <div class="l-container--col-2__main">
             <div class="c-article">
               <div v-if="Popup" class="l-container--small">
-                <template v-if="premiumUser">
+                <template v-if="authUser.isPremiumUser">
                   <div class="c-form-group">
                     <p>
                       プレミアム会員をやめ、通常会員に戻ります。<br />よろしいですか？
@@ -31,7 +32,7 @@
                     </button>
                   </div>
                 </template>
-                <template v-else-if="normalUser">
+                <template v-else-if="authUser.isRegularUser">
                   <div class="c-form-group">
                     <p>
                       プレミアム会員にアップデートします。<br />よろしいですか？
@@ -58,17 +59,17 @@
               <div v-else>
                 <UiAlertSuccess v-if="groupUpdate" :message="message" />
                 <p class="u-ma-0">
-                  ようこそ！{{ response.details.name1 }} {{ user.name2 }}さん
+                  ようこそ！{{ authUser.name1 }} {{ authUser.name2 }}さん
                 </p>
                 <h2>会員情報</h2>
                 <div class="c-form-group">
                   <dl>
                     <dt>お名前</dt>
-                    <dd>{{ user.name1 }} {{ user.name2 }}</dd>
+                    <dd>{{ authUser.name1 }} {{ authUser.name2 }}</dd>
                   </dl>
                   <dl>
                     <dt>メールアドレス</dt>
-                    <dd>{{ user.email }}</dd>
+                    <dd>{{ authUser.email }}</dd>
                   </dl>
                   <dl>
                     <dt>会員ステータス</dt>
@@ -163,55 +164,43 @@
 <script setup>
 const { authUser, isLoggedIn, logout, inquiry } = useAuth();
 
-const subject = "マイページ";
-const subheading = "Mypage";
+const subject = 'マイページ';
+const subheading = 'Mypage';
 const error = ref(null);
 const Popup = ref(false);
 const groupUpdate = ref(false);
-const message = "会員種別の変更申請を受け付けました。メールをご確認ください。";
-
-const { data: response } = await useKurocoApi("/rcms-api/1/member/me", null, {
-  server: false,
-});
-
-const user = ref({
-  name1: response.value?.details?.name1 || "",
-  name2: response.value?.details?.name2 || "",
-  email: response.value?.details?.email || "",
-  groupId: response.value?.details?.group_ids?.[0] || "",
-});
+const message = '会員種別の変更申請を受け付けました。メールをご確認ください。';
 
 const statusText = computed(() => {
-  return user.value.groupId === "104"
-    ? "通常会員"
-    : user.value.groupId === "105"
-    ? "プレミアム会員"
-    : "";
+  if (authUser.value.isPremiumUser) {
+    return 'プレミアム会員';
+  }
+  if (authUser.value.isRegularUser) {
+    return '通常会員';
+  }
+  return '';
 });
 
 const buttonText = computed(() => {
-  return user.value.groupId === "104"
-    ? "プレミアム会員にアップデートする"
-    : user.value.groupId === "105"
-    ? "通常会員にもどる"
-    : "";
-});
-
-const premiumUser = computed(() => {
-  return user.value.groupId === "105";
-});
-
-const normalUser = computed(() => {
-  return user.value.groupId === "104";
+  if (authUser.value.isPremiumUser) {
+    return '通常会員にもどる';
+  }
+  if (authUser.value.isRegularUser) {
+    return 'プレミアム会員にアップデートする';
+  }
+  return '';
 });
 
 const updateStatus = async (status) => {
   try {
-    await inquiry({
-      name: user.value.name1 + " " + user.value.name2,
-      email: user.value.email,
-      ext_01: status,
-    });
+    await inquiry(
+      {
+        name: `${authUser.value.name1} ${authUser.value.name2}`,
+        email: authUser.value.email,
+        ext_01: status,
+      },
+      { server: false }
+    );
     error.value = null;
     Popup.value = false;
     groupUpdate.value = true;

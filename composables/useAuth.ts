@@ -1,21 +1,17 @@
 import { useKurocoApi } from './useKurocoApi';
 
-const useAuthUser = () => {
+const useUser = () => {
   return useState<any | null>('user', () => null);
 };
 
 export const useAuth = () => {
-  const authUser = useAuthUser();
+  const userRef = useUser();
   const config = useRuntimeConfig();
   const baseURL = config.public.baseURL;
   const endpoint = config.public.endpoint as { [key: string]: string };
 
   const setUser = (user: any) => {
-    authUser.value = user;
-  };
-
-  const setCookie = (cookie: any) => {
-    cookie.value = cookie;
+    userRef.value = user;
   };
 
   const login = async ({
@@ -38,12 +34,10 @@ export const useAuth = () => {
       { server: false }
     );
     await nextTick(profile);
-
-    return authUser;
   };
 
   const logout = async () => {
-    const data = await useKurocoApi(
+    await useKurocoApi(
       endpoint.logout,
       {
         baseURL,
@@ -51,7 +45,6 @@ export const useAuth = () => {
       },
       { server: false }
     );
-
     setUser(null);
   };
 
@@ -68,7 +61,6 @@ export const useAuth = () => {
     );
 
     await nextTick(profile);
-    return authUser;
   };
 
   const inquiry = async (arg: any) => {
@@ -84,32 +76,35 @@ export const useAuth = () => {
     );
 
     await nextTick(profile);
-    return authUser;
   };
 
-  const initialized = ref(false);
   const profile = async () => {
-    try {
-      const { data } = await useKurocoApi(
-        endpoint.profile,
-        {
-          baseURL,
-        },
-        { server: false }
-      );
-      setUser(data);
-    } catch (error) {
-      setCookie(null);
-    }
-
-    initialized.value = true;
-    return authUser;
+    const { data } = await useKurocoApi(
+      endpoint.profile,
+      {
+        baseURL,
+      },
+      { server: false }
+    );
+    setUser(data);
   };
 
-  const isLoggedIn = computed(() => !!authUser.value?.member_id);
+  const isLoggedIn = computed(() => !!userRef.value?.member_id);
+
+  const authUser = computed(() => {
+    const u = userRef.value;
+    const groupId = Object.keys(u?.group_ids || {})?.[0];
+    const isPremiumUser = groupId === '105';
+    const isRegularUser = groupId === '104';
+    return {
+      ...u,
+      groupId: Object.keys(u?.group_ids || {})?.[0],
+      isPremiumUser,
+      isRegularUser,
+    };
+  });
 
   return {
-    initialized,
     authUser,
     isLoggedIn,
     login,

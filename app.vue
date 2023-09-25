@@ -5,7 +5,5 @@
 </template>
 
 <script setup>
-if (process.client) {
-  await useAuth().profile();
-}
+await useAuth().profile();
 </script>
