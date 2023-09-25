@@ -1,9 +1,10 @@
-import type { AsyncDataOptions } from 'nuxt/app';
+import { AsyncDataOptions, useAsyncData } from 'nuxt/app';
 import { defu } from 'defu';
 
 export const useKurocoApi = (
   url: string,
-  options: Parameters<typeof $fetch>[1]
+  options: Parameters<typeof $fetch>[1] = {},
+  asyncDataOptions: AsyncDataOptions<any> = {}
 ) => {
   const config = useRuntimeConfig();
 
@@ -15,5 +16,5 @@ export const useKurocoApi = (
   // for nice deep defaults, please use unjs/defu
   const params = defu(options || {}, defaults);
 
-  return useAsyncData(url, () => $fetch(url, params));
+  return useAsyncData(url, () => $fetch(url, { ...params }), asyncDataOptions);
 };
