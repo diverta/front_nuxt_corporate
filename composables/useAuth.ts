@@ -25,35 +25,47 @@ export const useAuth = () => {
     email: string;
     password: string;
   }) => {
-    await useKurocoApi(endpoint.login, {
-      baseURL,
-      method: 'POST',
-      body: {
-        email,
-        password,
+    await useKurocoApi(
+      endpoint.login,
+      {
+        baseURL,
+        method: 'POST',
+        body: {
+          email,
+          password,
+        },
       },
-    });
+      { server: false }
+    );
     await nextTick(profile);
 
     return authUser;
   };
 
   const logout = async () => {
-    const data = await useKurocoApi(endpoint.logout, {
-      baseURL,
-      method: 'POST',
-    });
+    const data = await useKurocoApi(
+      endpoint.logout,
+      {
+        baseURL,
+        method: 'POST',
+      },
+      { server: false }
+    );
 
     setUser(null);
   };
 
   const register = async (arg: any) => {
     console.log(arg);
-    const data = await useKurocoApi(endpoint.register, {
-      baseURL,
-      method: 'POST',
-      body: arg,
-    });
+    const data = await useKurocoApi(
+      endpoint.register,
+      {
+        baseURL,
+        method: 'POST',
+        body: arg,
+      },
+      { server: false }
+    );
 
     await nextTick(profile);
     return authUser;
@@ -61,22 +73,30 @@ export const useAuth = () => {
 
   const inquiry = async (arg: any) => {
     console.log(arg);
-    const data = await useKurocoApi(endpoint.inquiry, {
-      baseURL,
-      method: 'POST',
-      body: arg,
-    });
+    const data = await useKurocoApi(
+      endpoint.inquiry,
+      {
+        baseURL,
+        method: 'POST',
+        body: arg,
+      },
+      { server: false }
+    );
 
     await nextTick(profile);
     return authUser;
-  };  
+  };
 
   const initialized = ref(false);
   const profile = async () => {
     try {
-      const { data } = await useKurocoApi(endpoint.profile, {
-        baseURL,
-      });
+      const { data } = await useKurocoApi(
+        endpoint.profile,
+        {
+          baseURL,
+        },
+        { server: false }
+      );
       setUser(data);
     } catch (error) {
       setCookie(null);
