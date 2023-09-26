@@ -8,9 +8,10 @@ export default defineNuxtConfig({
         login: '/rcms-api/1/login',
         logout: '/rcms-api/1/logout',
         register: '/rcms-api/1/member/register',
+        updateProfile: '/rcms-api/1/member/update',
         profile: '/rcms-api/1/profile',
         inquiry: '/rcms-api/1/inquiry/3',
-        contact: '/rcms-api/1/inquiry/1'
+        contact: '/rcms-api/1/inquiry/1',
       },
     },
   },

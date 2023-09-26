@@ -1,10 +1,9 @@
 <template>
   <ClientOnly>
     <div>
-      <UiNavLink v-if="details" :path="path" :subject="details.subject" />
+      <UiNavLink :path="path" :subject="subject" />
       <UiPagetitle
-        v-if="details"
-        :subject="details.group_nm"
+        :subject="subject"
         :subheading="subheading"
       />
       <div class="l-container--large l-container--contents">
@@ -20,6 +19,7 @@
 const path = [{ label: '会員限定コンテンツ', to: '/ltd-news/' }];
 const button = [{ label: '会員限定コンテンツ一覧へ戻る', to: '/ltd-news/' }];
 const subheading = 'For Members';
+const subject = "会員限定コンテンツ";
 
 const { isLoggedIn } = useAuth();
 

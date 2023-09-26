@@ -63,6 +63,21 @@ export const useAuth = () => {
     await nextTick(profile);
   };
 
+  const updateProfile = async (arg: any) => {
+    console.log(arg);
+    const data = await useKurocoApi(
+      endpoint.updateProfile,
+      {
+        baseURL,
+        method: 'POST',
+        body: arg,
+      },
+      { server: false }
+    );
+
+    await nextTick(profile);
+  };   
+
   const inquiry = async (arg: any) => {
     console.log(arg);
     const data = await useKurocoApi(
@@ -125,8 +140,9 @@ export const useAuth = () => {
     login,
     logout,
     register,
+    updateProfile,
     profile,
     inquiry,
-    contact
+    contact,
   };
 };
