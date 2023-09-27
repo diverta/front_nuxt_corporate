@@ -32,11 +32,10 @@
             ログイン
           </button>
         </div>
-        <!-- TODO -->
         <div class="u-text-align-center u-mt-25">
           <NuxtLink to="/login/register">会員登録</NuxtLink>
-          または
-          <NuxtLink to="/login/reminder">パスワードをお忘れの方</NuxtLink>
+          <!-- または
+          <NuxtLink to="/login/reminder">パスワードをお忘れの方</NuxtLink> -->
         </div>
       </form>
     </div>

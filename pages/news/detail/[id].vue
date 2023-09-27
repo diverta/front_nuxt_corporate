@@ -9,23 +9,23 @@
       <div class="l-container--col-2__main">
         <ContentDetailBody :details="response.details" :button="button" />
       </div>
-      <ContentSideBar :itemList="master.list" />
+      <ContentSideBar :itemList="reverseItems" />
     </div>
   </div>
 </template>
 
 <script setup>
-const path = [{ label: 'ニュース', to: '/news' }];
-const button = [{ label: 'ニュースリリース一覧へ戻る', to: '/news/' }];
-const subheading = 'News Release';
+const path = [{ label: "ニュース", to: "/news" }];
+const button = [{ label: "ニュースリリース一覧へ戻る", to: "/news/" }];
+const subheading = "News Release";
 
 const route = useRoute();
 
 const { data: response } = await useKurocoApi(
   `/rcms-api/1/news/details/${route.params.id}`
 );
-const { data: master } = await useKurocoApi(
-  // reverse this later gaurav
-  '/rcms-api/1/master'
-);
+const { data: master } = await useKurocoApi("/rcms-api/1/master");
+const reverseItems = computed(() => {
+  return master.value?.list?.slice().reverse();
+});
 </script>

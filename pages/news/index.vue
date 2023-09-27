@@ -7,19 +7,24 @@
         <div class="l-container--col-2__main">
           <NewsList :subject="subject" v-bind="news" />
         </div>
-        <ContentSideBar :itemList="master.list" />
+        <ContentSideBar :itemList="reverseItems" />
       </div>
     </section>
   </div>
 </template>
 
 <script setup>
-const subject = 'ニュース';
-const subheading = 'News Release';
+const subject = "ニュース";
+const subheading = "News Release";
 
-const { data: news } = await useKurocoApi('/rcms-api/1/news/list');
-const { data: master } = await useKurocoApi(
-  // reverse this later gaurav
-  '/rcms-api/1/master'
-);
+const route = useRoute();
+console.log(route.query.filter); //to do later to add filter by ContentSideBar
+
+const { data: news } = await useKurocoApi("/rcms-api/1/news/list");
+const { data: master } = await useKurocoApi("/rcms-api/1/master");
+const reverseItems = computed(() => {
+  return master.value?.list?.slice().reverse();
+});
+
+
 </script>
