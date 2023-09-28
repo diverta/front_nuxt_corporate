@@ -4,7 +4,6 @@
     <section>
       <UiPagetitle :subject="subject" :subheading="subheading" />
       <div class="l-container--small l-container--contents">
-        {{ authUser }}
         <template v-if="updateProfileDone">
           <UiAlertSuccess :message="message" />
           <div class="c-form u-text-align-center">

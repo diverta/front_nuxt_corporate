@@ -3,8 +3,6 @@
       <UiNavLink :subject="subject" />
       <UiPagetitle :subject="subject" :subheading="subheading" />
       <div class="l-container--small l-container--contents">
-        {{ isLoggedIn }}
-      {{ JSON.stringify(authUser, null, 2) }}
         <template v-if="signupDone">
           <UiAlertSuccess :message="message" />
         </template>
@@ -64,7 +62,7 @@
   </template>
 
 <script setup>
-const { authUser, isLoggedIn, login, logout, register, profile } = useAuth(); // uses the default signIn function provided by nuxt-auth
+const { register } = useAuth();
 
 const subject = '会員登録';
 const subheading = 'Sign Up';
@@ -79,12 +77,11 @@ const user = ref({
 const errorMessage = ref('');
 const message = '登録が完了しました';
 
-const handleSignup = async (e) => {
+const handleSignup = async () => {
   try {
-    e.preventDefault();
     await register({ ...user.value });
-    useRouter().push('/');
     signupDone.value = true;
+    useRouter().push('/');
   } catch (error) {
     console.log(error);
     errorMessage.value = error.response.data.errors;

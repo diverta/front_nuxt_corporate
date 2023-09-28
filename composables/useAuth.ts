@@ -49,8 +49,7 @@ export const useAuth = () => {
   };
 
   const register = async (arg: any) => {
-    console.log(arg);
-    const data = await useKurocoApi(
+    await useKurocoApi(
       endpoint.register,
       {
         baseURL,
@@ -64,8 +63,7 @@ export const useAuth = () => {
   };
 
   const updateProfile = async (arg: any) => {
-    console.log(arg);
-    const data = await useKurocoApi(
+    await useKurocoApi(
       endpoint.updateProfile,
       {
         baseURL,
@@ -93,8 +91,7 @@ export const useAuth = () => {
   };
 
   const inquiry = async (arg: any) => {
-    console.log(arg);
-    const data = await useKurocoApi(
+    await useKurocoApi(
       endpoint.inquiry,
       {
         baseURL,
@@ -108,7 +105,6 @@ export const useAuth = () => {
   };
 
   const contact = async (arg: any) => {
-    console.log(arg);
     const data = await useKurocoApi(
       endpoint.contact,
       {

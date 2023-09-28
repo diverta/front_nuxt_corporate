@@ -4,7 +4,6 @@
       <UiNavLink :subject="subject" />
       <section>
         <UiPagetitle :subject="subject" :subheading="subheading" />
-        {{ authUser }}
         <div class="l-container--col-2 l-container--contents">
           <div class="l-container--col-2__main">
             <div class="c-article">
@@ -162,7 +161,7 @@
 </template>
 
 <script setup>
-const { authUser, isLoggedIn, logout, inquiry } = useAuth();
+const { authUser, logout, inquiry } = useAuth();
 
 const subject = 'マイページ';
 const subheading = 'Mypage';

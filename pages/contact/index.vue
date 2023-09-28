@@ -348,7 +348,6 @@ const handleOnSubmit = async () => {
     submitted.value = true;
     thanksText.value = formresponse.value?.messages?.[0];
   } catch (err) {
-    console.log("Bhai idhar");
     console.error(err);
     error.value = err.response.data.errors;
   }

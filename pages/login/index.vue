@@ -3,10 +3,8 @@
     <UiNavLink :subject="subject" />
     <UiPagetitle :subject="subject" :subheading="subheading" />
     <div class="l-container--small l-container--contents">
-      {{ isLoggedIn }}
-      {{ JSON.stringify(authUser, null, 2) }}
       <form @submit.prevent="handleSubmit" class="c-form">
-        <UiAlertError v-if="errorMessage" :error="errorMessage" />
+        <UiAlertError v-if="error" :error="errorMessage" />
         <div class="c-form-group">
           <label for="email" class="c-form-label">メールアドレス</label>
           <input
@@ -43,23 +41,28 @@
 </template>
 
 <script setup>
-const { authUser, isLoggedIn, login, logout, register, profile } = useAuth(); // uses the default signIn function provided by nuxt-auth
+const { login } = useAuth(); // uses the default signIn function provided by nuxt-auth
 
-const subject = 'ログイン';
-const subheading = 'Login';
+const subject = "ログイン";
+const subheading = "Login";
 const formData = reactive({
-  email: '',
-  password: '',
+  email: "",
+  password: "",
 });
-const errorMessage = ref('');
+const error = ref(null);
+const errorMessage = [
+  {
+    message: "メールアドレスまたはパスワードが正しくありません。",
+  },
+];
 
-const handleSubmit = async (e) => {
+const handleSubmit = async () => {
   try {
-    e.preventDefault();
     await login({ ...formData });
-    useRouter().push('/');
+    useRouter().push("/");
   } catch (error) {
-    errorMessage.value = 'メールアドレスまたはパスワードが正しくありません。';
+    console.error(e);
+    error.value = e.response.data.errors;
   }
 };
 

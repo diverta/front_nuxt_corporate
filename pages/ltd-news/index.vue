@@ -26,20 +26,15 @@
             会員登録またはマイページから会員ステータスの変更、ログアウトすることで表示の確認ができます。
           </p>
           <div v-if="group == null">
-              <NuxtLink to="/login/register" class="c-button u-pa-15"
-                >会員登録</NuxtLink
-              >
-            </div>
-            <div v-else-if="group == 104">
-              <NuxtLink to="/mypage" class="c-button u-pa-15"
-                >プレミアム会員へアップグレードする</NuxtLink
-              >
-            </div>
-            <div v-else>
-              <NuxtLink to="/mypage" class="c-button u-pa-15"
-                >通常会員へ戻す</NuxtLink
-              >
-            </div>
+            <NuxtLink to="/login/register" class="c-button u-pa-15"
+              >会員登録</NuxtLink
+            >
+          </div>
+          <div v-else>
+            <NuxtLink to="/mypage" class="c-button u-pa-15">{{
+              group
+            }}</NuxtLink>
+          </div>
         </div>
         <div class="l-container--contents">
           <UiCardList v-if="newsList?.length" :list="newsList"></UiCardList>
@@ -50,22 +45,23 @@
 </template>
 
 <script setup>
+const { authUser } = useAuth();
 const config = useRuntimeConfig();
 
-const subject = '会員限定コンテンツ';
-const subheading = 'For Members';
+const subject = "会員限定コンテンツ";
+const subheading = "For Members";
 
-// TODO switch display by member status
-const group = ref(null);
-// if (this.$auth.user.member_id != null) {
-//   if ("105" in this.$auth.user.group_ids) {
-//     group.value = 105;
-//   } else if ("104" in $auth.user.group_ids) {
-//     group.value = 104;
-//   }
-// }
+const group = computed(() => {
+  if (authUser.value.isPremiumUser) {
+    return "通常会員へ戻す";
+  }
+  if (authUser.value.isRegularUser) {
+    return "プレミアム会員へアップグレードする";
+  }
+  return null;
+});
 
-const { data: newsList } = await useAsyncData('ltd-news', async () => {
+const { data: newsList } = await useAsyncData("ltd-news", async () => {
   const ltdList = await $fetch(
     `${config.public.baseURL}/rcms-api/1/ltd-news/list`,
     {
