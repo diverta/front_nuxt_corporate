@@ -1,6 +1,7 @@
 import { defineNuxtConfig } from 'nuxt/config';
 
 export default defineNuxtConfig({
+  ssr: true,  
   runtimeConfig: {
     public: {
       baseURL: process.env.BASE_URL,
