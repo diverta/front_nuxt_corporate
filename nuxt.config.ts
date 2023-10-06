@@ -1,7 +1,7 @@
 import { defineNuxtConfig } from 'nuxt/config';
 
 export default defineNuxtConfig({
-  ssr: true,  
+  // ssr: true,  
   runtimeConfig: {
     public: {
       baseURL: process.env.BASE_URL,
@@ -35,4 +35,11 @@ export default defineNuxtConfig({
 
   devtools: { enabled: true },
   css: ['@/assets/scss/style.scss'],
+
+  nitro: { // FullStaticGeneration
+    prerender: {
+      crawlLinks: true,
+      routes: ['/', '/404.html', '/200.html'],
+    },
+  },
 });

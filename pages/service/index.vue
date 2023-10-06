@@ -1,5 +1,5 @@
 <template>
-  <div class="l-container--wrap">
+  <div v-if="response" class="l-container--wrap">
     <UiNavLink :subject="response.details.subject" />
     <ContentPlainBody v-bind="response.details" :subheading="subheading" />
   </div>

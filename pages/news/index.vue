@@ -20,13 +20,10 @@ const subheading = "News Release";
 const route = useRoute();
 console.log(route.query.filter); // to complete for same page reroute
 
-const { data: news } = await useKurocoApi("/rcms-api/1/news/list", {
-        params: { filter: route.query.filter },
-      });
+const { data: news } = await useKurocoApi("/rcms-api/1/news/list"); 
+// Add filter later params: { filter: route.query.filter }
 const { data: master } = await useKurocoApi("/rcms-api/1/master");
 const reverseItems = computed(() => {
   return master.value?.list?.slice().reverse();
 });
-
-
 </script>

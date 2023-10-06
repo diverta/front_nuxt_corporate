@@ -17,9 +17,10 @@
               >{{ n.Year }}年{{ n.Month }}月 ({{ n.Count }})</NuxtLink
             >
           </template>
-          <template v-else>
+          <template v-else> 
+            <!-- Add filter cond later here -->
             <NuxtLink
-              :to="`/news/?filter=${n.Filter}`"
+              :to="`/news/`" 
               class="u-display-block u-pa-5"
             >
               <i class="c-link__icon c-list__icon -front fas fa-caret-right"></i

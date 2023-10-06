@@ -1,19 +1,20 @@
 <template>
-    <section>
-      <UiNavLink :subject="subject" />
-      <UiPagetitle :subject="subject" :subheading="subheading" />
-      <div class="l-container--small l-container--contents">
-        <template v-if="signupDone">
-          <UiAlertSuccess :message="message" />
-        </template>
-        <template v-else>
-          <div class="c-form-group u-text-align-center">
-            <p class="c-text--small">
-              <span class="c-form-label__required">*</span>は必須項目です。
-            </p>
-          </div>
-          <UiAlertError v-if="errorMessage" :error="errorMessage" />
-          <form @submit.prevent="handleSignup" class="c-form">
+  <section>
+    <UiNavLink :subject="subject" />
+    <UiPagetitle :subject="subject" :subheading="subheading" />
+    <div class="l-container--small l-container--contents">
+      <template v-if="signupDone">
+        <UiAlertSuccess :message="message" />
+      </template>
+      <template v-else>
+        <div class="c-form-group u-text-align-center">
+          <p class="c-text--small">
+            <span class="c-form-label__required">*</span>は必須項目です。
+          </p>
+        </div>
+        <UiAlertError v-if="errorMessage" :error="errorMessage" />
+        <form @submit.prevent="handleSignup" class="c-form">
+          <div v-if="user">
             <div class="c-form-group">
               <label for="name1" class="c-form-label">名前（姓）</label>
               <span class="c-form-label__required">*</span>
@@ -44,7 +45,9 @@
               />
             </div>
             <div class="c-form-group">
-              <button type="submit" class="c-button--primary u-width-100">登録</button>
+              <button type="submit" class="c-button--primary u-width-100">
+                登録
+              </button>
             </div>
             <div class="c-form-group u-text-align-center">
               すでに会員の方は<NuxtLink to="/login">ログイン</NuxtLink>
@@ -55,33 +58,34 @@
                 >プライバシーポリシー</NuxtLink
               >に同意したこととなります。
             </p>
-          </form>
-        </template>
-      </div>
-    </section>
-  </template>
+          </div>
+        </form>
+      </template>
+    </div>
+  </section>
+</template>
 
 <script setup>
 const { register } = useAuth();
 
-const subject = '会員登録';
-const subheading = 'Sign Up';
+const subject = "会員登録";
+const subheading = "Sign Up";
 
 const signupDone = ref(false);
 const user = ref({
-  name1: '',
-  name2: '',
-  email: '',
-  login_pwd: ''
+  name1: "",
+  name2: "",
+  email: "",
+  login_pwd: "",
 });
-const errorMessage = ref('');
-const message = '登録が完了しました';
+const errorMessage = ref("");
+const message = "登録が完了しました";
 
 const handleSignup = async () => {
   try {
     await register({ ...user.value });
     signupDone.value = true;
-    useRouter().push('/');
+    useRouter().push("/");
   } catch (error) {
     console.log(error);
     errorMessage.value = error.response.data.errors;
@@ -89,7 +93,6 @@ const handleSignup = async () => {
 };
 
 const clearErrorMessages = () => {
-  errorMessage.value = '';
+  errorMessage.value = "";
 };
 </script>
-  

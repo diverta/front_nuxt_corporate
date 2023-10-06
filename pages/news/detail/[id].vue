@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="response">
     <UiNavLink :path="path" :subject="response.details.subject" />
     <UiPagetitle
       :subject="response.details.group_nm"
