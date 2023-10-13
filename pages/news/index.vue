@@ -5,25 +5,32 @@
       <UiPagetitle :subject="subject" :subheading="subheading" />
       <div class="l-container--col-2 l-container--contents">
         <div class="l-container--col-2__main">
-          <NewsList :subject="subject" v-bind="news" />
+          <NewsList v-if="news" :subject="subject" v-bind="news" />
         </div>
-        <ContentSideBar :itemList="reverseItems" />
+        <ContentSideBar v-if="master" :itemList="master.list" />
       </div>
     </section>
   </div>
 </template>
 
 <script setup>
-const subject = "ニュース";
-const subheading = "News Release";
+const subject = 'ニュース';
+const subheading = 'News Release';
 
 const route = useRoute();
-console.log(route.query.filter); // to complete for same page reroute
+const filter = route.query.filter;
 
-const { data: news } = await useKurocoApi("/rcms-api/1/news/list"); 
 // Add filter later params: { filter: route.query.filter }
-const { data: master } = await useKurocoApi("/rcms-api/1/master");
-const reverseItems = computed(() => {
-  return master.value?.list?.slice().reverse();
-});
+const { data: master } = await useKurocoApi('/rcms-api/1/master');
+const { data: news } = await useKurocoApi(
+  '/rcms-api/1/news/list',
+  {
+    query: {
+      filter,
+    },
+  },
+  {
+    server: false,
+  }
+);
 </script>
