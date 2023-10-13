@@ -7,7 +7,7 @@
         <div class="l-container--col-2__main">
           <NewsList v-if="news" :subject="subject" v-bind="news" />
         </div>
-        <ContentSideBar v-if="master" :itemList="master.list" />
+        <ContentSideBar v-if="master" :itemList="reverseItems" />
       </div>
     </section>
   </div>
@@ -33,4 +33,5 @@ const { data: news } = await useKurocoApi(
     server: false,
   }
 );
+const reverseItems = computed(() => master?.value?.list?.slice()?.reverse());
 </script>
