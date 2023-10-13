@@ -5,19 +5,24 @@
       <UiPagetitle :subject="subject" :subheading="subheading" />
       <div class="l-container--small l-container--contents">
         <template v-if="submitted">
-          <p class="c-text--pre" v-html="thanksText"></p>
+          <p class="c-text--pre" v-html="thanksText" />
           <NuxtLink to="/" class="c-button">トップページ</NuxtLink>
         </template>
         <template v-else>
           <div class="c-form-group">
-            <p class="c-text c-text--pre">
-              {{ response.details.inquiry_info }}
-            </p>
+            <p
+              class="c-text c-text--pre"
+              v-html="response.details.inquiry_info"
+            />
             <p class="c-text--small">
               <span class="c-form-label__required">*</span>は必須項目です。
             </p>
           </div>
-          <UiAlertError v-if="error" :error="error" />
+          <UiAlertError
+            ref="errorRef"
+            v-show="errors.length > 0"
+            :error="errors"
+          />
           <form class="c-form">
             <div
               v-for="n in response.details.cols"
@@ -298,20 +303,23 @@
 </template>
 
 <script setup>
-const { contact } = useAuth();
-const subject = "お問い合わせ";
-const subheading = "Contact";
+const subject = 'お問い合わせ';
+const subheading = 'Contact';
 const submitted = ref(false);
-const error = ref(null);
+const errors = ref([]);
+const errorRef = ref(null);
 const disabled = ref(true);
 const submitData = reactive({});
 const thanksText = ref(null);
-const y = ref("");
-const m = ref("");
-const d = ref("");
+const y = ref('');
+const m = ref('');
+const d = ref('');
 const config = useRuntimeConfig();
 
-const { data: response } = await useKurocoApi("/rcms-api/1/inquiry/1");
+// const { data: response } = await useKurocoApi('/rcms-api/1/inquiry/1', null, {
+//   server: false,
+// });
+const { data: response } = await useKurocoApi('/rcms-api/1/inquiry/1');
 
 Object.keys(response.value.details.cols).forEach((key) => {
   const object = response.value.details.cols[key];
@@ -320,7 +328,7 @@ Object.keys(response.value.details.cols).forEach((key) => {
     submitData[object.key] = ref([]);
   }
 
-  if (object.type === 10 && object.attribute.selection_type === "multiple") {
+  if (object.type === 10 && object.attribute.selection_type === 'multiple') {
     Object.keys(object.options[1].value).forEach((key) => {
       if (!submitData[object.key]) {
         submitData[object.key] = [];
@@ -341,15 +349,26 @@ const setYMD = (key) => {
 };
 
 const handleOnSubmit = async () => {
-  try {
-    const { data: formresponse } = await contact({ ...submitData });
-    console.log(formresponse);
-    error.value = null;
-    submitted.value = true;
-    thanksText.value = formresponse.value?.messages?.[0];
-  } catch (err) {
-    console.error(err);
-    error.value = err.response.data.errors;
+  const { data: formresponse, error } = await useKurocoApi(
+    '/rcms-api/1/inquiry/1',
+    {
+      method: 'POST',
+      body: submitData,
+    },
+    { server: false }
+  );
+  if (error?.value) {
+    errors.value = error.value?.data?.errors || [];
+    nextTick(() => {
+      errorRef.value.errorWrapperRef.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+    });
+    return;
   }
+  error.value = [];
+  submitted.value = true;
+  thanksText.value = formresponse.value?.messages?.[0];
 };
 </script>

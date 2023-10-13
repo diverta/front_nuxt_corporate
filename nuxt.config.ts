@@ -12,8 +12,6 @@ export default defineNuxtConfig({
         updateProfile: '/rcms-api/1/member/update',
         deleteProfile: '/rcms-api/1/member/delete',
         profile: '/rcms-api/1/profile',
-        inquiry: '/rcms-api/1/inquiry/3',
-        contact: '/rcms-api/1/inquiry/1',
       },
     },
   },

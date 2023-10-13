@@ -75,7 +75,7 @@ export const useAuth = () => {
 
     await nextTick(profile);
   };
-  
+
   const deleteProfile = async (arg: any) => {
     await useKurocoApi(
       endpoint.deleteProfile,
@@ -89,34 +89,6 @@ export const useAuth = () => {
 
     await nextTick(logout);
   };
-
-  const inquiry = async (arg: any) => {
-    await useKurocoApi(
-      endpoint.inquiry,
-      {
-        baseURL,
-        method: 'POST',
-        body: arg,
-      },
-      { server: false }
-    );
-
-    await nextTick(profile);
-  };
-
-  const contact = async (arg: any) => {
-    const data = await useKurocoApi(
-      endpoint.contact,
-      {
-        baseURL,
-        method: 'POST',
-        body: arg,
-      },
-      { server: false }
-    );
-
-    return data;
-  };   
 
   const profile = async () => {
     const { data } = await useKurocoApi(
@@ -153,7 +125,5 @@ export const useAuth = () => {
     updateProfile,
     deleteProfile,
     profile,
-    inquiry,
-    contact,
   };
 };

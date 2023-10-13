@@ -161,7 +161,7 @@
 </template>
 
 <script setup>
-const { authUser, logout, inquiry } = useAuth();
+const { authUser, logout } = useAuth();
 
 const subject = 'マイページ';
 const subheading = 'Mypage';
@@ -192,11 +192,15 @@ const buttonText = computed(() => {
 
 const updateStatus = async (status) => {
   try {
-    await inquiry(
+    await useKurocoApi(
+      '/rcms-api/1/inquiry/3',
       {
-        name: `${authUser.value.name1} ${authUser.value.name2}`,
-        email: authUser.value.email,
-        ext_01: status,
+        method: 'POST',
+        body: {
+          name: `${authUser.value.name1} ${authUser.value.name2}`,
+          email: authUser.value.email,
+          ext_01: status,
+        },
       },
       { server: false }
     );

@@ -1,5 +1,5 @@
 <template>
-  <div class="c-alert c-alert--error">
+  <div ref="errorWrapperRef" class="c-alert c-alert--error">
     <div class="u-display-flex">
       <div class="c-alert__icon u-display-flex-shrink-0">
         <svg
@@ -43,5 +43,11 @@ const props = defineProps({
     type: Array,
     required: true,
   },
+});
+
+const errorWrapperRef = ref(null);
+
+defineExpose({
+  errorWrapperRef,
 });
 </script>
