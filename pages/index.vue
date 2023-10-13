@@ -12,7 +12,7 @@
     <section class="l-container--large l-container--contents">
       <div class="c-section--image-text">
         <div class="c-section--image-text__image">
-          <img src="~/assets/image/top-service.png" alt="" width="100%" />
+          <img src="~/assets/image/top-service.png" alt="" />
         </div>
         <div class="u-display-flex-grow-1">
           <p class="c-heading--sub">Our Service</p>
