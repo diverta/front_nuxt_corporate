@@ -9,12 +9,16 @@ export const useKurocoApi = (
   const config = useRuntimeConfig();
 
   const defaults: Parameters<typeof $fetch>[1] = {
-    baseURL: (config.public.baseURL as string) || '/',
+    baseURL: (config.public.kurocoApiDomain as string) || '/',
     credentials: 'include',
   };
 
   // for nice deep defaults, please use unjs/defu
   const params = defu(options || {}, defaults);
 
-  return useAsyncData(url, () => $fetch(url, { ...params }), asyncDataOptions);
+  return useAsyncData(
+    `${url}${JSON.stringify(params)}`,
+    () => $fetch(url, { ...params }),
+    asyncDataOptions
+  );
 };

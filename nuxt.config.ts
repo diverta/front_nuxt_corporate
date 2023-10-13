@@ -1,10 +1,10 @@
 import { defineNuxtConfig } from 'nuxt/config';
 
 export default defineNuxtConfig({
-  // ssr: true,  
+  // ssr: true,
   runtimeConfig: {
     public: {
-      baseURL: process.env.BASE_URL,
+      kurocoApiDomain: 'https://dev-nuxt-corporate.g.kuroco.app',
       endpoint: {
         login: '/rcms-api/1/login',
         logout: '/rcms-api/1/logout',
@@ -36,7 +36,8 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ['@/assets/scss/style.scss'],
 
-  nitro: { // FullStaticGeneration
+  nitro: {
+    // FullStaticGeneration
     prerender: {
       crawlLinks: true,
       routes: ['/', '/404.html', '/200.html'],
