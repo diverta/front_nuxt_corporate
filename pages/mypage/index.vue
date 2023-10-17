@@ -161,7 +161,7 @@
 </template>
 
 <script setup>
-const { authUser, logout } = useAuth();
+const { authUser, profile, logout } = useAuth();
 
 const subject = 'マイページ';
 const subheading = 'Mypage';
@@ -204,6 +204,7 @@ const updateStatus = async (status) => {
       },
       { server: false }
     );
+    await profile();
     error.value = null;
     Popup.value = false;
     groupUpdate.value = true;
