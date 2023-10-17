@@ -19,8 +19,8 @@
 <script setup>
 const props = defineProps({
   list: {
-      type: Array,
-      required: true,
-    },
+    type: Array,
+    required: true,
+  },
 });
 </script>

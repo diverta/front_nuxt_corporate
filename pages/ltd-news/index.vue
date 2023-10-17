@@ -37,7 +37,7 @@
           </div>
         </div>
         <div class="l-container--contents">
-          <UiCardList v-if="newsList?.length" :list="newsList"></UiCardList>
+          <UiCardList :list="newsList"></UiCardList>
         </div>
       </div>
     </section>
@@ -48,26 +48,25 @@
 const { authUser } = useAuth();
 const config = useRuntimeConfig();
 
-const subject = "会員限定コンテンツ";
-const subheading = "For Members";
+const subject = '会員限定コンテンツ';
+const subheading = 'For Members';
 
 const group = computed(() => {
   if (authUser.value.isPremiumUser) {
-    return "通常会員へ戻す";
+    return '通常会員へ戻す';
   }
   if (authUser.value.isRegularUser) {
-    return "プレミアム会員へアップグレードする";
+    return 'プレミアム会員へアップグレードする';
   }
   return null;
 });
 
-const { data: newsList } = await useAsyncData("ltd-news", async () => {
-  const ltdList = await $fetch(
-    `${config.public.baseURL}/rcms-api/1/ltd-news/list`,
-    {
-      params: { cnt: 12 },
-    }
-  );
-  return ltdList.data.list;
-});
+const { data } = await useKurocoApi(
+  '/rcms-api/1/ltd-news/list',
+  {
+    params: { cnt: 12 },
+  },
+  { server: false }
+);
+const newsList = computed(() => data?.value?.data?.list || []);
 </script>
