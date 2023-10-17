@@ -32,8 +32,8 @@
         </div>
         <div class="u-text-align-center u-mt-25">
           <NuxtLink to="/login/register">会員登録</NuxtLink>
-          <!-- または
-          <NuxtLink to="/login/reminder">パスワードをお忘れの方</NuxtLink> -->
+          または
+          <NuxtLink to="/login/reminder">パスワードをお忘れの方</NuxtLink>
         </div>
       </form>
     </div>
@@ -43,23 +43,23 @@
 <script setup>
 const { login } = useAuth(); // uses the default signIn function provided by nuxt-auth
 
-const subject = "ログイン";
-const subheading = "Login";
+const subject = 'ログイン';
+const subheading = 'Login';
 const formData = reactive({
-  email: "",
-  password: "",
+  email: '',
+  password: '',
 });
 const error = ref(null);
 const errorMessage = [
   {
-    message: "メールアドレスまたはパスワードが正しくありません。",
+    message: 'メールアドレスまたはパスワードが正しくありません。',
   },
 ];
 
 const handleSubmit = async () => {
   try {
     await login({ ...formData });
-    useRouter().push("/");
+    useRouter().push('/');
   } catch (error) {
     console.error(e);
     error.value = e.response.data.errors;
