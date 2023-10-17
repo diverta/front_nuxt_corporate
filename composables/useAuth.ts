@@ -105,9 +105,9 @@ export const useAuth = () => {
 
   const authUser = computed(() => {
     const u = userRef.value;
-    const groupId = Object.keys(u?.group_ids || {})?.[0];
-    const isPremiumUser = groupId === '105';
-    const isRegularUser = groupId === '104';
+    const groupIds = Object.keys(u?.group_ids || {});
+    const isPremiumUser = groupIds.includes('105');
+    const isRegularUser = groupIds.includes('104');
     return {
       ...u,
       groupId: Object.keys(u?.group_ids || {})?.[0],
