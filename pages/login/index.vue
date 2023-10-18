@@ -26,9 +26,9 @@
           />
         </div>
         <div class="c-form-group">
-          <button type="submit" class="c-button--primary u-width-100">
+          <UiSubmitButton type="submit" :loading="loading">
             ログイン
-          </button>
+          </UiSubmitButton>
         </div>
         <div class="u-text-align-center u-mt-25">
           <NuxtLink to="/login/register">会員登録</NuxtLink>
@@ -56,13 +56,18 @@ const errorMessage = [
   },
 ];
 
+const loading = ref(false);
+
 const handleSubmit = async () => {
+  loading.value = true;
+
   try {
     await login({ ...formData });
     useRouter().push('/');
   } catch (error) {
     console.error(e);
     error.value = e.response.data.errors;
+    loading.value = false;
   }
 };
 
