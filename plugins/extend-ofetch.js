@@ -5,8 +5,8 @@ export default defineNuxtPlugin({
   enforce: 'pre',
   setup() {
     const config = useRuntimeConfig();
-    const opts: Parameters<typeof $fetch>[1] = {
-      baseURL: (config.public.kurocoApiDomain as string) || '/',
+    const opts = {
+      baseURL: config.public.kurocoApiDomain || '/',
       credentials: 'include',
     };
 
