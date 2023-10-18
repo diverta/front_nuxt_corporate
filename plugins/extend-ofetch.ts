@@ -1,3 +1,4 @@
+/** inject common config into every $fetch request */
 export default defineNuxtPlugin({
   name: 'extend-ofetch',
   parallel: false,
