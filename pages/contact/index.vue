@@ -182,6 +182,23 @@
                   ><label :for="n.key + '_d'" class="u-pa-10">日</label>
                 </div>
               </template>
+              <!-- ファイル -->
+              <template v-if="n.type === 7">
+                <ul>
+                  <li>
+                    <input
+                      type="file"
+                      @change="handleFileChange"
+                      :accept="
+                        n.options.map(({ value }) => `.${value}`).join(',') ||
+                        '*'
+                      "
+                      :name="n.key"
+                      :id="n.key"
+                    />
+                  </li>
+                </ul>
+              </template>
               <!--マトリックス(単一選択)-->
               <template
                 v-if="n.type === 10 && n.attribute.selection_type === 'single'"
@@ -346,6 +363,37 @@ Object.keys(response.value.details.cols).forEach((key) => {
 
 const setYMD = (key) => {
   submitData[key] = `${y.value}-${m.value}-${d.value}`;
+};
+
+const handleFileChange = async (e) => {
+  const fm = new FormData();
+  fm.append('file', e.target.files[0]);
+
+  const { data, error } = await useKurocoApi(
+    `/rcms-api/1/upload`,
+    {
+      method: 'POST',
+      body: fm,
+    },
+    {
+      server: false,
+    }
+  );
+
+  if (error?.value) {
+    errors.value = error.value?.data?.errors || [];
+    nextTick(() => {
+      errorRef.value.errorWrapperRef.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+    });
+    return;
+  }
+  error.value = [];
+
+  const file_id = data?.value?.file_id;
+  submitData[e.target.id] = { file_id };
 };
 
 const handleOnSubmit = async () => {
