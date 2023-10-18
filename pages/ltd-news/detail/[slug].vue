@@ -30,15 +30,15 @@
 </template>
 
 <script setup>
-const path = [{ label: "会員限定コンテンツ", to: "/ltd-news/" }];
-const button = [{ label: "会員限定コンテンツ一覧へ戻る", to: "/ltd-news/" }];
-const subheading = "For Members";
-const subject = "会員限定コンテンツ";
+const path = [{ label: '会員限定コンテンツ', to: '/ltd-news/' }];
+const button = [{ label: '会員限定コンテンツ一覧へ戻る', to: '/ltd-news/' }];
+const subheading = 'For Members';
+const subject = '会員限定コンテンツ';
 
 const { isLoggedIn } = useAuth();
 
 const route = useRoute();
-const { data } = await useKurocoApi(
+const { data } = await useFetch(
   `/rcms-api/1/ltd-news/details/${route.params.slug}`
 );
 const details = data?.value?.details;

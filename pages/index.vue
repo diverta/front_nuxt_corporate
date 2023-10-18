@@ -277,6 +277,6 @@
 </template>
 
 <script setup>
-const { data: news } = await useKurocoApi('/rcms-api/1/news/list');
-const { data: ltdNews } = await useKurocoApi('/rcms-api/1/ltd-news/list');
+const { data: news } = await useFetch('/rcms-api/1/news/list');
+const { data: ltdNews } = await useFetch('/rcms-api/1/ltd-news/list');
 </script>

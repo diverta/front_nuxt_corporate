@@ -334,10 +334,10 @@ const d = ref('');
 const config = useRuntimeConfig();
 const loading = ref(false);
 
-// const { data: response } = await useKurocoApi('/rcms-api/1/inquiry/1', null, {
+// const { data: response } = await useFetch('/rcms-api/1/inquiry/1', null, {
 //   server: false,
 // });
-const { data: response } = await useKurocoApi('/rcms-api/1/inquiry/1');
+const { data: response } = await useFetch('/rcms-api/1/inquiry/1');
 
 Object.keys(response.value.details.cols).forEach((key) => {
   const object = response.value.details.cols[key];
@@ -370,7 +370,7 @@ const handleFileChange = async (e) => {
   const fm = new FormData();
   fm.append('file', e.target.files[0]);
 
-  const { data, error } = await useKurocoApi(
+  const { data, error } = await useFetch(
     `/rcms-api/1/upload`,
     {
       method: 'POST',
@@ -399,7 +399,7 @@ const handleFileChange = async (e) => {
 
 const handleOnSubmit = async () => {
   loading.value = true;
-  const { data: formresponse, error } = await useKurocoApi(
+  const { data: formresponse, error } = await useFetch(
     '/rcms-api/1/inquiry/1',
     {
       method: 'POST',

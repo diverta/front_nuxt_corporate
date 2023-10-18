@@ -1,5 +1,3 @@
-import { useKurocoApi } from './useKurocoApi';
-
 const useUser = () => {
   return useState<any | null>('user', () => null);
 };
@@ -7,7 +5,6 @@ const useUser = () => {
 export const useAuth = () => {
   const userRef = useUser();
   const config = useRuntimeConfig();
-  const baseURL = config.public.baseURL;
   const endpoint = config.public.endpoint as { [key: string]: string };
 
   const setUser = (user: any) => {
@@ -21,83 +18,52 @@ export const useAuth = () => {
     email: string;
     password: string;
   }) => {
-    await useKurocoApi(
-      endpoint.login,
-      {
-        baseURL,
-        method: 'POST',
-        body: {
-          email,
-          password,
-        },
+    await $fetch(endpoint.login, {
+      method: 'POST',
+      body: {
+        email,
+        password,
       },
-      { server: false }
-    );
+    });
     await nextTick(profile);
   };
 
   const logout = async () => {
-    await useKurocoApi(
-      endpoint.logout,
-      {
-        baseURL,
-        method: 'POST',
-      },
-      { server: false }
-    );
+    await $fetch(endpoint.logout, {
+      method: 'POST',
+    });
     setUser(null);
   };
 
   const register = async (arg: any) => {
-    await useKurocoApi(
-      endpoint.register,
-      {
-        baseURL,
-        method: 'POST',
-        body: arg,
-      },
-      { server: false }
-    );
+    await $fetch(endpoint.register, {
+      method: 'POST',
+      body: arg,
+    });
 
     await nextTick(profile);
   };
 
   const updateProfile = async (arg: any) => {
-    await useKurocoApi(
-      endpoint.updateProfile,
-      {
-        baseURL,
-        method: 'POST',
-        body: arg,
-      },
-      { server: false }
-    );
+    await $fetch(endpoint.updateProfile, {
+      method: 'POST',
+      body: arg,
+    });
 
     await nextTick(profile);
   };
 
   const deleteProfile = async (arg: any) => {
-    await useKurocoApi(
-      endpoint.deleteProfile,
-      {
-        baseURL,
-        method: 'POST',
-        body: arg,
-      },
-      { server: false }
-    );
+    await $fetch(endpoint.deleteProfile, {
+      method: 'POST',
+      body: arg,
+    });
 
     await nextTick(logout);
   };
 
   const profile = async () => {
-    const { data } = await useKurocoApi(
-      endpoint.profile,
-      {
-        baseURL,
-      },
-      { server: false }
-    );
+    const data = await $fetch(endpoint.profile);
     setUser(data);
   };
 

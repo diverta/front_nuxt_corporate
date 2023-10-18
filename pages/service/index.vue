@@ -8,7 +8,7 @@
 <script setup>
 const subheading = 'Service';
 
-const { data: response } = await useKurocoApi(
+const { data: response } = await useFetch(
   '/rcms-api/1/content/details/service'
 );
 </script>

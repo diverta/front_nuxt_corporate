@@ -192,7 +192,7 @@ const buttonText = computed(() => {
 
 const updateStatus = async (status) => {
   try {
-    await useKurocoApi(
+    await useFetch(
       '/rcms-api/1/inquiry/3',
       {
         method: 'POST',

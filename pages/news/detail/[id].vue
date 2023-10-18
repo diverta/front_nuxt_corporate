@@ -15,16 +15,16 @@
 </template>
 
 <script setup>
-const path = [{ label: "ニュース", to: "/news" }];
-const button = [{ label: "ニュースリリース一覧へ戻る", to: "/news/" }];
-const subheading = "News Release";
+const path = [{ label: 'ニュース', to: '/news' }];
+const button = [{ label: 'ニュースリリース一覧へ戻る', to: '/news/' }];
+const subheading = 'News Release';
 
 const route = useRoute();
 
-const { data: response } = await useKurocoApi(
+const { data: response } = await useFetch(
   `/rcms-api/1/news/details/${route.params.id}`
 );
-const { data: master } = await useKurocoApi("/rcms-api/1/master");
+const { data: master } = await useFetch('/rcms-api/1/master');
 const reverseItems = computed(() => {
   return master.value?.list?.slice().reverse();
 });

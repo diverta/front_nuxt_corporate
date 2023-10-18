@@ -115,7 +115,7 @@ const message = ref(null);
 
 const resetPasswordRequest = async () => {
   // post data
-  const { data, error } = await useKurocoApi(
+  const { data, error } = await useFetch(
     `/rcms-api/1/reminder`,
     {
       method: 'POST',
@@ -146,7 +146,7 @@ const resetPassword = async () => {
     return;
   }
 
-  const { data, error } = await useKurocoApi(
+  const { data, error } = await useFetch(
     `/rcms-api/1/reminder`,
     {
       method: 'POST',

@@ -21,8 +21,8 @@ const route = useRoute();
 const filter = route.query.filter;
 
 // Add filter later params: { filter: route.query.filter }
-const { data: master } = await useKurocoApi('/rcms-api/1/master');
-const { data: news } = await useKurocoApi(
+const { data: master } = await useFetch('/rcms-api/1/master');
+const { data: news } = await useFetch(
   '/rcms-api/1/news/list',
   {
     query: {

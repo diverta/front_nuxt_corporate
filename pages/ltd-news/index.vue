@@ -61,7 +61,7 @@ const group = computed(() => {
   return null;
 });
 
-const { data } = await useKurocoApi(
+const { data } = await useFetch(
   '/rcms-api/1/ltd-news/list',
   {
     params: { cnt: 12 },
