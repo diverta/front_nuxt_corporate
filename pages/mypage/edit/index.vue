@@ -36,9 +36,9 @@
               <div>{{ statusText }}</div>
             </div>
             <div class="c-form-group">
-              <button type="submit" class="c-button--primary u-width-100">
+              <UiSubmitButton type="submit" :loading="loading">
                 更新する
-              </button>
+              </UiSubmitButton>
             </div>
             <div class="c-form-group u-text-align-center">
               <NuxtLink to="/mypage/">マイページへ戻る</NuxtLink>
@@ -53,12 +53,13 @@
 <script setup>
 const { authUser, updateProfile } = useAuth();
 
-const path = [{ label: "マイページ", to: "/mypage/" }];
-const subject = "マイページ";
-const subheading = "Edit Profile";
-const message = "会員情報の更新が完了しました。";
+const path = [{ label: 'マイページ', to: '/mypage/' }];
+const subject = 'マイページ';
+const subheading = 'Edit Profile';
+const message = '会員情報の更新が完了しました。';
 const updateProfileDone = ref(false);
 const error = ref(null);
+const loading = ref(false);
 
 const user = ref({
   name1: authUser.value.name1,
@@ -77,6 +78,7 @@ const statusText = computed(() => {
 });
 
 const handleUpdateProfile = async () => {
+  loading.value = true;
   try {
     await updateProfile({ ...user.value });
     updateProfileDone.value = true;
@@ -84,5 +86,6 @@ const handleUpdateProfile = async () => {
     console.log(err);
     error.value = err.response.data.errors;
   }
+  loading.value = false;
 };
 </script>

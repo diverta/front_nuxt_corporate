@@ -303,15 +303,15 @@
                 >に同意する</label
               >
             </div>
-            <button
-              class="c-button--primary u-width-100"
+            <UiSubmitButton
               type="submit"
               id="inquiry_item_button_confirm"
+              :loading="loading"
               :disabled="disabled"
               @click.prevent="handleOnSubmit"
             >
               確認する
-            </button>
+            </UiSubmitButton>
           </form>
         </template>
       </div>
@@ -332,6 +332,7 @@ const y = ref('');
 const m = ref('');
 const d = ref('');
 const config = useRuntimeConfig();
+const loading = ref(false);
 
 // const { data: response } = await useKurocoApi('/rcms-api/1/inquiry/1', null, {
 //   server: false,
@@ -397,6 +398,7 @@ const handleFileChange = async (e) => {
 };
 
 const handleOnSubmit = async () => {
+  loading.value = true;
   const { data: formresponse, error } = await useKurocoApi(
     '/rcms-api/1/inquiry/1',
     {
@@ -405,6 +407,8 @@ const handleOnSubmit = async () => {
     },
     { server: false }
   );
+  loading.value = false;
+
   if (error?.value) {
     errors.value = error.value?.data?.errors || [];
     nextTick(() => {

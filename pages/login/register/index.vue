@@ -45,9 +45,9 @@
               />
             </div>
             <div class="c-form-group">
-              <button type="submit" class="c-button--primary u-width-100">
+              <UiSubmitButton type="submit" :loading="loading">
                 登録
-              </button>
+              </UiSubmitButton>
             </div>
             <div class="c-form-group u-text-align-center">
               すでに会員の方は<NuxtLink to="/login">ログイン</NuxtLink>
@@ -68,31 +68,34 @@
 <script setup>
 const { register } = useAuth();
 
-const subject = "会員登録";
-const subheading = "Sign Up";
+const subject = '会員登録';
+const subheading = 'Sign Up';
 
 const signupDone = ref(false);
 const user = ref({
-  name1: "",
-  name2: "",
-  email: "",
-  login_pwd: "",
+  name1: '',
+  name2: '',
+  email: '',
+  login_pwd: '',
 });
-const errorMessage = ref("");
-const message = "登録が完了しました";
+const errorMessage = ref('');
+const message = '登録が完了しました';
+const loading = ref(false);
 
 const handleSignup = async () => {
+  loading.value = true;
   try {
     await register({ ...user.value });
     signupDone.value = true;
-    useRouter().push("/");
+    useRouter().push('/');
   } catch (error) {
     console.log(error);
     errorMessage.value = error.response.data.errors;
+    loading.value = false;
   }
 };
 
 const clearErrorMessages = () => {
-  errorMessage.value = "";
+  errorMessage.value = '';
 };
 </script>
