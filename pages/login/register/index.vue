@@ -66,7 +66,7 @@
 </template>
 
 <script setup>
-const { register } = useAuth();
+const { profile } = useAuth();
 
 const subject = '会員登録';
 const subheading = 'Sign Up';
@@ -85,7 +85,11 @@ const loading = ref(false);
 const handleSignup = async () => {
   loading.value = true;
   try {
-    await register({ ...user.value });
+    await $fetch('/rcms-api/1/member/register', {
+      method: 'POST',
+      body: { ...user.value },
+    });
+    await profile();
     signupDone.value = true;
     useRouter().push('/');
   } catch (error) {

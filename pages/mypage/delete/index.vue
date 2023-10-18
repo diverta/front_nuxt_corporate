@@ -37,18 +37,22 @@
 </template>
 
 <script setup>
-const { deleteProfile } = useAuth();
+const { logout } = useAuth();
 
-const path = [{ label: "マイページ", to: "/mypage/" }];
-const subject = "退会";
-const subheading = "Delete";
-const message = "退会が完了しました。";
+const path = [{ label: 'マイページ', to: '/mypage/' }];
+const subject = '退会';
+const subheading = 'Delete';
+const message = '退会が完了しました。';
 const deleteDone = ref(false);
 const error = ref(null);
 
 const handleDeleteProfile = async () => {
   try {
-    await deleteProfile({});
+    await $fetch('/rcms-api/1/member/delete', {
+      method: 'POST',
+      body: {},
+    });
+    await logout();
     deleteDone.value = true;
   } catch (err) {
     console.log(err);

@@ -5,14 +5,6 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       kurocoApiDomain: 'https://dev-nuxt-corporate.g.kuroco.app',
-      endpoint: {
-        login: '/rcms-api/1/login',
-        logout: '/rcms-api/1/logout',
-        register: '/rcms-api/1/member/register',
-        updateProfile: '/rcms-api/1/member/update',
-        deleteProfile: '/rcms-api/1/member/delete',
-        profile: '/rcms-api/1/profile',
-      },
     },
   },
   app: {

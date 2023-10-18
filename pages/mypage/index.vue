@@ -161,7 +161,7 @@
 </template>
 
 <script setup>
-const { authUser, profile, logout, updateProfile } = useAuth();
+const { authUser, profile, logout } = useAuth();
 
 const subject = 'マイページ';
 const subheading = 'Mypage';
@@ -205,7 +205,10 @@ const updateStatus = async (status) => {
       { server: false }
     );
     // for refreshing user's group_id with new session, instead of logout and login.
-    await updateProfile({});
+    await $fetch('/rcms-api/1/member/update', {
+      method: 'POST',
+      body: {},
+    });
     await profile();
     error.value = null;
     Popup.value = false;

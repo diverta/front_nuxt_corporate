@@ -51,7 +51,7 @@
 </template>
 
 <script setup>
-const { authUser, updateProfile } = useAuth();
+const { authUser, profile } = useAuth();
 
 const path = [{ label: 'マイページ', to: '/mypage/' }];
 const subject = 'マイページ';
@@ -80,7 +80,11 @@ const statusText = computed(() => {
 const handleUpdateProfile = async () => {
   loading.value = true;
   try {
-    await updateProfile({ ...user.value });
+    await $fetch('/rcms-api/1/member/update', {
+      method: 'POST',
+      body: { ...user.value },
+    });
+    await profile();
     updateProfileDone.value = true;
   } catch (err) {
     console.log(err);
