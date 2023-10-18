@@ -161,7 +161,7 @@
 </template>
 
 <script setup>
-const { authUser, profile, logout } = useAuth();
+const { authUser, profile, logout, updateProfile } = useAuth();
 
 const subject = 'マイページ';
 const subheading = 'Mypage';
@@ -205,14 +205,7 @@ const updateStatus = async (status) => {
       { server: false }
     );
     // for refreshing user's group_id with new session, instead of logout and login.
-    await useKurocoApi(
-      '/rcms-api/1/member/update',
-      {
-        method: 'POST',
-        body: {},
-      },
-      { server: false }
-    );
+    await updateProfile({});
     await profile();
     error.value = null;
     Popup.value = false;
