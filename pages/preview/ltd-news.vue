@@ -1,13 +1,18 @@
 <template>
-  <ClientOnly>
-    <div v-if="details">
-      <UiNavLink :path="path" :subject="details.subject" />
-      <UiPagetitle :subject="details.group_nm" :subheading="subheading" />
-      <div class="l-container--large l-container--contents">
-        <ContentDetailBody v-if="details" :details="details" :button="button" />
-      </div>
+  <div v-if="response">
+    <UiNavLink :path="path" :subject="response.details.subject" />
+    <UiPagetitle
+      :subject="response.details.group_nm"
+      :subheading="subheading"
+    />
+    <div class="l-container--large l-container--contents">
+      <ContentDetailBody
+        v-if="response.details"
+        :details="response.details"
+        :button="button"
+      />
     </div>
-  </ClientOnly>
+  </div>
 </template>
 
 <script setup>
@@ -25,5 +30,4 @@ const { data: response } = await useFetch(`/rcms-api/1/preview`, {
   },
   server: false,
 });
-const details = response?.value?.details;
 </script>
