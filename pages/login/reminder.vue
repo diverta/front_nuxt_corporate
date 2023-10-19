@@ -115,16 +115,12 @@ const message = ref(null);
 
 const resetPasswordRequest = async () => {
   // post data
-  const { data, error } = await useFetch(
-    `/rcms-api/1/reminder`,
-    {
-      method: 'POST',
-      body: {
-        email: formData.email,
-      },
+  const { data, error } = await $fetch(`/rcms-api/1/reminder`, {
+    method: 'POST',
+    body: {
+      email: formData.email,
     },
-    { server: false }
-  );
+  });
 
   if (error?.value) {
     errors.value = error.value?.data?.errors || [];
@@ -146,18 +142,14 @@ const resetPassword = async () => {
     return;
   }
 
-  const { data, error } = await useFetch(
-    `/rcms-api/1/reminder`,
-    {
-      method: 'POST',
-      body: {
-        token,
-        temp_pwd: formData.temporaryPassword,
-        login_pwd: formData.password,
-      },
+  const { data, error } = await $fetch(`/rcms-api/1/reminder`, {
+    method: 'POST',
+    body: {
+      token,
+      temp_pwd: formData.temporaryPassword,
+      login_pwd: formData.password,
     },
-    { server: false }
-  );
+  });
 
   if (error?.value) {
     errors.value = error.value?.data?.errors || [];

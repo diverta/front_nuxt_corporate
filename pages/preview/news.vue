@@ -20,10 +20,14 @@ const button = [{ label: 'ニュースリリース一覧へ戻る', to: '/news/'
 const subheading = 'News Release';
 
 const route = useRoute();
+const preview_token = route.query.preview_token;
 
-const { data: response } = await useFetch(
-  `/rcms-api/1/news/details/${route.params.id}`
-);
+const { data: response } = await useFetch('/rcms-api/1/preview', {
+  params: {
+    preview_token,
+  },
+  server: false,
+});
 const { data: master } = await useFetch('/rcms-api/1/master');
 const reverseItems = computed(() => master.value?.list?.slice().reverse());
 </script>
