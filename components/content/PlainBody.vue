@@ -1,16 +1,22 @@
 <template>
-  <div class="l-container--middle l-container--contents">
-    <article>
-      <div class="topics_contents">
-        <div v-html="contents"></div>
-        <div class="clr"></div>
-      </div>
-    </article>
-  </div>
+  <article class="c-article">
+    <UiPagetitle :subject="subject" :subheading="subheading" />
+    <div class="l-container--large l-container--contents">
+      <div v-html="contents"></div>
+    </div>
+  </article>
 </template>
 
 <script setup>
 const props = defineProps({
+  subject: {
+    type: String,
+    required: true,
+  },
+  subheading: {
+    type: String,
+    required: false,
+  },
   contents: {
     type: String,
     required: true,

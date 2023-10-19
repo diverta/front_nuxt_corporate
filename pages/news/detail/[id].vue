@@ -1,46 +1,31 @@
 <template>
-    <div class="l-container--wrap">
-      <UiNavLink :path="path" :subject="details.subject" />
-      <div class="l-container--middle l-container--contents">
-        <ContentDetailBody :details="details" :button="button" />
-        <ContentSideBar :itemList="master.list" />
+  <div v-if="response">
+    <UiNavLink :path="path" :subject="response.details.subject" />
+    <UiPagetitle
+      :subject="response.details.group_nm"
+      :subheading="subheading"
+    />
+    <div class="l-container--col-2 l-container--contents">
+      <div class="l-container--col-2__main">
+        <ContentDetailBody :details="response.details" :button="button" />
       </div>
+      <ContentSideBar :itemList="reverseItems" />
     </div>
-  </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        path: [{ label: "ニュース", to: "/news" }],
-        button: [{ type: "back", label: "一覧へ", to: "/news/" }],
-      };
-    },
-    async asyncData({ $axios, params }) {
-      const response = await $axios.$get(
-        `/rcms-api/1/news/details/${params.slug}`
-      );
-      return {
-        details: response.details,
-        master: await $axios.$get("/rcms-api/1/master"),
-      };
-    },
-    computed: {
-      reverseItems() {
-        return this.master.list.slice().reverse();
-      },
-    },
-  };
-  </script>
+  </div>
+</template>
 
 <script setup>
-const path = [{ label: "ニュース", to: "/news" }];
-const button = [{ type: "back", label: "一覧へ", to: "/news/" }];
-const { data: news } = await useFetch(
-  "https://dev-nuxt-corporate.g.kuroco.app/rcms-api/1/news/list"
+const path = [{ label: 'ニュース', to: '/news' }];
+const button = [{ label: 'ニュースリリース一覧へ戻る', to: '/news/' }];
+const subheading = 'News Release';
+
+const route = useRoute();
+
+const { data: response } = await useFetch(
+  `/rcms-api/1/news/details/${route.params.id}`
 );
-const { data: master } = await useFetch( // reverse this later gaurav
-  "https://dev-nuxt-corporate.g.kuroco.app/rcms-api/1/master"
-); 
+const { data: master } = await useFetch('/rcms-api/1/master');
+const reverseItems = computed(() => {
+  return master.value?.list?.slice().reverse();
+});
 </script>
-  

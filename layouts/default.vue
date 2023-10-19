@@ -1,8 +1,9 @@
 <template>
   <div>
     <AppHeader/>
-    <AppFooter/>
-    <slot />
+    <div class="l-container">
+      <slot />
+    </div>
     <AppFooter />
   </div>
 </template>

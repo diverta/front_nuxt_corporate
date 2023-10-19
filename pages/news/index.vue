@@ -1,45 +1,37 @@
 <template>
-    <div class="l-container--wrap">
-      <UiNavLink :subject="subject" />
-      <div class="l-container--middle l-container--contents">
-        <NewsList :subject="subject" v-bind="news" />
-        <ContentSideBar :itemList="master.list" /> 
+  <div class="l-container">
+    <UiNavLink :subject="subject" />
+    <section>
+      <UiPagetitle :subject="subject" :subheading="subheading" />
+      <div class="l-container--col-2 l-container--contents">
+        <div class="l-container--col-2__main">
+          <NewsList v-if="news" :subject="subject" v-bind="news" />
+        </div>
+        <ContentSideBar v-if="master" :itemList="reverseItems" />
       </div>
-    </div>
-  </template>
-  
-  <!-- <script>
-  export default {
-    data() {
-      return {
-        subject: "ニュース",
-      };
-    },
-    watchQuery: ["filter"],
-    async asyncData({ $axios, query }) {
-      return {
-        news: await $axios.$get("/rcms-api/1/news/list", {
-          params: { filter: query.filter },
-        }),
-        master: await $axios.$get("/rcms-api/1/master"),
-      };
-    },
-    computed: {
-      reverseItems() {
-        return this.master.list.slice().reverse();
-      },
-    },
-  };
-  </script> -->
+    </section>
+  </div>
+</template>
 
 <script setup>
-import {ref} from 'vue';
-const subject = "ニュース";
+const subject = 'ニュース';
+const subheading = 'News Release';
+
+const route = useRoute();
+const filter = route.query.filter;
+
+// Add filter later params: { filter: route.query.filter }
+const { data: master } = await useFetch('/rcms-api/1/master');
 const { data: news } = await useFetch(
-  "https://dev-nuxt-corporate.g.kuroco.app/rcms-api/1/news/list"
+  '/rcms-api/1/news/list',
+  {
+    query: {
+      filter,
+    },
+  },
+  {
+    server: false,
+  }
 );
-const { data: master } = await useFetch( // reverse this later gaurav
-  "https://dev-nuxt-corporate.g.kuroco.app/rcms-api/1/master"
-); 
+const reverseItems = computed(() => master?.value?.list?.slice()?.reverse());
 </script>
-  

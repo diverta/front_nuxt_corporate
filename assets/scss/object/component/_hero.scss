@@ -1,0 +1,58 @@
+.c-hero {
+  position: relative;
+  margin-bottom: var(--spacing-vertical-pc);
+  padding: var(--spacing-horizontal-pc) 0 var(--spacing-vertical-pc);
+  @include sp() {
+    margin-bottom: var(--spacing-vertical-sp);
+    padding: var(--spacing-horizontal-sp) 0 calc( var(--spacing-vertical-sp) * 4);
+  }
+  &__image {
+    display: block;
+    width: 86%;
+    margin-left: auto;
+    border-radius: calc(var(--border-radius) * 4) 0 0 calc(var(--border-radius) * 4);
+    @include sp() {
+      width: calc( 100% - var(--spacing-horizontal-sp) );
+    }
+  }
+  &__body {
+    position: absolute;
+    left: 4%;
+    bottom: var(--spacing-vertical-pc);
+      @include sp() {
+        bottom: calc( var(--spacing-vertical-sp) * -1 );
+      }
+    &__lead {
+      margin: 0;
+      font-size: 6vw;
+      font-family: 'Secular One', sans-serif;
+      line-height: 1.3;
+      padding-right: var(--spacing-horizontal-sp);
+      @include sp() {
+        font-size: 10vw;
+      }
+    }
+    &__text {
+      margin: var(--spacing) 0;
+      padding: 0 var(--spacing);
+      font-weight: bold;
+      letter-spacing: .05em;
+      @include pc() {
+        font-size: var(--font-size-h4);
+      }
+    }
+  }
+  &::after {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 80%;
+    height: 70%;
+    background-color: var(--color-light-gray);
+    content: "";
+    z-index: -1;
+    @include sp() {
+      width: calc( 100% - var(--spacing-horizontal-sp) );
+    }
+  }
+}

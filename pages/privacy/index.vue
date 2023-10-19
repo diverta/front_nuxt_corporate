@@ -1,14 +1,14 @@
 <template>
-  <NuxtLayout>
-    <div class="l-container--wrap">
-      <UiNavLink v-bind="response.details" />
-      <ContentPlainBody v-bind="response.details" />
-    </div>
-  </NuxtLayout>
+  <div>
+    <UiNavLink :subject="response.details.subject" />
+    <ContentPlainBody v-bind="response.details" :subheading="subheading" />
+  </div>
 </template>
 
 <script setup>
+const subheading = 'Privacy Policy';
+
 const { data: response } = await useFetch(
-  "https://dev-nuxt-corporate.g.kuroco.app/rcms-api/1/content/details/privacy"
+  '/rcms-api/1/content/details/privacy'
 );
 </script>
