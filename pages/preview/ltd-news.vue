@@ -1,6 +1,6 @@
 <template>
   <ClientOnly>
-    <div>
+    <div v-if="details">
       <UiNavLink :path="path" :subject="details.subject" />
       <UiPagetitle :subject="details.group_nm" :subheading="subheading" />
       <div class="l-container--large l-container--contents">
@@ -22,8 +22,8 @@ const preview_token = route.query.preview_token;
 const { data: response } = await useFetch(`/rcms-api/1/preview`, {
   params: {
     preview_token,
-    server: false,
   },
+  server: false,
 });
-const details = response?.details;
+const details = response?.value?.details;
 </script>
