@@ -27,8 +27,8 @@ const preview_token = route.query.preview_token;
 const response = await useFetch('/rcms-api/1/preview', {
   params: {
     preview_token,
+    server: false,
   },
-  server: false,
 });
 const { data: master } = await useFetch('/rcms-api/1/master');
 const reverseItems = computed(() => master.value?.list?.slice().reverse());

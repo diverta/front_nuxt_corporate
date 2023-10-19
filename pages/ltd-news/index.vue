@@ -61,12 +61,9 @@ const group = computed(() => {
   return null;
 });
 
-const { data } = await useFetch(
-  '/rcms-api/1/ltd-news/list',
-  {
-    params: { cnt: 12 },
-  },
-  { server: false }
-);
+const { data } = await useFetch('/rcms-api/1/ltd-news/list', {
+  params: { cnt: 12 },
+  server: false,
+});
 const newsList = computed(() => data?.value?.data?.list || []);
 </script>

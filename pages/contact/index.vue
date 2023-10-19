@@ -334,9 +334,6 @@ const d = ref('');
 const config = useRuntimeConfig();
 const loading = ref(false);
 
-// const { data: response } = await useFetch('/rcms-api/1/inquiry/1', null, {
-//   server: false,
-// });
 const { data: response } = await useFetch('/rcms-api/1/inquiry/1');
 
 Object.keys(response.value.details.cols).forEach((key) => {
@@ -370,16 +367,10 @@ const handleFileChange = async (e) => {
   const fm = new FormData();
   fm.append('file', e.target.files[0]);
 
-  const { data, error } = await useFetch(
-    `/rcms-api/1/upload`,
-    {
-      method: 'POST',
-      body: fm,
-    },
-    {
-      server: false,
-    }
-  );
+  const { data, error } = await $fetch(`/rcms-api/1/upload`, {
+    method: 'POST',
+    body: fm,
+  });
 
   if (error?.value) {
     errors.value = error.value?.data?.errors || [];
@@ -399,14 +390,10 @@ const handleFileChange = async (e) => {
 
 const handleOnSubmit = async () => {
   loading.value = true;
-  const { data: formresponse, error } = await useFetch(
-    '/rcms-api/1/inquiry/1',
-    {
-      method: 'POST',
-      body: submitData,
-    },
-    { server: false }
-  );
+  const { data: formresponse, error } = await $fetch('/rcms-api/1/inquiry/1', {
+    method: 'POST',
+    body: submitData,
+  });
   loading.value = false;
 
   if (error?.value) {
