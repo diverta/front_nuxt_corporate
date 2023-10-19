@@ -17,10 +17,10 @@
               >{{ n.Year }}年{{ n.Month }}月 ({{ n.Count }})</NuxtLink
             >
           </template>
-          <template v-else> 
+          <template v-else>
             <!-- Add filter cond later here -->
             <NuxtLink
-              :to="`/news/`" 
+              :to="`/news/${getFilterParam(n.Filter)}`"
               class="u-display-block u-pa-5"
             >
               <i class="c-link__icon c-list__icon -front fas fa-caret-right"></i
@@ -44,4 +44,12 @@ const props = defineProps({
     required: false,
   },
 });
+
+const getFilterParam = (filter = '') => {
+  if (filter === '') {
+    return '';
+  }
+  const searchParam = new URLSearchParams({ filter });
+  return `?${searchParam.toString()}`;
+};
 </script>
