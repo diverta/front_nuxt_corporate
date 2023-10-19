@@ -1,11 +1,13 @@
 <template>
-  <div>
-    <UiNavLink :path="path" :subject="details.subject" />
-    <UiPagetitle :subject="details.group_nm" :subheading="subheading" />
-    <div class="l-container--large l-container--contents">
-      <ContentDetailBody v-if="details" :details="details" :button="button" />
+  <ClientOnly>
+    <div>
+      <UiNavLink :path="path" :subject="details.subject" />
+      <UiPagetitle :subject="details.group_nm" :subheading="subheading" />
+      <div class="l-container--large l-container--contents">
+        <ContentDetailBody v-if="details" :details="details" :button="button" />
+      </div>
     </div>
-  </div>
+  </ClientOnly>
 </template>
 
 <script setup>
@@ -17,10 +19,11 @@ const subject = '会員限定コンテンツ';
 const route = useRoute();
 const preview_token = route.query.preview_token;
 
-const response = await $fetch(`/rcms-api/1/preview`, {
+const response = await useFetch(`/rcms-api/1/preview`, {
   params: {
     preview_token,
   },
+  server: false,
 });
 const details = response?.details;
 </script>

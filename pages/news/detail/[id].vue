@@ -25,7 +25,5 @@ const { data: response } = await useFetch(
   `/rcms-api/1/news/details/${route.params.id}`
 );
 const { data: master } = await useFetch('/rcms-api/1/master');
-const reverseItems = computed(() => {
-  return master.value?.list?.slice().reverse();
-});
+const reverseItems = computed(() => master.value?.list?.slice().reverse());
 </script>
