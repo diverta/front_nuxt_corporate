@@ -41,8 +41,6 @@ jobs:
         if: ${{ steps.node_modules_cache_id.outputs.cache-hit != 'true' }}
         run: npm ci
 
-      - name: Build
-        run: npm run build
       - name: Generate
         run: npm run generate
       - name: Zip artifact for upload
@@ -87,8 +85,6 @@ jobs:
         if: ${{ steps.node_modules_cache_id.outputs.cache-hit != 'true' }}
         run: npm ci
 
-      - name: Build
-        run: npm run build
       - name: Generate
         run: npm run generate
       - name: Zip artifact for upload
