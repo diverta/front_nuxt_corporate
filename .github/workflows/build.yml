@@ -44,7 +44,7 @@ jobs:
       - name: Generate
         run: npm run generate
       - name: Zip artifact for upload
-        run: cd ./.output/public && zip ../dist.zip . -r
+        run: cd ./.output/public && zip ../../dist.zip . -r
       - name: Archive Production Artifact
         uses: actions/upload-artifact@v3
         with:
@@ -88,7 +88,7 @@ jobs:
       - name: Generate
         run: npm run generate
       - name: Zip artifact for upload
-        run: cd ./.output/public && zip ../dist.zip . -r
+        run: cd ./.output/public && zip ../../dist.zip . -r
       - name: Archive Production Artifact
         uses: actions/upload-artifact@v3
         with:
