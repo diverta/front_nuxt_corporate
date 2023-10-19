@@ -11,10 +11,10 @@
 const route = useRoute();
 const preview_token = route.query.preview_token;
 
-const response = await useFetch('/rcms-api/1/preview', {
+const { data: response } = await useFetch('/rcms-api/1/preview', {
   params: {
     preview_token,
-    server: false,
   },
+  server: false,
 });
 </script>
