@@ -61,12 +61,13 @@ const loading = ref(false);
 const handleSubmit = async () => {
   try {
     loading.value = true;
-    await login({ ...formData }).finally(() => (loading.value = false));
+    await login({ ...formData });
 
     useRouter().push('/');
   } catch (e) {
     error.value = e?.data?.errors || [];
   }
+  loading.value = false;
 };
 
 const clearErrorMessages = () => {

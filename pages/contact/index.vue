@@ -392,7 +392,7 @@ const handleOnSubmit = async () => {
     const response = await $fetch('/rcms-api/1/inquiry/1', {
       method: 'POST',
       body: submitData,
-    }).finally(() => (loading.value = false));
+    });
     submitted.value = true;
     thanksText.value = response.value?.messages?.[0];
   } catch (e) {
@@ -404,5 +404,6 @@ const handleOnSubmit = async () => {
       });
     });
   }
+  loading.value = false;
 };
 </script>

@@ -126,7 +126,7 @@ const resetPasswordRequest = async () => {
       body: {
         email: formData.email,
       },
-    }).finally(() => (loading.value = false));
+    });
     errors.value = [];
     message.value = response?.messages?.[0];
     sequenceDone.value = true;
@@ -139,6 +139,7 @@ const resetPasswordRequest = async () => {
       });
     });
   }
+  loading.value = false;
 };
 
 const resetPassword = async () => {
@@ -156,7 +157,7 @@ const resetPassword = async () => {
         temp_pwd: formData.temporaryPassword,
         login_pwd: formData.password,
       },
-    }).finally(() => (loading.value = false));
+    });
     errors.value = [];
     message.value = response?.messages?.[0];
     sequenceDone.value = true;
@@ -169,5 +170,6 @@ const resetPassword = async () => {
       });
     });
   }
+  loading.value = false;
 };
 </script>
