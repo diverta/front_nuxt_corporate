@@ -394,7 +394,7 @@ const handleOnSubmit = async () => {
       body: submitData,
     });
     submitted.value = true;
-    thanksText.value = response.value?.messages?.[0];
+    thanksText.value = response.messages[0];
   } catch (e) {
     errors.value = e?.data?.errors || [];
     nextTick(() => {
