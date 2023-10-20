@@ -209,9 +209,8 @@ const updateStatus = async (status) => {
     error.value = null;
     Popup.value = false;
     groupUpdate.value = true;
-  } catch (err) {
-    console.log(err);
-    error.value = err.response.data.errors;
+  } catch (e) {
+    error.value = e.data.errors;
   }
 };
 </script>

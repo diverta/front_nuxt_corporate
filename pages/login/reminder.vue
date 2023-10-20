@@ -132,7 +132,6 @@ const resetPasswordRequest = async () => {
         block: 'center',
       });
     });
-    return;
   }
 };
 
@@ -161,7 +160,6 @@ const resetPassword = async () => {
         block: 'center',
       });
     });
-    return;
   }
 };
 </script>

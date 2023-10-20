@@ -54,9 +54,8 @@ const handleDeleteProfile = async () => {
     });
     await logout();
     deleteDone.value = true;
-  } catch (err) {
-    console.log(err);
-    error.value = err.response.data.errors[0].message;
+  } catch (e) {
+    error.value = e?.data?.errors?.[0]?.message;
   }
 };
 </script>

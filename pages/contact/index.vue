@@ -367,47 +367,42 @@ const handleFileChange = async (e) => {
   const fm = new FormData();
   fm.append('file', e.target.files[0]);
 
-  const { data, error } = await $fetch(`/rcms-api/1/upload`, {
-    method: 'POST',
-    body: fm,
-  });
-
-  if (error?.value) {
-    errors.value = error.value?.data?.errors || [];
+  try {
+    const response = await $fetch(`/rcms-api/1/upload`, {
+      method: 'POST',
+      body: fm,
+    });
+    error.value = [];
+    const file_id = response.data.file_id;
+    submitData[e.target.id] = { file_id };
+  } catch (e) {
+    errors.value = e?.data?.errors || [];
     nextTick(() => {
       errorRef.value.errorWrapperRef.scrollIntoView({
         behavior: 'smooth',
         block: 'center',
       });
     });
-    return;
   }
-  error.value = [];
-
-  const file_id = data?.value?.file_id;
-  submitData[e.target.id] = { file_id };
 };
 
 const handleOnSubmit = async () => {
-  loading.value = true;
-  const { data: formresponse, error } = await $fetch('/rcms-api/1/inquiry/1', {
-    method: 'POST',
-    body: submitData,
-  });
-  loading.value = false;
-
-  if (error?.value) {
-    errors.value = error.value?.data?.errors || [];
+  try {
+    loading.value = true;
+    const response = await $fetch('/rcms-api/1/inquiry/1', {
+      method: 'POST',
+      body: submitData,
+    }).finally(() => (loading.value = false));
+    submitted.value = true;
+    thanksText.value = response.value?.messages?.[0];
+  } catch (e) {
+    errors.value = e?.data?.errors || [];
     nextTick(() => {
       errorRef.value.errorWrapperRef.scrollIntoView({
         behavior: 'smooth',
         block: 'center',
       });
     });
-    return;
   }
-  error.value = [];
-  submitted.value = true;
-  thanksText.value = formresponse.value?.messages?.[0];
 };
 </script>

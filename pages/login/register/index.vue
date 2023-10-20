@@ -5,6 +5,9 @@
     <div class="l-container--small l-container--contents">
       <template v-if="signupDone">
         <UiAlertSuccess :message="message" />
+        <div class="c-form u-text-align-center">
+          <NuxtLink to="/mypage/">マイページへ</NuxtLink>
+        </div>
       </template>
       <template v-else>
         <div class="c-form-group u-text-align-center">
@@ -66,7 +69,7 @@
 </template>
 
 <script setup>
-const { profile } = useAuth();
+const { login } = useAuth();
 
 const subject = '会員登録';
 const subheading = 'Sign Up';
@@ -89,14 +92,15 @@ const handleSignup = async () => {
       method: 'POST',
       body: { ...user.value },
     });
-    await profile();
+    await login({
+      email: user.value.email,
+      password: user.value.login_pwd,
+    });
     signupDone.value = true;
-    useRouter().push('/');
   } catch (error) {
-    console.log(error);
-    errorMessage.value = error.response.data.errors;
-    loading.value = false;
+    errorMessage.value = error.data.errors;
   }
+  loading.value = false;
 };
 
 const clearErrorMessages = () => {

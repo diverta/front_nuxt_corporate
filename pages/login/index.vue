@@ -59,14 +59,13 @@ const errorMessage = [
 const loading = ref(false);
 
 const handleSubmit = async () => {
-  loading.value = true;
-
   try {
-    await login({ ...formData });
+    loading.value = true;
+    await login({ ...formData }).finally(() => (loading.value = false));
+
     useRouter().push('/');
   } catch (e) {
     error.value = e?.data?.errors || [];
-    loading.value = false;
   }
 };
 
