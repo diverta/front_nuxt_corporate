@@ -86,9 +86,8 @@ const handleUpdateProfile = async () => {
     });
     await profile();
     updateProfileDone.value = true;
-  } catch (err) {
-    console.log(err);
-    error.value = err.response.data.errors;
+  } catch (e) {
+    error.value = e?.data?.errors;
   }
   loading.value = false;
 };

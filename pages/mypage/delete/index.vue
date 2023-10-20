@@ -18,13 +18,13 @@
               </p>
             </div>
             <div class="c-form-group">
-              <button
+              <UiSubmitButton
                 type="button"
                 @click.prevent="handleDeleteProfile"
-                class="c-button--primary u-width-100"
+                :loading="loading"
               >
                 削除する
-              </button>
+              </UiSubmitButton>
             </div>
             <div class="c-form-group u-text-align-center">
               <NuxtLink to="/mypage/">マイページへ戻る</NuxtLink>
@@ -46,7 +46,10 @@ const message = '退会が完了しました。';
 const deleteDone = ref(false);
 const error = ref(null);
 
+const loading = ref(false);
+
 const handleDeleteProfile = async () => {
+  loading.value = true;
   try {
     await $fetch('/rcms-api/1/member/delete', {
       method: 'POST',
@@ -54,9 +57,9 @@ const handleDeleteProfile = async () => {
     });
     await logout();
     deleteDone.value = true;
-  } catch (err) {
-    console.log(err);
-    error.value = err.response.data.errors[0].message;
+  } catch (e) {
+    error.value = e?.data?.errors?.[0]?.message;
   }
+  loading.value = false;
 };
 </script>

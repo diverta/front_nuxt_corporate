@@ -44,7 +44,7 @@ export const useAuth = () => {
   });
 
   /** get either user is logged in */
-  const isLoggedIn = computed(() => !!authUser?.member_id);
+  const isLoggedIn = computed(() => userRef.value?.member_id);
 
   return {
     authUser,

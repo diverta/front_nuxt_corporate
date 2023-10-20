@@ -54,12 +54,13 @@
             />
           </div>
           <div class="c-form-group">
-            <button
+            <UiSubmitButton
               @click.prevent="resetPassword"
-              class="c-button--primary u-width-100"
+              :loading="loading"
+              :disabled="sequenceDone"
             >
               送信
-            </button>
+            </UiSubmitButton>
           </div>
         </template>
 
@@ -78,12 +79,13 @@
             />
           </div>
           <div class="c-form-group">
-            <button
+            <UiSubmitButton
               @click.prevent="resetPasswordRequest"
-              class="c-button--primary u-width-100"
+              :loading="loading"
+              :disabled="sequenceDone"
             >
               送信
-            </button>
+            </UiSubmitButton>
           </div>
           <div class="c-form-group u-text-align-center">
             <NuxtLink to="/login">ログイン</NuxtLink>
@@ -113,27 +115,31 @@ const errors = ref([]);
 const errorRef = ref(null);
 const message = ref(null);
 
-const resetPasswordRequest = async () => {
-  // post data
-  const { data, error } = await $fetch(`/rcms-api/1/reminder`, {
-    method: 'POST',
-    body: {
-      email: formData.email,
-    },
-  });
+const loading = ref(false);
+const sequenceDone = ref(false);
 
-  if (error?.value) {
-    errors.value = error.value?.data?.errors || [];
+const resetPasswordRequest = async () => {
+  loading.value = true;
+  try {
+    const response = await $fetch(`/rcms-api/1/reminder`, {
+      method: 'POST',
+      body: {
+        email: formData.email,
+      },
+    });
+    errors.value = [];
+    message.value = response?.messages?.[0];
+    sequenceDone.value = true;
+  } catch (e) {
+    errors.value = e?.data?.errors || [];
     nextTick(() => {
       errorRef.value.errorWrapperRef.scrollIntoView({
         behavior: 'smooth',
         block: 'center',
       });
     });
-    return;
   }
-  errors.value = [];
-  message.value = data.value?.messages?.[0];
+  loading.value = false;
 };
 
 const resetPassword = async () => {
@@ -142,26 +148,28 @@ const resetPassword = async () => {
     return;
   }
 
-  const { data, error } = await $fetch(`/rcms-api/1/reminder`, {
-    method: 'POST',
-    body: {
-      token,
-      temp_pwd: formData.temporaryPassword,
-      login_pwd: formData.password,
-    },
-  });
-
-  if (error?.value) {
-    errors.value = error.value?.data?.errors || [];
+  loading.value = true;
+  try {
+    const response = await $fetch(`/rcms-api/1/reminder`, {
+      method: 'POST',
+      body: {
+        token,
+        temp_pwd: formData.temporaryPassword,
+        login_pwd: formData.password,
+      },
+    });
+    errors.value = [];
+    message.value = response?.messages?.[0];
+    sequenceDone.value = true;
+  } catch (e) {
+    errors.value = e?.data?.errors || [];
     nextTick(() => {
       errorRef.value.errorWrapperRef.scrollIntoView({
         behavior: 'smooth',
         block: 'center',
       });
     });
-    return;
   }
-  errors.value = [];
-  message.value = data.value?.messages?.[0];
+  loading.value = false;
 };
 </script>
