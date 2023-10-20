@@ -15,20 +15,20 @@
                     </p>
                   </div>
                   <div class="c-form-group">
-                    <button
+                    <UiSubmitButton
                       type="button"
                       @click="updateStatus('2')"
-                      class="c-button--primary u-width-100"
+                      :loading="loading"
                     >
                       通常会員に戻る
-                    </button>
-                    <button
+                    </UiSubmitButton>
+                    <UiSubmitButton
                       type="button"
                       @click="Popup = false"
-                      class="c-button--primary u-width-100"
+                      :disabled="loading"
                     >
                       やっぱりやめる
-                    </button>
+                    </UiSubmitButton>
                   </div>
                 </template>
                 <template v-else-if="authUser.isRegularUser">
@@ -38,20 +38,20 @@
                     </p>
                   </div>
                   <div class="c-form-group">
-                    <button
+                    <UiSubmitButton
                       type="button"
                       @click="updateStatus('1')"
-                      class="c-button--primary u-width-100"
+                      :loading="loading"
                     >
                       アップデートする
-                    </button>
-                    <button
+                    </UiSubmitButton>
+                    <UiSubmitButton
                       type="button"
                       @click="Popup = false"
-                      class="c-button--primary u-width-100"
+                      :disabled="loading"
                     >
                       やっぱりやめる
-                    </button>
+                    </UiSubmitButton>
                   </div>
                 </template>
               </div>
@@ -76,13 +76,13 @@
                   </dl>
                 </div>
                 <div class="u-text-align-center" v-if="statusText">
-                  <button
+                  <UiSubmitButton
                     type="button"
-                    class="c-button--primary"
+                    class="u-width-fit-content"
                     @click="Popup = true"
                   >
                     {{ buttonText }}
-                  </button>
+                  </UiSubmitButton>
                 </div>
               </div>
             </div>
@@ -170,6 +170,8 @@ const Popup = ref(false);
 const groupUpdate = ref(false);
 const message = '会員種別の変更申請を受け付けました。メールをご確認ください。';
 
+const loading = ref(false);
+
 const statusText = computed(() => {
   if (authUser.value.isPremiumUser) {
     return 'プレミアム会員';
@@ -191,6 +193,7 @@ const buttonText = computed(() => {
 });
 
 const updateStatus = async (status) => {
+  loading.value = true;
   try {
     await $fetch('/rcms-api/1/inquiry/3', {
       method: 'POST',
@@ -212,5 +215,6 @@ const updateStatus = async (status) => {
   } catch (e) {
     error.value = e.data.errors;
   }
+  loading.value = false;
 };
 </script>
