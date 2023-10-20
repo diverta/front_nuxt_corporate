@@ -115,15 +115,17 @@ const message = ref(null);
 
 const resetPasswordRequest = async () => {
   // post data
-  const { data, error } = await $fetch(`/rcms-api/1/reminder`, {
-    method: 'POST',
-    body: {
-      email: formData.email,
-    },
-  });
-
-  if (error?.value) {
-    errors.value = error.value?.data?.errors || [];
+  try {
+    const response = await $fetch(`/rcms-api/1/reminder`, {
+      method: 'POST',
+      body: {
+        email: formData.email,
+      },
+    });
+    errors.value = [];
+    message.value = response?.messages?.[0];
+  } catch (e) {
+    errors.value = e?.data?.errors || [];
     nextTick(() => {
       errorRef.value.errorWrapperRef.scrollIntoView({
         behavior: 'smooth',
@@ -132,8 +134,6 @@ const resetPasswordRequest = async () => {
     });
     return;
   }
-  errors.value = [];
-  message.value = data.value?.messages?.[0];
 };
 
 const resetPassword = async () => {
@@ -142,17 +142,19 @@ const resetPassword = async () => {
     return;
   }
 
-  const { data, error } = await $fetch(`/rcms-api/1/reminder`, {
-    method: 'POST',
-    body: {
-      token,
-      temp_pwd: formData.temporaryPassword,
-      login_pwd: formData.password,
-    },
-  });
-
-  if (error?.value) {
-    errors.value = error.value?.data?.errors || [];
+  try {
+    const response = await $fetch(`/rcms-api/1/reminder`, {
+      method: 'POST',
+      body: {
+        token,
+        temp_pwd: formData.temporaryPassword,
+        login_pwd: formData.password,
+      },
+    });
+    errors.value = [];
+    message.value = response?.messages?.[0];
+  } catch (e) {
+    errors.value = e?.data?.errors || [];
     nextTick(() => {
       errorRef.value.errorWrapperRef.scrollIntoView({
         behavior: 'smooth',
@@ -161,7 +163,5 @@ const resetPassword = async () => {
     });
     return;
   }
-  errors.value = [];
-  message.value = data.value?.messages?.[0];
 };
 </script>
