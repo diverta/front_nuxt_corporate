@@ -64,9 +64,8 @@ const handleSubmit = async () => {
   try {
     await login({ ...formData });
     useRouter().push('/');
-  } catch (error) {
-    console.error(e);
-    error.value = e.response.data.errors;
+  } catch (e) {
+    error.value = e?.data?.errors || [];
     loading.value = false;
   }
 };
