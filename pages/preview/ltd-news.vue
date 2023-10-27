@@ -16,6 +16,8 @@
 </template>
 
 <script setup>
+const config = useRuntimeConfig();
+
 const path = [{ label: '会員限定コンテンツ', to: '/ltd-news/' }];
 const button = [{ label: '会員限定コンテンツ一覧へ戻る', to: '/ltd-news/' }];
 const subheading = 'For Members';
@@ -24,10 +26,14 @@ const subject = '会員限定コンテンツ';
 const route = useRoute();
 const preview_token = route.query.preview_token;
 
-const { data: response } = await useFetch(`/rcms-api/1/preview`, {
-  params: {
-    preview_token,
-  },
-  server: false,
-});
+const { data: response } = await useFetch(
+  `${config.public.kurocoApiDomain}/rcms-api/1/preview`,
+  {
+    credentials: 'include',
+    params: {
+      preview_token,
+    },
+    server: false,
+  }
+);
 </script>

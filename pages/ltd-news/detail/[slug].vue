@@ -30,6 +30,8 @@
 </template>
 
 <script setup>
+const config = useRuntimeConfig();
+
 const path = [{ label: '会員限定コンテンツ', to: '/ltd-news/' }];
 const button = [{ label: '会員限定コンテンツ一覧へ戻る', to: '/ltd-news/' }];
 const subheading = 'For Members';
@@ -39,7 +41,10 @@ const { isLoggedIn } = useAuth();
 
 const route = useRoute();
 const { data } = await useFetch(
-  `/rcms-api/1/ltd-news/details/${route.params.slug}`
+  `${config.public.kurocoApiDomain}/rcms-api/1/ltd-news/details/${route.params.slug}`,
+  {
+    credentials: 'include',
+  }
 );
 const details = data?.value?.details;
 </script>

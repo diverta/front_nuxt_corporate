@@ -6,8 +6,11 @@
 </template>
 
 <script setup>
+const config = useRuntimeConfig();
+
 const subheading = 'Company';
+
 const { data: response } = await useFetch(
-  '/rcms-api/1/content/details/company'
+  `${config.public.kurocoApiDomain}/rcms-api/1/content/details/company`
 );
 </script>

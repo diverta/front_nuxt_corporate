@@ -37,6 +37,8 @@
 </template>
 
 <script setup>
+const config = useRuntimeConfig();
+
 const { logout } = useAuth();
 
 const path = [{ label: 'マイページ', to: '/mypage/' }];
@@ -51,7 +53,8 @@ const loading = ref(false);
 const handleDeleteProfile = async () => {
   loading.value = true;
   try {
-    await $fetch('/rcms-api/1/member/delete', {
+    await $fetch(`${config.public.kurocoApiDomain}/rcms-api/1/member/delete`, {
+      credentials: 'include',
       method: 'POST',
       body: {},
     });

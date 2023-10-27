@@ -69,6 +69,8 @@
 </template>
 
 <script setup>
+const config = useRuntimeConfig();
+
 const { login } = useAuth();
 
 const subject = '会員登録';
@@ -88,10 +90,14 @@ const loading = ref(false);
 const handleSignup = async () => {
   loading.value = true;
   try {
-    await $fetch('/rcms-api/1/member/register', {
-      method: 'POST',
-      body: { ...user.value },
-    });
+    await $fetch(
+      `${config.public.kurocoApiDomain}/rcms-api/1/member/register`,
+      {
+        method: 'POST',
+        credentials: 'include',
+        body: { ...user.value },
+      }
+    );
     await login({
       email: user.value.email,
       password: user.value.login_pwd,

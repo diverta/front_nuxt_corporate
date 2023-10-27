@@ -15,6 +15,8 @@
 </template>
 
 <script setup>
+const config = useRuntimeConfig();
+
 const path = [{ label: 'ニュース', to: '/news' }];
 const button = [{ label: 'ニュースリリース一覧へ戻る', to: '/news/' }];
 const subheading = 'News Release';
@@ -22,12 +24,21 @@ const subheading = 'News Release';
 const route = useRoute();
 const preview_token = route.query.preview_token;
 
-const { data: response } = await useFetch('/rcms-api/1/preview', {
-  params: {
-    preview_token,
-  },
-  server: false,
-});
-const { data: master } = await useFetch('/rcms-api/1/master');
+const { data: response } = await useFetch(
+  `${config.public.kurocoApiDomain}/rcms-api/1/preview`,
+  {
+    credentials: 'include',
+    params: {
+      preview_token,
+    },
+    server: false,
+  }
+);
+const { data: master } = await useFetch(
+  `${config.public.kurocoApiDomain}/rcms-api/1/master`,
+  {
+    credentials: 'include',
+  }
+);
 const reverseItems = computed(() => master.value?.list?.slice().reverse());
 </script>

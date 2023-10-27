@@ -10,7 +10,14 @@
         <!-- リマインダーメールのリンクから遷移してきた場合 -->
         <template v-if="token">
           <div class="c-form-group">
-            <p>新しいパスワードを設定します。</p>
+            <p v-if="message === null">新しいパスワードを設定します。</p>
+            <div v-else>
+              <p>新しいパスワードを設定しました。</p>
+              <p>
+                <NuxtLink to="/login">ログインページ</NuxtLink
+                >からログインしてください。
+              </p>
+            </div>
           </div>
           <div class="c-form-group">
             <label for="temporary-password" class="c-form-label"
@@ -97,6 +104,8 @@
 </template>
 
 <script setup>
+const config = useRuntimeConfig();
+
 const subject = 'パスワード再発行';
 const path = [{ label: 'ログイン', to: '/login' }];
 const subheading = 'Password Reset';
@@ -121,12 +130,16 @@ const sequenceDone = ref(false);
 const resetPasswordRequest = async () => {
   loading.value = true;
   try {
-    const response = await $fetch(`/rcms-api/1/reminder`, {
-      method: 'POST',
-      body: {
-        email: formData.email,
-      },
-    });
+    const response = await $fetch(
+      `${config.public.kurocoApiDomain}/rcms-api/1/reminder`,
+      {
+        method: 'POST',
+        credentials: 'include',
+        body: {
+          email: formData.email,
+        },
+      }
+    );
     errors.value = [];
     message.value = response?.messages?.[0];
     sequenceDone.value = true;
@@ -150,14 +163,18 @@ const resetPassword = async () => {
 
   loading.value = true;
   try {
-    const response = await $fetch(`/rcms-api/1/reminder`, {
-      method: 'POST',
-      body: {
-        token,
-        temp_pwd: formData.temporaryPassword,
-        login_pwd: formData.password,
-      },
-    });
+    const response = await $fetch(
+      `${config.public.kurocoApiDomain}/rcms-api/1/reminder`,
+      {
+        method: 'POST',
+        credentials: 'include',
+        body: {
+          token,
+          temp_pwd: formData.temporaryPassword,
+          login_pwd: formData.password,
+        },
+      }
+    );
     errors.value = [];
     message.value = response?.messages?.[0];
     sequenceDone.value = true;

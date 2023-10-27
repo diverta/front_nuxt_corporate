@@ -161,6 +161,8 @@
 </template>
 
 <script setup>
+const config = useRuntimeConfig();
+
 const { authUser, profile, logout } = useAuth();
 
 const subject = 'マイページ';
@@ -195,7 +197,8 @@ const buttonText = computed(() => {
 const updateStatus = async (status) => {
   loading.value = true;
   try {
-    await $fetch('/rcms-api/1/inquiry/3', {
+    await $fetch(`${config.public.kurocoApiDomain}/rcms-api/1/inquiry/3`, {
+      credentials: 'include',
       method: 'POST',
       body: {
         name: `${authUser.value.name1} ${authUser.value.name2}`,
@@ -204,7 +207,8 @@ const updateStatus = async (status) => {
       },
     });
     // for refreshing user's group_id with new session, instead of logout and login.
-    await $fetch('/rcms-api/1/member/update', {
+    await $fetch(`${config.public.kurocoApiDomain}/rcms-api/1/member/update`, {
+      credentials: 'include',
       method: 'POST',
       body: {},
     });

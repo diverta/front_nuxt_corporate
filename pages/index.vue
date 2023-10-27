@@ -277,6 +277,18 @@
 </template>
 
 <script setup>
-const { data: news } = await useFetch('/rcms-api/1/news/list');
-const { data: ltdNews } = await useFetch('/rcms-api/1/ltd-news/list');
+const config = useRuntimeConfig();
+
+const { data: news } = await useFetch(
+  `${config.public.kurocoApiDomain}/rcms-api/1/news/list`,
+  {
+    credentials: 'include',
+  }
+);
+const { data: ltdNews } = await useFetch(
+  `${config.public.kurocoApiDomain}/rcms-api/1/ltd-news/list`,
+  {
+    credentials: 'include',
+  }
+);
 </script>

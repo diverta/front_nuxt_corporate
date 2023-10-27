@@ -320,6 +320,8 @@
 </template>
 
 <script setup>
+const config = useRuntimeConfig();
+
 const subject = 'お問い合わせ';
 const subheading = 'Contact';
 const submitted = ref(false);
@@ -331,10 +333,14 @@ const thanksText = ref(null);
 const y = ref('');
 const m = ref('');
 const d = ref('');
-const config = useRuntimeConfig();
 const loading = ref(false);
 
-const { data: response } = await useFetch('/rcms-api/1/inquiry/1');
+const { data: response } = await useFetch(
+  `${config.public.kurocoApiDomain}/rcms-api/1/inquiry/1`,
+  {
+    credentials: 'include',
+  }
+);
 
 Object.keys(response.value.details.cols).forEach((key) => {
   const object = response.value.details.cols[key];
@@ -368,10 +374,14 @@ const handleFileChange = async (e) => {
   fm.append('file', e.target.files[0]);
 
   try {
-    const response = await $fetch(`/rcms-api/1/upload`, {
-      method: 'POST',
-      body: fm,
-    });
+    const response = await $fetch(
+      `${config.public.kurocoApiDomain}/rcms-api/1/upload`,
+      {
+        credentials: 'include',
+        method: 'POST',
+        body: fm,
+      }
+    );
     error.value = [];
     const file_id = response.data.file_id;
     submitData[e.target.id] = { file_id };
@@ -389,12 +399,16 @@ const handleFileChange = async (e) => {
 const handleOnSubmit = async () => {
   try {
     loading.value = true;
-    const response = await $fetch('/rcms-api/1/inquiry/1', {
-      method: 'POST',
-      body: submitData,
-    });
+    const response = await $fetch(
+      `${config.public.kurocoApiDomain}/rcms-api/1/inquiry/1`,
+      {
+        credentials: 'include',
+        method: 'POST',
+        body: submitData,
+      }
+    );
     submitted.value = true;
-    thanksText.value = response.value?.messages?.[0];
+    thanksText.value = response.messages?.[0];
   } catch (e) {
     errors.value = e?.data?.errors || [];
     nextTick(() => {

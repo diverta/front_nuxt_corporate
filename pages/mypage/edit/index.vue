@@ -51,6 +51,8 @@
 </template>
 
 <script setup>
+const config = useRuntimeConfig();
+
 const { authUser, profile } = useAuth();
 
 const path = [{ label: 'マイページ', to: '/mypage/' }];
@@ -80,7 +82,8 @@ const statusText = computed(() => {
 const handleUpdateProfile = async () => {
   loading.value = true;
   try {
-    await $fetch('/rcms-api/1/member/update', {
+    await $fetch(`${config.public.kurocoApiDomain}/rcms-api/1/member/update`, {
+      credentials: 'include',
       method: 'POST',
       body: { ...user.value },
     });

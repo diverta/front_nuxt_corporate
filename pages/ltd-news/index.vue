@@ -45,8 +45,9 @@
 </template>
 
 <script setup>
-const { authUser } = useAuth();
 const config = useRuntimeConfig();
+
+const { authUser } = useAuth();
 
 const subject = '会員限定コンテンツ';
 const subheading = 'For Members';
@@ -61,9 +62,13 @@ const group = computed(() => {
   return null;
 });
 
-const { data } = await useFetch('/rcms-api/1/ltd-news/list', {
-  params: { cnt: 12 },
-  server: false,
-});
+const { data } = await useFetch(
+  `${config.public.kurocoApiDomain}/rcms-api/1/ltd-news/list`,
+  {
+    credentials: 'include',
+    params: { cnt: 12 },
+    server: false,
+  }
+);
 const newsList = computed(() => data?.value?.data?.list || []);
 </script>

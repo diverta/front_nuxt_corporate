@@ -6,9 +6,14 @@
 </template>
 
 <script setup>
+const config = useRuntimeConfig();
+
 const subheading = 'Privacy Policy';
 
 const { data: response } = await useFetch(
-  '/rcms-api/1/content/details/privacy'
+  `${config.public.kurocoApiDomain}/rcms-api/1/content/details/privacy`,
+  {
+    credentials: 'include',
+  }
 );
 </script>
