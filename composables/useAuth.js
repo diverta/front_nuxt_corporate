@@ -37,7 +37,8 @@ export const useAuth = () => {
       `${config.public.kurocoApiDomain}/rcms-api/1/profile`, {
       server: false,
       credentials: 'include'
-    });
+    })
+      .catch(() => null);
   }
 
   /** get user's information */
