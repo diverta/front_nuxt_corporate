@@ -1,11 +1,15 @@
 <template>
   <div>
     <UiNavLink :subject="response.details.subject" />
-    <ContentPlainBody
-      :subject="response.details.subject"
-      :contents="response.details.contents"
-      :subheading="subheading"
-    />
+    <article class="c-article">
+      <UiPagetitle
+        :subject="response.details.subject"
+        :subheading="subheading"
+      />
+      <div class="l-container--large l-container--contents">
+        <div v-html="response.details.contents"></div>
+      </div>
+    </article>
   </div>
 </template>
 

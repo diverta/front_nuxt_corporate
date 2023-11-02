@@ -1,17 +1,19 @@
 <template>
-  <div v-if="response">
-    <UiNavLink :path="path" :subject="response.details.subject" />
-    <UiPagetitle
-      :subject="response.details.group_nm"
-      :subheading="subheading"
-    />
-    <div class="l-container--col-2 l-container--contents">
-      <div class="l-container--col-2__main">
-        <ContentDetailBody :details="response.details" :button="button" />
+  <ClientOnly>
+    <div>
+      <UiNavLink :path="path" :subject="response.details.subject" />
+      <UiPagetitle
+        :subject="response.details.group_nm"
+        :subheading="subheading"
+      />
+      <div class="l-container--col-2 l-container--contents">
+        <div class="l-container--col-2__main">
+          <ContentDetailBody :details="response.details" :button="button" />
+        </div>
+        <ContentSideBar :conditions="newsConditionMaster?.list" />
       </div>
-      <ContentSideBar :itemList="reverseItems" />
     </div>
-  </div>
+  </ClientOnly>
 </template>
 
 <script setup>
@@ -34,11 +36,10 @@ const { data: response } = await useFetch(
     server: false,
   }
 );
-const { data: master } = await useFetch(
+const { data: newsConditionMaster } = await useFetch(
   `${config.public.kurocoApiDomain}/rcms-api/1/master`,
   {
     credentials: 'include',
   }
 );
-const reverseItems = computed(() => master.value?.list?.slice().reverse());
 </script>

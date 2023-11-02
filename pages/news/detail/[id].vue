@@ -6,7 +6,7 @@
       <div class="l-container--col-2__main">
         <ContentDetailBody :details="news.details" :button="button" />
       </div>
-      <ContentSideBar :itemList="reverseItems" />
+      <ContentSideBar :conditions="newsConditionMaster?.list" />
     </div>
   </div>
 </template>
@@ -26,11 +26,10 @@ const { data: news } = await useFetch(
     credentials: 'include',
   }
 );
-const { data: master, pending } = await useFetch(
+const { data: newsConditionMaster } = await useFetch(
   `${config.public.kurocoApiDomain}/rcms-api/1/master`,
   {
     credentials: 'include',
   }
 );
-const reverseItems = computed(() => master.value?.list?.slice().reverse());
 </script>

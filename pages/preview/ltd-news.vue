@@ -1,18 +1,20 @@
 <template>
-  <div v-if="response">
-    <UiNavLink :path="path" :subject="response.details.subject" />
-    <UiPagetitle
-      :subject="response.details.group_nm"
-      :subheading="subheading"
-    />
-    <div class="l-container--large l-container--contents">
-      <ContentDetailBody
-        v-if="response.details"
-        :details="response.details"
-        :button="button"
+  <ClientOnly>
+    <div>
+      <UiNavLink :path="path" :subject="response.details.subject" />
+      <UiPagetitle
+        :subject="response.details.group_nm"
+        :subheading="subheading"
       />
+      <div class="l-container--large l-container--contents">
+        <ContentDetailBody
+          v-if="response.details"
+          :details="response.details"
+          :button="button"
+        />
+      </div>
     </div>
-  </div>
+  </ClientOnly>
 </template>
 
 <script setup>

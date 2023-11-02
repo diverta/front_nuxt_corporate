@@ -5,9 +5,9 @@
       <UiPagetitle :subject="subject" :subheading="subheading" />
       <div class="l-container--col-2 l-container--contents">
         <div class="l-container--col-2__main">
-          <NewsList v-if="news?.list" :subject="subject" :list="news.list" />
+          <NewsList :subject="subject" :list="news?.list" />
         </div>
-        <ContentSideBar v-if="master" :itemList="reverseItems" />
+        <ContentSideBar :conditions="newsConditionMaster?.list" />
       </div>
     </section>
   </div>
@@ -22,13 +22,6 @@ const subheading = 'News Release';
 const route = useRoute();
 const filter = computed(() => route.query.filter);
 
-// Add filter later params: { filter: route.query.filter }
-const { data: master } = await useFetch(
-  `${config.public.kurocoApiDomain}/rcms-api/1/master`,
-  {
-    credentials: 'include',
-  }
-);
 const { data: news } = await useFetch(
   `${config.public.kurocoApiDomain}/rcms-api/1/news/list`,
   {
@@ -39,5 +32,10 @@ const { data: news } = await useFetch(
     watch: [filter],
   }
 );
-const reverseItems = computed(() => master?.value?.list?.slice()?.reverse());
+const { data: newsConditionMaster } = await useFetch(
+  `${config.public.kurocoApiDomain}/rcms-api/1/master`,
+  {
+    credentials: 'include',
+  }
+);
 </script>

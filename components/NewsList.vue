@@ -23,11 +23,7 @@
 const props = defineProps({
   list: {
     type: Array,
-    required: true,
-  },
-  subject: {
-    type: String,
-    required: false,
+    default: () => [],
   },
 });
 </script>
