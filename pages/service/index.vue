@@ -1,7 +1,11 @@
 <template>
   <div v-if="response" class="l-container--wrap">
     <UiNavLink :subject="response.details.subject" />
-    <ContentPlainBody v-bind="response.details" :subheading="subheading" />
+    <ContentPlainBody
+      :subject="response.details.subject"
+      :contents="response.details.contents"
+      :subheading="subheading"
+    />
   </div>
 </template>
 

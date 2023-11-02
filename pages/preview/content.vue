@@ -2,7 +2,10 @@
   <ClientOnly>
     <div>
       <UiNavLink :subject="response.details.subject" />
-      <ContentPlainBody v-bind="response.details" />
+      <ContentPlainBody
+        :subject="response.details.subject"
+        :contents="response.details.contents"
+      />
     </div>
   </ClientOnly>
 </template>

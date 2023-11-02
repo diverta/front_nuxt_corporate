@@ -5,7 +5,7 @@
       <UiPagetitle :subject="subject" :subheading="subheading" />
       <div class="l-container--col-2 l-container--contents">
         <div class="l-container--col-2__main">
-          <NewsList v-if="news?.list" :subject="subject" v-bind="news" />
+          <NewsList v-if="news?.list" :subject="subject" :list="news.list" />
         </div>
         <ContentSideBar v-if="master" :itemList="reverseItems" />
       </div>
