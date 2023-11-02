@@ -1,25 +1,27 @@
 <template>
-  <div>
-    <UiPageHeader
-      :path="[{ label: 'ニュース', to: '/news' }]"
-      :subject="response.details.group_nm"
-      subheading="News Release"
-    />
+  <ClientOnly>
+    <div>
+      <UiPageHeader
+        :path="[{ label: 'ニュース', to: '/news' }]"
+        :subject="response.details.group_nm"
+        subheading="News Release"
+      />
 
-    <div class="l-container--col-2 l-container--contents">
-      <div class="l-container--col-2__main">
-        <ContentDetailBody :details="response.details">
-          <hr />
-          <div class="l-container--contents u-pt-30 u-text-align-center">
-            <NuxtLink :to="'/news/'" class="c-button">
-              ニュースリリース一覧へ戻る
-            </NuxtLink>
-          </div>
-        </ContentDetailBody>
+      <div class="l-container--col-2 l-container--contents">
+        <div class="l-container--col-2__main">
+          <ContentDetailBody :details="response.details">
+            <hr />
+            <div class="l-container--contents u-pt-30 u-text-align-center">
+              <NuxtLink :to="'/news/'" class="c-button">
+                ニュースリリース一覧へ戻る
+              </NuxtLink>
+            </div>
+          </ContentDetailBody>
+        </div>
+        <ContentSideBar :conditions="newsConditionMaster?.list" />
       </div>
-      <ContentSideBar :conditions="newsConditionMaster?.list" />
     </div>
-  </div>
+  </ClientOnly>
 </template>
 
 <script setup>
