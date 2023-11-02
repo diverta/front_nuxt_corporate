@@ -1,14 +1,21 @@
 <template>
   <ClientOnly>
     <div>
-      <UiNavLink :path="path" :subject="response.details.subject" />
-      <UiPagetitle
+      <UiPageHeader
+        :path="path"
         :subject="response.details.group_nm"
         :subheading="subheading"
       />
       <div class="l-container--col-2 l-container--contents">
         <div class="l-container--col-2__main">
-          <ContentDetailBody :details="response.details" :button="button" />
+          <ContentDetailBody :details="response.details">
+            <hr />
+            <div class="l-container--contents u-pt-30 u-text-align-center">
+              <NuxtLink :to="'/news/'" class="c-button">
+                ニュースリリース一覧へ戻る
+              </NuxtLink>
+            </div>
+          </ContentDetailBody>
         </div>
         <ContentSideBar :conditions="newsConditionMaster?.list" />
       </div>
@@ -20,7 +27,6 @@
 const config = useRuntimeConfig();
 
 const path = [{ label: 'ニュース', to: '/news' }];
-const button = [{ label: 'ニュースリリース一覧へ戻る', to: '/news/' }];
 const subheading = 'News Release';
 
 const route = useRoute();

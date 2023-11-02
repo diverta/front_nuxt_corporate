@@ -1,8 +1,7 @@
 <template>
   <div>
-    <UiNavLink :subject="subject" />
+    <UiPageHeader :subject="subject" :subheading="subheading" />
     <section>
-      <UiPagetitle :subject="subject" :subheading="subheading" />
       <div class="l-container--small l-container--contents">
         <template v-if="submitted">
           <p class="c-text--pre" v-html="thanksText" />

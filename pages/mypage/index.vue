@@ -1,9 +1,8 @@
 <template>
   <ClientOnly>
     <div>
-      <UiNavLink :subject="subject" />
+      <UiPageHeader :subject="subject" :subheading="subheading" />
       <section>
-        <UiPagetitle :subject="subject" :subheading="subheading" />
         <div class="l-container--col-2 l-container--contents">
           <div class="l-container--col-2__main">
             <div class="c-article">

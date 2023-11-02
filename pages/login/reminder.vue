@@ -1,7 +1,6 @@
 <template>
   <div>
-    <UiNavLink :path="path" :subject="subject" />
-    <UiPagetitle :subject="subject" :subheading="subheading" />
+    <UiPageHeader :path="path" :subject="subject" :subheading="subheading" />
     <div class="l-container--small l-container--contents">
       <form class="c-form">
         <UiAlertSuccess v-if="message !== null" :message="message" />

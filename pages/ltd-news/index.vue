@@ -1,8 +1,7 @@
 <template>
   <div class="l-container--wrap">
-    <UiNavLink :subject="subject" />
+    <UiPageHeader :subject="subject" :subheading="subheading" />
     <section>
-      <UiPagetitle :subject="subject" :subheading="subheading" />
       <div class="l-container--large">
         <div class="l-container--contents c-article">
           <p>

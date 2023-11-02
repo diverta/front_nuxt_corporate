@@ -1,11 +1,10 @@
 <template>
   <div v-if="response" class="l-container--wrap">
-    <UiNavLink :subject="response.details.subject" />
+    <UiPageHeader
+      :subject="response.details.subject"
+      :subheading="subheading"
+    />
     <article class="c-article">
-      <UiPagetitle
-        :subject="response.details.subject"
-        :subheading="subheading"
-      />
       <div class="l-container--large l-container--contents">
         <div v-html="response.details.contents"></div>
       </div>

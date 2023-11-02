@@ -1,7 +1,6 @@
 <template>
   <section>
-    <UiNavLink :subject="subject" />
-    <UiPagetitle :subject="subject" :subheading="subheading" />
+    <UiPageHeader :subject="subject" :subheading="subheading" />
     <div class="l-container--small l-container--contents">
       <template v-if="signupDone">
         <UiAlertSuccess :message="message" />

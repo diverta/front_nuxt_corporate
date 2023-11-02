@@ -1,7 +1,6 @@
 <template>
   <div>
-    <UiNavLink :subject="subject" />
-    <UiPagetitle :subject="subject" :subheading="subheading" />
+    <UiPageHeader :subject="subject" :subheading="subheading" />
     <div class="l-container--small l-container--contents">
       <form @submit.prevent="handleSubmit" class="c-form">
         <UiAlertError v-if="error" :error="errorMessage" />

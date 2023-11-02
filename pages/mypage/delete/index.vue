@@ -1,8 +1,7 @@
 <template>
   <div>
-    <UiNavLink :path="path" :subject="subject" />
+    <UiPageHeader :path="path" :subject="subject" :subheading="subheading" />
     <section>
-      <UiPagetitle :subject="subject" :subheading="subheading" />
       <div class="l-container--small l-container--contents">
         <template v-if="deleteDone">
           <UiAlertSuccess :message="message" />

@@ -1,17 +1,20 @@
 <template>
   <ClientOnly>
     <div>
-      <UiNavLink :path="path" :subject="response.details.subject" />
-      <UiPagetitle
+      <UiPageHeader
+        :path="path"
         :subject="response.details.group_nm"
         :subheading="subheading"
       />
       <div class="l-container--large l-container--contents">
-        <ContentDetailBody
-          v-if="response.details"
-          :details="response.details"
-          :button="button"
-        />
+        <ContentDetailBody v-if="response.details" :details="response.details">
+          <hr />
+          <div class="l-container--contents u-pt-30 u-text-align-center">
+            <NuxtLink :to="'/ltd-news/'" class="c-button">
+              会員限定コンテンツ一覧へ戻る
+            </NuxtLink>
+          </div>
+        </ContentDetailBody>
       </div>
     </div>
   </ClientOnly>
@@ -21,9 +24,7 @@
 const config = useRuntimeConfig();
 
 const path = [{ label: '会員限定コンテンツ', to: '/ltd-news/' }];
-const button = [{ label: '会員限定コンテンツ一覧へ戻る', to: '/ltd-news/' }];
 const subheading = 'For Members';
-const subject = '会員限定コンテンツ';
 
 const route = useRoute();
 const preview_token = route.query.preview_token;
