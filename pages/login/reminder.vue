@@ -1,6 +1,11 @@
 <template>
   <div>
-    <UiPageHeader :path="path" :subject="subject" :subheading="subheading" />
+    <UiPageHeader
+      :path="[{ label: 'ログイン', to: '/login' }]"
+      subject="パスワード再発行"
+      subheading="Password Reset"
+    />
+
     <div class="l-container--small l-container--contents">
       <form class="c-form">
         <UiAlertSuccess v-if="message !== null" :message="message" />
@@ -104,10 +109,6 @@
 
 <script setup>
 const config = useRuntimeConfig();
-
-const subject = 'パスワード再発行';
-const path = [{ label: 'ログイン', to: '/login' }];
-const subheading = 'Password Reset';
 
 const route = useRoute();
 const token = route.query.token;

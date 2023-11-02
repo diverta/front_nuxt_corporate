@@ -1,6 +1,7 @@
 <template>
   <div class="l-container--wrap">
-    <UiPageHeader :subject="subject" :subheading="subheading" />
+    <UiPageHeader subject="会員限定コンテンツ" subheading="For Members" />
+
     <section>
       <div class="l-container--large">
         <div class="l-container--contents c-article">
@@ -24,7 +25,7 @@
           <p>
             会員登録またはマイページから会員ステータスの変更、ログアウトすることで表示の確認ができます。
           </p>
-          <div v-if="group == null">
+          <div v-if="group === null">
             <NuxtLink to="/login/register" class="c-button u-pa-15"
               >会員登録</NuxtLink
             >
@@ -47,9 +48,6 @@
 const config = useRuntimeConfig();
 
 const { authUser } = useAuth();
-
-const subject = '会員限定コンテンツ';
-const subheading = 'For Members';
 
 const group = computed(() => {
   if (authUser.value.isPremiumUser) {

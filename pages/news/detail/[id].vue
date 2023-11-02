@@ -1,10 +1,11 @@
 <template>
   <div>
     <UiPageHeader
-      :path="path"
+      :path="[{ label: 'ニュース', to: '/news' }]"
       :subject="news.details.group_nm"
-      :subheading="subheading"
+      subheading="News Release"
     />
+
     <div class="l-container--col-2 l-container--contents">
       <div class="l-container--col-2__main">
         <ContentDetailBody :details="news.details">
@@ -23,9 +24,6 @@
 
 <script setup>
 const config = useRuntimeConfig();
-
-const path = [{ label: 'ニュース', to: '/news' }];
-const subheading = 'News Release';
 
 const route = useRoute();
 

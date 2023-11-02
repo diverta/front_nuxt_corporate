@@ -1,9 +1,7 @@
 <template>
   <div>
-    <UiPageHeader
-      :subject="response.details.subject"
-      :subheading="subheading"
-    />
+    <UiPageHeader :subject="response.details.subject" subheading="Company" />
+
     <article class="c-article">
       <div class="l-container--large l-container--contents">
         <div v-html="response.details.contents"></div>
@@ -14,8 +12,6 @@
 
 <script setup>
 const config = useRuntimeConfig();
-
-const subheading = 'Company';
 
 const { data: response } = await useFetch(
   `${config.public.kurocoApiDomain}/rcms-api/1/content/details/company`

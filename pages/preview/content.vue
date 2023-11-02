@@ -2,6 +2,7 @@
   <ClientOnly>
     <div>
       <UiPageHeader :subject="response.details.subject" />
+
       <article class="c-article">
         <div class="l-container--large l-container--contents">
           <div v-html="response.details.contents"></div>

@@ -2,10 +2,11 @@
   <ClientOnly>
     <div>
       <UiPageHeader
-        :path="path"
+        :path="[{ label: '会員限定コンテンツ', to: '/ltd-news/' }]"
         :subject="response.details.group_nm"
-        :subheading="subheading"
+        subheading="For Members"
       />
+
       <div class="l-container--large l-container--contents">
         <ContentDetailBody v-if="response.details" :details="response.details">
           <hr />
@@ -22,9 +23,6 @@
 
 <script setup>
 const config = useRuntimeConfig();
-
-const path = [{ label: '会員限定コンテンツ', to: '/ltd-news/' }];
-const subheading = 'For Members';
 
 const route = useRoute();
 const preview_token = route.query.preview_token;

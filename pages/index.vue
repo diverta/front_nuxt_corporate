@@ -33,12 +33,7 @@
           <h2 class="c-heading--lv1">ニュースリリース</h2>
           <NuxtLink to="/news/" class="c-button">一覧を見る</NuxtLink>
         </div>
-        <NewsList
-          v-if="news"
-          :list="news.list"
-          :subject="news.subject"
-          class="u-display-flex-grow-1"
-        />
+        <NewsList :list="news.list" class="u-display-flex-grow-1" />
       </div>
     </section>
     <section class="l-container--contents c-section--bg">

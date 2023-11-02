@@ -2,8 +2,9 @@
   <div>
     <UiPageHeader
       :subject="response.details.subject"
-      :subheading="subheading"
+      subheading="Privacy Policy"
     />
+
     <article class="c-article">
       <div class="l-container--large l-container--contents">
         <div v-html="response.details.contents"></div>
@@ -14,8 +15,6 @@
 
 <script setup>
 const config = useRuntimeConfig();
-
-const subheading = 'Privacy Policy';
 
 const { data: response } = await useFetch(
   `${config.public.kurocoApiDomain}/rcms-api/1/content/details/privacy`,

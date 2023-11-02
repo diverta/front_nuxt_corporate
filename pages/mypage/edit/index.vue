@@ -1,6 +1,11 @@
 <template>
   <div>
-    <UiPageHeader :path="path" :subject="subject" :subheading="subheading" />
+    <UiPageHeader
+      :path="[{ label: 'マイページ', to: '/mypage/' }]"
+      subject="マイページ"
+      subheading="Edit Profile"
+    />
+
     <section>
       <div class="l-container--small l-container--contents">
         <template v-if="updateProfileDone">
@@ -54,9 +59,6 @@ const config = useRuntimeConfig();
 
 const { authUser, profile } = useAuth();
 
-const path = [{ label: 'マイページ', to: '/mypage/' }];
-const subject = 'マイページ';
-const subheading = 'Edit Profile';
 const message = '会員情報の更新が完了しました。';
 const updateProfileDone = ref(false);
 const error = ref(null);

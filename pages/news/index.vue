@@ -1,10 +1,11 @@
 <template>
   <div class="l-container">
-    <UiPageHeader :subject="subject" :subheading="subheading" />
+    <UiPageHeader subject="ニュース" subheading="News Release" />
+
     <section>
       <div class="l-container--col-2 l-container--contents">
         <div class="l-container--col-2__main">
-          <NewsList :subject="subject" :list="news?.list" />
+          <NewsList v-if="news" :list="news.list" />
         </div>
         <ContentSideBar :conditions="newsConditionMaster?.list" />
       </div>
@@ -14,9 +15,6 @@
 
 <script setup>
 const config = useRuntimeConfig();
-
-const subject = 'ニュース';
-const subheading = 'News Release';
 
 const route = useRoute();
 const filter = computed(() => route.query.filter);
@@ -29,6 +27,7 @@ const { data: news } = await useFetch(
       filter,
     },
     watch: [filter],
+    server: false, // in order to get query parameter, runs only client side
   }
 );
 const { data: newsConditionMaster } = await useFetch(

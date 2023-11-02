@@ -1,7 +1,8 @@
 <template>
   <ClientOnly>
     <div>
-      <UiPageHeader :subject="subject" :subheading="subheading" />
+      <UiPageHeader subject="マイページ" subheading="Mypage" />
+
       <section>
         <div class="l-container--col-2 l-container--contents">
           <div class="l-container--col-2__main">
@@ -164,8 +165,6 @@ const config = useRuntimeConfig();
 
 const { authUser, profile, logout } = useAuth();
 
-const subject = 'マイページ';
-const subheading = 'Mypage';
 const error = ref(null);
 const Popup = ref(false);
 const groupUpdate = ref(false);

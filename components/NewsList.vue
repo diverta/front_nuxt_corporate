@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p v-if="list.length == 0">記事が存在しません</p>
+    <p v-if="list.length === 0">記事が存在しません</p>
     <ul v-else class="c-topics-list">
       <li v-for="news in list" :key="news.topics_id">
         <NuxtLink :to="`/news/detail/${news.topics_id}`" class="c-topics">

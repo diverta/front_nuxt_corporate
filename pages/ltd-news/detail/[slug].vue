@@ -1,7 +1,12 @@
 <template>
   <ClientOnly>
     <div>
-      <UiPageHeader :path="path" :subject="subject" :subheading="subheading" />
+      <UiPageHeader
+        :path="[{ label: '会員限定コンテンツ', to: '/ltd-news/' }]"
+        subject="会員限定コンテンツ"
+        subheading="For Members"
+      />
+
       <div class="l-container--large l-container--contents">
         <ContentDetailBody v-if="details" :details="details">
           <hr />
@@ -45,10 +50,6 @@
 
 <script setup>
 const config = useRuntimeConfig();
-
-const path = [{ label: '会員限定コンテンツ', to: '/ltd-news/' }];
-const subheading = 'For Members';
-const subject = '会員限定コンテンツ';
 
 const { isLoggedIn } = useAuth();
 

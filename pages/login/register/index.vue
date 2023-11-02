@@ -1,6 +1,7 @@
 <template>
   <section>
-    <UiPageHeader :subject="subject" :subheading="subheading" />
+    <UiPageHeader subject="会員登録" subheading="Sign Up" />
+
     <div class="l-container--small l-container--contents">
       <template v-if="signupDone">
         <UiAlertSuccess :message="message" />
@@ -71,9 +72,6 @@
 const config = useRuntimeConfig();
 
 const { login } = useAuth();
-
-const subject = '会員登録';
-const subheading = 'Sign Up';
 
 const signupDone = ref(false);
 const user = ref({

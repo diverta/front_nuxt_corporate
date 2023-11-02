@@ -1,6 +1,7 @@
 <template>
   <div>
-    <UiPageHeader :subject="subject" :subheading="subheading" />
+    <UiPageHeader subject="お問い合わせ" subheading="Contact" />
+
     <section>
       <div class="l-container--small l-container--contents">
         <template v-if="submitted">
@@ -321,8 +322,6 @@
 <script setup>
 const config = useRuntimeConfig();
 
-const subject = 'お問い合わせ';
-const subheading = 'Contact';
 const submitted = ref(false);
 const errors = ref([]);
 const errorRef = ref(null);
