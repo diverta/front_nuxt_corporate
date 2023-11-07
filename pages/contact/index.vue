@@ -406,7 +406,11 @@ const handleOnSubmit = async () => {
       }
     );
     submitted.value = true;
+<<<<<<< HEAD
     thanksText.value = response.messages?.[0];
+=======
+    thanksText.value = response.messages[0];
+>>>>>>> VortexExpansion/main
   } catch (e) {
     errors.value = e?.data?.errors || [];
     nextTick(() => {
