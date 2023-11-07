@@ -289,6 +289,7 @@ const { data: ltdNews } = await useFetch(
   `${config.public.kurocoApiDomain}/rcms-api/1/ltd-news/list`,
   {
     credentials: 'include',
+    server: false,
   }
 );
 </script>
