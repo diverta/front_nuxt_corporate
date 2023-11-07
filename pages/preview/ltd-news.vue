@@ -8,14 +8,29 @@
       />
 
       <div class="l-container--large l-container--contents">
-        <ContentDetailBody v-if="response.details" :details="response.details">
+        <article v-if="response?.details" class="c-article">
+          <header>
+            <h1 class="c-heading--lv1">
+              {{ response.details.subject }}
+            </h1>
+            <time class="c-topics__date" :datetime="response.details.ymd">{{
+              response.details.ymd
+            }}</time>
+            <span class="c-badge">
+              {{ response.details.contents_type_nm }}
+            </span>
+          </header>
+          <div class="l-container--contents">
+            <div v-html="response.details.contents"></div>
+          </div>
+
           <hr />
           <div class="l-container--contents u-pt-30 u-text-align-center">
             <NuxtLink :to="'/ltd-news/'" class="c-button">
               会員限定コンテンツ一覧へ戻る
             </NuxtLink>
           </div>
-        </ContentDetailBody>
+        </article>
       </div>
     </div>
   </ClientOnly>

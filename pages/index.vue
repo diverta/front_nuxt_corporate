@@ -9,6 +9,7 @@
       </div>
       <img src="~/assets/image/top-hero.png" alt="hero" class="c-hero__image" />
     </section>
+
     <section class="l-container--large l-container--contents">
       <div class="c-section--image-text">
         <div class="c-section--image-text__image">
@@ -26,6 +27,7 @@
         </div>
       </div>
     </section>
+
     <section class="l-container--large l-container--contents">
       <div class="c-section--list">
         <div class="c-section--list__heading">
@@ -33,9 +35,28 @@
           <h2 class="c-heading--lv1">ニュースリリース</h2>
           <NuxtLink to="/news/" class="c-button">一覧を見る</NuxtLink>
         </div>
-        <NewsList :list="news.list" class="u-display-flex-grow-1" />
+
+        <div class="u-display-flex-grow-1">
+          <ul v-if="news.list.length > 0" class="c-topics-list">
+            <li v-for="news in news.list" :key="news.topics_id">
+              <NuxtLink :to="`/news/detail/${news.topics_id}`" class="c-topics">
+                <time class="c-topics__date" :datetime="news.ymd">{{
+                  news.ymd
+                }}</time>
+                <span class="c-badge">
+                  {{ news.contents_type_nm }}
+                </span>
+                <p class="c-topics__title">
+                  {{ news.subject }}
+                </p>
+              </NuxtLink>
+            </li>
+          </ul>
+          <p v-else>記事が存在しません</p>
+        </div>
       </div>
     </section>
+
     <section class="l-container--contents c-section--bg">
       <div class="l-container--large">
         <div class="u-display-flex u-display-flex-align-items-center u-mb-20">
@@ -49,10 +70,12 @@
             >
           </div>
         </div>
+
         <UiCardList
-          v-if="ltdNews?.data?.list?.length"
+          v-if="ltdNews?.data?.list?.length > 0"
           :list="ltdNews.data.list"
         ></UiCardList>
+
         <div class="l-container--contents">
           <div
             class="c-section--dark-block c-section--list u-display-flex-align-items-end"

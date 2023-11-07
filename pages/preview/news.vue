@@ -9,14 +9,29 @@
 
       <div class="l-container--col-2 l-container--contents">
         <div class="l-container--col-2__main">
-          <ContentDetailBody :details="response.details">
+          <article v-if="response.details" class="c-article">
+            <header>
+              <h1 class="c-heading--lv1">
+                {{ response.details.subject }}
+              </h1>
+              <time class="c-topics__date" :datetime="response.details.ymd">{{
+                response.details.ymd
+              }}</time>
+              <span class="c-badge">
+                {{ response.details.contents_type_nm }}
+              </span>
+            </header>
+            <div class="l-container--contents">
+              <div v-html="response.details.contents"></div>
+            </div>
+
             <hr />
             <div class="l-container--contents u-pt-30 u-text-align-center">
               <NuxtLink :to="'/news/'" class="c-button">
                 ニュースリリース一覧へ戻る
               </NuxtLink>
             </div>
-          </ContentDetailBody>
+          </article>
         </div>
         <ContentSideBar :conditions="newsConditionMaster?.list" />
       </div>

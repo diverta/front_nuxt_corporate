@@ -37,7 +37,10 @@
           </div>
         </div>
         <div class="l-container--contents">
-          <UiCardList :list="newsList"></UiCardList>
+          <UiCardList
+            v-if="ltdNews?.data?.list?.length > 0"
+            :list="ltdNews.data.list"
+          />
         </div>
       </div>
     </section>
@@ -59,7 +62,7 @@ const group = computed(() => {
   return null;
 });
 
-const { data } = await useFetch(
+const { data: ltdNews } = await useFetch(
   `${config.public.kurocoApiDomain}/rcms-api/1/ltd-news/list`,
   {
     credentials: 'include',
@@ -67,5 +70,4 @@ const { data } = await useFetch(
     server: false,
   }
 );
-const newsList = computed(() => data?.value?.data?.list || []);
 </script>
