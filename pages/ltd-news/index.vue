@@ -1,8 +1,8 @@
 <template>
   <div class="l-container--wrap">
-    <UiNavLink :subject="subject" />
+    <UiPageHeader subject="会員限定コンテンツ" subheading="For Members" />
+
     <section>
-      <UiPagetitle :subject="subject" :subheading="subheading" />
       <div class="l-container--large">
         <div class="l-container--contents c-article">
           <p>
@@ -25,7 +25,7 @@
           <p>
             会員登録またはマイページから会員ステータスの変更、ログアウトすることで表示の確認ができます。
           </p>
-          <div v-if="group == null">
+          <div v-if="group === null">
             <NuxtLink to="/login/register" class="c-button u-pa-15"
               >会員登録</NuxtLink
             >
@@ -37,7 +37,10 @@
           </div>
         </div>
         <div class="l-container--contents">
-          <UiCardList :list="newsList"></UiCardList>
+          <UiCardList
+            v-if="ltdNews?.data?.list?.length > 0"
+            :list="ltdNews.data.list"
+          />
         </div>
       </div>
     </section>
@@ -45,11 +48,9 @@
 </template>
 
 <script setup>
-const { authUser } = useAuth();
 const config = useRuntimeConfig();
 
-const subject = '会員限定コンテンツ';
-const subheading = 'For Members';
+const { authUser } = useAuth();
 
 const group = computed(() => {
   if (authUser.value.isPremiumUser) {
@@ -61,9 +62,12 @@ const group = computed(() => {
   return null;
 });
 
-const { data } = await useFetch('/rcms-api/1/ltd-news/list', {
-  params: { cnt: 12 },
-  server: false,
-});
-const newsList = computed(() => data?.value?.data?.list || []);
+const { data: ltdNews } = await useFetch(
+  `${config.public.kurocoApiDomain}/rcms-api/1/ltd-news/list`,
+  {
+    credentials: 'include',
+    params: { cnt: 12 },
+    server: false,
+  }
+);
 </script>

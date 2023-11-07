@@ -1,33 +1,64 @@
 <template>
-  <div v-if="response">
-    <UiNavLink :path="path" :subject="response.details.subject" />
-    <UiPagetitle
-      :subject="response.details.group_nm"
-      :subheading="subheading"
-    />
-    <div class="l-container--col-2 l-container--contents">
-      <div class="l-container--col-2__main">
-        <ContentDetailBody :details="response.details" :button="button" />
+  <ClientOnly>
+    <div>
+      <UiPageHeader
+        :path="[{ label: 'ニュース', to: '/news' }]"
+        :subject="response.details.group_nm"
+        subheading="News Release"
+      />
+
+      <div class="l-container--col-2 l-container--contents">
+        <div class="l-container--col-2__main">
+          <article v-if="response.details" class="c-article">
+            <header>
+              <h1 class="c-heading--lv1">
+                {{ response.details.subject }}
+              </h1>
+              <time class="c-topics__date" :datetime="response.details.ymd">{{
+                response.details.ymd
+              }}</time>
+              <span class="c-badge">
+                {{ response.details.contents_type_nm }}
+              </span>
+            </header>
+            <div class="l-container--contents">
+              <div v-html="response.details.contents"></div>
+            </div>
+
+            <hr />
+            <div class="l-container--contents u-pt-30 u-text-align-center">
+              <NuxtLink :to="'/news/'" class="c-button">
+                ニュースリリース一覧へ戻る
+              </NuxtLink>
+            </div>
+          </article>
+        </div>
+        <ContentSideBar :conditions="newsConditionMaster?.list" />
       </div>
-      <ContentSideBar :itemList="reverseItems" />
     </div>
-  </div>
+  </ClientOnly>
 </template>
 
 <script setup>
-const path = [{ label: 'ニュース', to: '/news' }];
-const button = [{ label: 'ニュースリリース一覧へ戻る', to: '/news/' }];
-const subheading = 'News Release';
+const config = useRuntimeConfig();
 
 const route = useRoute();
 const preview_token = route.query.preview_token;
 
-const { data: response } = await useFetch('/rcms-api/1/preview', {
-  params: {
-    preview_token,
-  },
-  server: false,
-});
-const { data: master } = await useFetch('/rcms-api/1/master');
-const reverseItems = computed(() => master.value?.list?.slice().reverse());
+const { data: response } = await useFetch(
+  `${config.public.kurocoApiDomain}/rcms-api/1/preview`,
+  {
+    credentials: 'include',
+    params: {
+      preview_token,
+    },
+    server: false,
+  }
+);
+const { data: newsConditionMaster } = await useFetch(
+  `${config.public.kurocoApiDomain}/rcms-api/1/master`,
+  {
+    credentials: 'include',
+  }
+);
 </script>

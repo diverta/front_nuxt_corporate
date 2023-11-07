@@ -2,24 +2,29 @@
 const useUser = () => useState('user', () => null);
 
 export const useAuth = () => {
+  const config = useRuntimeConfig();
   const userRef = useUser();
 
   /** login and set user's information */
   const login = async ({ email, password }) => {
-    await $fetch('/rcms-api/1/login', {
+    await $fetch(`${config.public.kurocoApiDomain}/rcms-api/1/login`, {
       method: 'POST',
       body: {
         email,
         password,
       },
+      server: false,
+      credentials: 'include'
     });
     await profile();
   };
 
   /** logout and clear user's information */
   const logout = async () => {
-    await $fetch('/rcms-api/1/logout', {
+    await $fetch(`${config.public.kurocoApiDomain}/rcms-api/1/logout`, {
       method: 'POST',
+      server: false,
+      credentials: 'include'
     }).catch(() => {
       /** NP, to run following process */
     });
@@ -27,8 +32,14 @@ export const useAuth = () => {
   };
 
   /** process restore user's login state with requesting /profile, only in client side */
-  const profile = async () =>
-    userRef.value = await $fetch('/rcms-api/1/profile');
+  const profile = async () => {
+    userRef.value = await $fetch(
+      `${config.public.kurocoApiDomain}/rcms-api/1/profile`, {
+      server: false,
+      credentials: 'include'
+    })
+      .catch(() => null);
+  }
 
   /** get user's information */
   const authUser = computed(() => {
@@ -44,7 +55,7 @@ export const useAuth = () => {
   });
 
   /** get either user is logged in */
-  const isLoggedIn = computed(() => userRef.value?.member_id);
+  const isLoggedIn = computed(() => Boolean(userRef.value?.member_id));
 
   return {
     authUser,

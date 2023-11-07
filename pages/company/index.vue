@@ -1,13 +1,19 @@
 <template>
   <div>
-    <UiNavLink :subject="response.details.subject" />
-    <ContentPlainBody v-bind="response.details" :subheading="subheading" />
+    <UiPageHeader :subject="response.details.subject" subheading="Company" />
+
+    <article class="c-article">
+      <div class="l-container--large l-container--contents">
+        <div v-html="response.details.contents"></div>
+      </div>
+    </article>
   </div>
 </template>
 
 <script setup>
-const subheading = 'Company';
+const config = useRuntimeConfig();
+
 const { data: response } = await useFetch(
-  '/rcms-api/1/content/details/company'
+  `${config.public.kurocoApiDomain}/rcms-api/1/content/details/company`
 );
 </script>

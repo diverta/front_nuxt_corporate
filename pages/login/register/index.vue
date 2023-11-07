@@ -1,7 +1,7 @@
 <template>
   <section>
-    <UiNavLink :subject="subject" />
-    <UiPagetitle :subject="subject" :subheading="subheading" />
+    <UiPageHeader subject="会員登録" subheading="Sign Up" />
+
     <div class="l-container--small l-container--contents">
       <template v-if="signupDone">
         <UiAlertSuccess :message="message" />
@@ -69,10 +69,9 @@
 </template>
 
 <script setup>
-const { login } = useAuth();
+const config = useRuntimeConfig();
 
-const subject = '会員登録';
-const subheading = 'Sign Up';
+const { login } = useAuth();
 
 const signupDone = ref(false);
 const user = ref({
@@ -88,10 +87,14 @@ const loading = ref(false);
 const handleSignup = async () => {
   loading.value = true;
   try {
-    await $fetch('/rcms-api/1/member/register', {
-      method: 'POST',
-      body: { ...user.value },
-    });
+    await $fetch(
+      `${config.public.kurocoApiDomain}/rcms-api/1/member/register`,
+      {
+        method: 'POST',
+        credentials: 'include',
+        body: { ...user.value },
+      }
+    );
     await login({
       email: user.value.email,
       password: user.value.login_pwd,
