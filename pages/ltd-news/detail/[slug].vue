@@ -73,6 +73,7 @@ const { data: response } = await useFetch(
   `${config.public.kurocoApiDomain}/rcms-api/1/ltd-news/details/${route.params.slug}`,
   {
     credentials: 'include',
+    server: false,
   }
 );
 </script>
