@@ -1,0 +1,87 @@
+%button {
+  display: inline-block;
+  position: relative;
+  font-size: var(--font-size-base);
+  line-height: 1;
+  margin-top: var(--spacing);
+  padding: calc( var(--spacing) * 1.5);
+  border: 1px solid;
+  border-radius: var(--border-radius);
+  transition: var(--transition-seconds) border-color, var(--transition-seconds) background-color, var(--transition-seconds) color;
+  cursor: pointer;
+}
+
+.c-button {
+  @extend %button;
+  display: inline-flex;
+  align-items: center;
+  border-color: var(--color-base);
+  background-color: var(--color-base);
+  color: var(--color-white);
+  svg {
+    transition: var(--transition-seconds);
+  }
+  &::after {
+    display: inline-block;
+    width: calc( var(--font-size-base) / 2 );
+    height: calc( var(--font-size-base) / 2 );
+    margin: 0 calc( var(--spacing) / 3 ) 0 var(--spacing);
+    border-top: 1px solid var(--color-white);
+    border-right: 1px solid var(--color-white);
+    transform: rotate(45deg);
+    transition: var(--transition-seconds) border-color;
+    content: "";
+  }
+  &:hover {
+    color: var(--color-base);
+    background-color: var(--color-white);
+    svg path { 
+      stroke: var(--color-base);
+    }
+    &::after {
+      border-color: var(--color-base);
+    }
+  }
+  &:disabled {
+    @extend %button;
+    border-color: #bbb;
+    background-color: #bbb;
+    color: #666;
+    pointer-events: none;
+  }
+  &--primary {
+    @extend %button;
+    border-color: var(--color-primary);
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    &:hover {
+      background-color: var(--color-primary-dark);
+    }
+  }
+  &--loading {
+    @extend %button;
+    border-color: var(--color-primary);
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    &:hover {
+      background-color: var(--color-primary-dark);
+    }
+    &__wrapper {
+      height: 1em;
+      display: flex;
+      justify-content: center;
+      svg {
+        position: absolute;
+        top: 1em;
+        height: 2em;
+        fill: var(--color-white);
+      }
+    }
+  }
+  &--disabled {
+    @extend %button;
+    border-color: var(--color-light-gray);
+    background-color: var(--color-light-gray);
+    color: var(--color-gray);
+  }
+}

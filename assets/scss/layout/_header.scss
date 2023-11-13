@@ -1,0 +1,157 @@
+.l-header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  background-color: var(--color-white);
+  z-index: 100;
+  &__inner {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    @include pc() {
+      height: var(--header-height-pc);
+      padding: var(--spacing) var(--spacing-horizontal-pc);
+    }
+    @include sp() {
+      height: var(--header-height-sp);
+      padding: var(--spacing) var(--spacing-horizontal-sp);
+    }
+  }
+  &__logo {
+    flex: 0 1 auto;
+    min-width: 100px;
+    @include sp() {
+      margin-top: var(--spacing-small);
+      margin-bottom: var(--spacing-small);
+    }
+    a { 
+      display: block;
+      padding: var(--spacing-small) var(--spacing-small) var(--spacing-small) 0;
+      transition: var(--transition-seconds);
+      &:hover {
+        opacity: .8;
+      }
+    }
+    img,
+    svg {
+      display: block;
+    }
+  }
+  &__nav {
+    flex: 1 0 auto;
+    display: flex;
+    justify-content: flex-end;
+    &__toggle {
+      @include pc() { display: none; }
+      width: 3em;
+      height: 3em;
+      padding: var(--spacing) 0;
+      background-color: transparent;
+      &__icon {
+        position: relative;
+        width: 1.5em;
+        height: 100%;
+        margin: auto;
+        span {
+          position: absolute;
+          right: 0;
+          display: block;
+          width: 100%;
+          border-bottom: 2px solid var(--color-dark-gray);
+          &:first-child { top: 0; }
+          &:nth-child(2) { top: 50%; }
+          &:last-child { top: 100%; }
+          .l-header.is-open & {
+            top: 50%;
+            &:first-child {
+              transform: rotate(45deg);
+            }
+            &:last-child {
+              transform: rotate(135deg);
+            }
+            &:nth-child(2) { display: none; }
+          }
+        }
+      }
+    }
+    &__inner {
+      @include pc() {
+        display: flex;
+        align-items: center;
+      }
+      @include sp() {
+        position: fixed;
+        top: var(--header-height-sp);
+        right: -100vw;
+        width: 100%;
+        height: calc( 100% - var(--header-height-sp) );
+        padding-top: var(--spacing-horizontal-sp);
+        background-color: var(--color-white);
+        z-index: 100;
+        transition: var(--transition-seconds) ease-out;
+        .l-header.is-open & {
+          right: 0;
+        }
+      }
+    }
+    &__list {
+      @include pc() {
+        display: inline-flex;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+      &__item {
+        a {
+          display: block;
+          padding: var(--spacing);
+          font-size: .95em;
+          transition: var(--transition-seconds) color;
+          @include sp() {
+            padding: var(--spacing) var(--spacing-horizontal-sp);
+            font-weight: bold;
+          }
+          &:hover {
+            color: var(--color-primary);
+          }
+        }
+      }
+    }
+    &__options {
+      @include pc() {
+        margin-left: var(--spacing);
+      }
+      @include sp() {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: var(--spacing);
+        background-color: var(--color-light-gray);
+        padding: var(--spacing-horizontal-sp);
+        p {
+          flex: 0 0 100%;
+        }
+      }
+      &__button {
+        padding: var(--spacing);
+        border: 1px solid var(--color-base);
+        border-radius: var(--border-radius);
+        background-color: var(--color-base);
+        color: var(--color-white);
+        font-size: var(--font-size-x-small);
+        transition: var(--transition-seconds) border-color, var(--transition-seconds) background-color, var(--transition-seconds) color;
+        @include sp() {
+          & + & { margin-left: var(--spacing); }
+        }
+        svg {
+          margin-right: var(--spacing-small);
+          transition: var(--transition-seconds);
+        }
+        &:hover {
+          color: var(--color-base);
+          background-color: var(--color-white);
+          svg path { stroke: var(--color-base); }
+        }
+      }
+    }
+  }
+}
