@@ -69,10 +69,14 @@ const config = useRuntimeConfig();
 const { isLoggedIn } = useAuth();
 
 const route = useRoute();
-const { data: response } = await useFetch(
+// use $fetch() instead of useFetch() to avoid using cache.
+// for the specific case that user can not see this page after changing Regular -> Premium,
+// must fetch data in client side all the time.
+const response = await $fetch(
   `${config.public.kurocoApiDomain}/rcms-api/1/ltd-news/details/${route.params.slug}`,
   {
     credentials: 'include',
+    server: false,
   }
-);
+).catch((error) => console.info(error));
 </script>
