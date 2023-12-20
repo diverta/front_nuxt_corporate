@@ -1,4 +1,5 @@
 import { defineNuxtConfig } from 'nuxt/config';
+import allNews from './json/all_news.json';
 
 export default defineNuxtConfig({
   // ssr: true,
@@ -26,11 +27,21 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ['@/assets/scss/style.scss'],
 
-  nitro: {
-    // FullStaticGeneration
-    prerender: {
-      crawlLinks: true,
-      routes: ['/', '/404.html', '/200.html'],
+  hooks: {
+    // Config FullStaticGeneration
+    async "nitro:config"(nitroConfig) {
+      if (nitroConfig.dev) {
+        return;
+      }
+      const res = allNews;
+      if (nitroConfig.prerender?.routes === undefined) {
+        return;
+      }
+      nitroConfig.prerender.routes = res.map((mount: any) => {
+        return `/news/detail/${mount.slug ? mount.slug : mount.topics_id}`;
+      });
+      nitroConfig.prerender.routes.concat(['/', '/404.html', '/200.html']);
+      nitroConfig.prerender.crawlLinks = false;
     },
   },
 });
