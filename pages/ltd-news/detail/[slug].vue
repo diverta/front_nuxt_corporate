@@ -65,6 +65,7 @@
 
 <script setup>
 const config = useRuntimeConfig();
+await useAuth().profile();
 
 const { isLoggedIn } = useAuth();
 

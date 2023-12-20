@@ -41,6 +41,7 @@
 </template>
 
 <script setup>
+await useAuth().profile();
 const { login } = useAuth(); // uses the default signIn function provided by nuxt-auth
 
 const formData = reactive({

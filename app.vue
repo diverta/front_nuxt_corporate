@@ -8,5 +8,4 @@
 </template>
 
 <script setup>
-await useAuth().profile();
 </script>

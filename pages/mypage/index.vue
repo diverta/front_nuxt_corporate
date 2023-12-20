@@ -161,6 +161,7 @@
 <script setup>
 const config = useRuntimeConfig();
 
+await useAuth().profile();
 const { authUser, profile, logout } = useAuth();
 
 const error = ref(null);

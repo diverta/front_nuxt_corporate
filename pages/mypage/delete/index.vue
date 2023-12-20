@@ -38,6 +38,7 @@
 <script setup>
 const config = useRuntimeConfig();
 
+await useAuth().profile();
 const { logout } = useAuth();
 
 const path = [{ label: 'マイページ', to: '/mypage/' }];

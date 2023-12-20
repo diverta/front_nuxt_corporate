@@ -50,6 +50,7 @@
 <script setup>
 const config = useRuntimeConfig();
 
+await useAuth().profile();
 const { authUser } = useAuth();
 
 const group = computed(() => {
