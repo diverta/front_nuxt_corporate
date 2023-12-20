@@ -1,11 +1,8 @@
 {
-    "rewrites": [
-        {
-          "source": ".*",
-          "destination": "/index.html"
-        }
-      ],
     "redirects": [],
     "basic":[],
+    "error_page": {
+      "status404":"/404.html"
+    },
     "ip_restrictions":[]
 }

@@ -1,6 +1,6 @@
 <template>
   <ClientOnly>
-    <div>
+    <div v-if="!errorFlg">
       <UiPageHeader
         :path="[{ label: '会員限定コンテンツ', to: '/ltd-news/' }]"
         subject="会員限定コンテンツ"
@@ -60,6 +60,9 @@
         </template>
       </div>
     </div>
+    <div v-else>
+      <p>error</p>
+    </div>
   </ClientOnly>
 </template>
 
@@ -67,6 +70,8 @@
 const config = useRuntimeConfig();
 
 const { isLoggedIn } = useAuth();
+
+const errorFlg = ref(false);
 
 const route = useRoute();
 // use $fetch() instead of useFetch() to avoid using cache.
@@ -78,5 +83,8 @@ const response = await $fetch(
     credentials: 'include',
     server: false,
   }
-).catch((error) => console.info(error));
+).catch((error) => {
+  console.info(error)
+  errorFlg.value = true;
+});
 </script>
