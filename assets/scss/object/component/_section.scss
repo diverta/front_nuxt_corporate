@@ -1,7 +1,4 @@
 .c-section {
-  &--general {
-    display: flex;
-  }
   &--image-text {
     @include pc() {
       display: flex;
