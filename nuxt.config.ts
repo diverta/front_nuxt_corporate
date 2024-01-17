@@ -23,6 +23,16 @@ export default defineNuxtConfig({
     },
   },
 
+  modules: ['@nuxtjs/google-fonts'],
+
+  googleFonts: {
+    families: {
+      'Noto Sans JP': [400, 700],
+      Helvetica: [400, 700],
+      'Secular One': [400, 700],
+    },
+  },
+
   devtools: { enabled: true },
   css: ['@/assets/scss/style.scss'],
 
