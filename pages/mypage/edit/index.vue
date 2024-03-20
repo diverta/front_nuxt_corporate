@@ -99,6 +99,7 @@ const handleUpdateProfile = async () => {
       credentials: 'include',
       method: 'POST',
       body: { ...user.value },
+      server: false
     });
     await profile();
     updateProfileDone.value = true;
