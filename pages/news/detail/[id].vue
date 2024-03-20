@@ -1,57 +1,64 @@
 <template>
-  <div>
-    <UiPageHeader
-      :path="[{ label: 'ニュース', to: '/news' }]"
-      :subject="news.details.group_nm"
-      subheading="News Release"
-    />
+  <ClientOnly>
+    <div>
+      <UiPageHeader
+        :path="[{ label: 'ニュース', to: '/news' }]"
+        :subject="news.details.group_nm"
+        subheading="News Release"
+      />
+      <div class="l-container--col-2 l-container--contents">
+        <div class="l-container--col-2__main">
+          <article class="c-article">
+            <header>
+              <h1 class="c-heading--lv1">
+                {{ news.details.subject }}
+              </h1>
+              <time class="c-topics__date" :datetime="news.details.ymd">{{
+                news.details.ymd
+              }}</time>
+              <span class="c-badge">
+                {{ news.details.contents_type_nm }}
+              </span>
+            </header>
+            <div class="l-container--contents">
+              <div v-html="news.details.contents"></div>
+            </div>
 
-    <div class="l-container--col-2 l-container--contents">
-      <div class="l-container--col-2__main">
-        <article class="c-article">
-          <header>
-            <h1 class="c-heading--lv1">
-              {{ news.details.subject }}
-            </h1>
-            <time class="c-topics__date" :datetime="news.details.ymd">{{
-              news.details.ymd
-            }}</time>
-            <span class="c-badge">
-              {{ news.details.contents_type_nm }}
-            </span>
-          </header>
-          <div class="l-container--contents">
-            <div v-html="news.details.contents"></div>
-          </div>
-
-          <hr />
-          <div class="l-container--contents u-pt-30 u-text-align-center">
-            <NuxtLink :to="'/news/'" class="c-button">
-              ニュースリリース一覧へ戻る
-            </NuxtLink>
-          </div>
-        </article>
+            <hr />
+            <div class="l-container--contents u-pt-30 u-text-align-center">
+              <NuxtLink :to="'/news/'" class="c-button">
+                ニュースリリース一覧へ戻る
+              </NuxtLink>
+            </div>
+          </article>
+        </div>
+        <ContentSideBar :conditions="newsConditionMaster?.list" />
       </div>
-      <ContentSideBar :conditions="newsConditionMaster?.list" />
     </div>
-  </div>
+  </ClientOnly>
 </template>
 
 <script setup>
 const config = useRuntimeConfig();
-
 const route = useRoute();
 
-const { data: news } = await useFetch(
-  `${config.public.kurocoApiDomain}/rcms-api/1/news/details/${route.params.id}`,
-  {
-    credentials: 'include',
-  }
-);
-const { data: newsConditionMaster } = await useFetch(
-  `${config.public.kurocoApiDomain}/rcms-api/1/master`,
-  {
-    credentials: 'include',
-  }
-);
+const news = ref(null);
+const newsConditionMaster = ref(null);
+
+onMounted(async () => {
+  news.value = await $fetch(
+    `${config.public.kurocoApiDomain}/rcms-api/1/news/details/${route.params.id}`,
+    {
+      credentials: "include",
+      server: false,
+    }
+  );
+  newsConditionMaster.value = await $fetch(
+    `${config.public.kurocoApiDomain}/rcms-api/1/master`,
+    {
+      credentials: "include",
+      server: false,
+    }
+  );
+});
 </script>
