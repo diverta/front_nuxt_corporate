@@ -1,14 +1,12 @@
 <template>
-  <ClientOnly>
-    <div>
-      <UiPageHeader :subject="response.details.subject" subheading="Company" />
-      <article class="c-article">
-        <div class="l-container--large l-container--contents">
-          <div v-html="response.details.contents"></div>
-        </div>
-      </article>
-    </div>
-  </ClientOnly>
+  <div>
+    <UiPageHeader :subject="response.details.subject" subheading="Company" />
+    <article class="c-article">
+      <div class="l-container--large l-container--contents">
+        <div v-html="response.details.contents"></div>
+      </div>
+    </article>
+  </div>
 </template>
 
 <script setup>
