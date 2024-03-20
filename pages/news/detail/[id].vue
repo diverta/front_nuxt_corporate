@@ -42,23 +42,18 @@
 const config = useRuntimeConfig();
 const route = useRoute();
 
-const news = ref(null);
-const newsConditionMaster = ref(null);
-
-onMounted(async () => {
-  news.value = await $fetch(
-    `${config.public.kurocoApiDomain}/rcms-api/1/news/details/${route.params.id}`,
-    {
-      credentials: "include",
-      server: false,
-    }
-  );
-  newsConditionMaster.value = await $fetch(
-    `${config.public.kurocoApiDomain}/rcms-api/1/master`,
-    {
-      credentials: "include",
-      server: false,
-    }
-  );
-});
+const news = await $fetch(
+  `${config.public.kurocoApiDomain}/rcms-api/1/news/details/${route.params.id}`,
+  {
+    credentials: "include",
+    server: false,
+  }
+);
+const newsConditionMaster = await $fetch(
+  `${config.public.kurocoApiDomain}/rcms-api/1/master`,
+  {
+    credentials: "include",
+    server: false,
+  }
+);
 </script>
