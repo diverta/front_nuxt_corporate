@@ -1,7 +1,6 @@
 <template>
   <section>
     <UiPageHeader subject="会員登録" subheading="Sign Up" />
-
     <div class="l-container--small l-container--contents">
       <template v-if="signupDone">
         <UiAlertSuccess :message="message" />
@@ -75,13 +74,13 @@ const { login } = useAuth();
 
 const signupDone = ref(false);
 const user = ref({
-  name1: '',
-  name2: '',
-  email: '',
-  login_pwd: '',
+  name1: "",
+  name2: "",
+  email: "",
+  login_pwd: "",
 });
-const errorMessage = ref('');
-const message = '登録が完了しました';
+const errorMessage = ref("");
+const message = "登録が完了しました";
 const loading = ref(false);
 
 const handleSignup = async () => {
@@ -90,9 +89,10 @@ const handleSignup = async () => {
     await $fetch(
       `${config.public.kurocoApiDomain}/rcms-api/1/member/register`,
       {
-        method: 'POST',
-        credentials: 'include',
+        method: "POST",
+        credentials: "include",
         body: { ...user.value },
+        server: false,
       }
     );
     await login({
@@ -107,6 +107,6 @@ const handleSignup = async () => {
 };
 
 const clearErrorMessages = () => {
-  errorMessage.value = '';
+  errorMessage.value = "";
 };
 </script>

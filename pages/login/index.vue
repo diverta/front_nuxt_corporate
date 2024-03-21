@@ -1,7 +1,6 @@
 <template>
   <div>
     <UiPageHeader subject="ログイン" subheading="Login" />
-
     <div class="l-container--small l-container--contents">
       <form @submit.prevent="handleSubmit" class="c-form">
         <UiAlertError v-if="error" :error="errorMessage" />
@@ -44,13 +43,13 @@
 const { login } = useAuth(); // uses the default signIn function provided by nuxt-auth
 
 const formData = reactive({
-  email: '',
-  password: '',
+  email: "",
+  password: "",
 });
 const error = ref(null);
 const errorMessage = [
   {
-    message: 'メールアドレスまたはパスワードが正しくありません。',
+    message: "メールアドレスまたはパスワードが正しくありません。",
   },
 ];
 
@@ -61,7 +60,7 @@ const handleSubmit = async () => {
     loading.value = true;
     await login({ ...formData });
 
-    useRouter().push('/');
+    useRouter().push("/");
   } catch (e) {
     error.value = e?.data?.errors || [];
   }
@@ -69,6 +68,6 @@ const handleSubmit = async () => {
 };
 
 const clearErrorMessages = () => {
-  errorMessage.value = '';
+  errorMessage.value = "";
 };
 </script>

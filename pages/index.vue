@@ -302,16 +302,17 @@
 <script setup>
 const config = useRuntimeConfig();
 
-const { data: news } = await useFetch(
+const news = await $fetch(
   `${config.public.kurocoApiDomain}/rcms-api/1/news/list`,
   {
-    credentials: 'include',
+    credentials: "include",
+    server: false,
   }
 );
-const { data: ltdNews } = await useFetch(
+const ltdNews = await $fetch(
   `${config.public.kurocoApiDomain}/rcms-api/1/ltd-news/list`,
   {
-    credentials: 'include',
+    credentials: "include",
     server: false,
   }
 );
