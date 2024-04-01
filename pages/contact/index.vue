@@ -332,7 +332,7 @@ const m = ref("");
 const d = ref("");
 const loading = ref(false);
 
-const response = await $fetch(
+const { data: response } = await useFetch(
   `${config.public.kurocoApiDomain}/rcms-api/1/inquiry/1`,
   {
     credentials: "include",

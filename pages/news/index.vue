@@ -48,7 +48,7 @@ const { data: news } = await useFetch(
     server: false, // in order to get query parameter, runs only client side
   }
 );
-const newsConditionMaster = await $fetch(
+const { data: newsConditionMaster } = await useFetch(
   `${config.public.kurocoApiDomain}/rcms-api/1/master`,
   {
     credentials: "include",

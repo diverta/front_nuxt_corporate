@@ -40,14 +40,14 @@
 const config = useRuntimeConfig();
 const route = useRoute();
 
-const news = await $fetch(
+const { data: news } = await useFetch(
   `${config.public.kurocoApiDomain}/rcms-api/1/news/details/${route.params.id}`,
   {
     credentials: "include",
     server: false,
   }
 );
-const newsConditionMaster = await $fetch(
+const { data: newsConditionMaster } = await useFetch(
   `${config.public.kurocoApiDomain}/rcms-api/1/master`,
   {
     credentials: "include",

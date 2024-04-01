@@ -16,7 +16,7 @@ const config = useRuntimeConfig();
 const route = useRoute();
 const preview_token = route.query.preview_token;
 
-const response = await $fetch(
+const { data: response } = await useFetch(
   `${config.public.kurocoApiDomain}/rcms-api/1/preview`,
   {
     credentials: "include",

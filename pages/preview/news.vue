@@ -43,7 +43,7 @@ const config = useRuntimeConfig();
 const route = useRoute();
 const preview_token = route.query.preview_token;
 
-const response = await $fetch(
+const { data: response } = await useFetch(
   `${config.public.kurocoApiDomain}/rcms-api/1/preview`,
   {
     credentials: "include",
@@ -53,7 +53,7 @@ const response = await $fetch(
     server: false,
   }
 );
-const newsConditionMaster = await $fetch(
+const { data: newsConditionMaster } = await useFetch(
   `${config.public.kurocoApiDomain}/rcms-api/1/master`,
   {
     credentials: "include",
