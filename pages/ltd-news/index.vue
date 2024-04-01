@@ -61,7 +61,7 @@ const group = computed(() => {
   return null;
 });
 
-const ltdNews = await $fetch(
+const { data: ltdNews } = await useFetch(
   `${config.public.kurocoApiDomain}/rcms-api/1/ltd-news/list`,
   {
     credentials: "include",
