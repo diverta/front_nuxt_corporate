@@ -1,11 +1,9 @@
 <template>
-  <ClientOnly>
-    <div>
-      <AppHeader />
-      <div class="l-container">
-        <slot />
-      </div>
-      <AppFooter />
+  <div>
+    <AppHeader />
+    <div class="l-container">
+      <slot />
     </div>
-  </ClientOnly>
+    <AppFooter />
+  </div>
 </template>
