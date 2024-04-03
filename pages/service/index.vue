@@ -18,5 +18,5 @@ const { data: response } = await useFetch(
     credentials: "include",
     server: false,
   }
-).catch((error) => console.info(error));
+);
 </script>
