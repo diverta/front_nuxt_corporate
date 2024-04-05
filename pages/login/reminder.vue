@@ -109,21 +109,19 @@
 
 <script setup>
 const config = useRuntimeConfig();
-
 const route = useRoute();
 const token = route.query.token;
 
 const formData = reactive({
-  email: '',
-  temporaryPassword: '',
-  password: '',
-  confirmPassword: '',
+  email: "",
+  temporaryPassword: "",
+  password: "",
+  confirmPassword: "",
 });
 
 const errors = ref([]);
 const errorRef = ref(null);
 const message = ref(null);
-
 const loading = ref(false);
 const sequenceDone = ref(false);
 
@@ -133,11 +131,12 @@ const resetPasswordRequest = async () => {
     const response = await $fetch(
       `${config.public.kurocoApiDomain}/rcms-api/1/reminder`,
       {
-        method: 'POST',
-        credentials: 'include',
+        method: "POST",
+        credentials: "include",
         body: {
           email: formData.email,
         },
+        server: false,
       }
     );
     errors.value = [];
@@ -147,8 +146,8 @@ const resetPasswordRequest = async () => {
     errors.value = e?.data?.errors || [];
     nextTick(() => {
       errorRef.value.errorWrapperRef.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
+        behavior: "smooth",
+        block: "center",
       });
     });
   }
@@ -157,7 +156,7 @@ const resetPasswordRequest = async () => {
 
 const resetPassword = async () => {
   if (formData.password != formData.confirmPassword) {
-    errors.value = [{ message: '確認用パスワードが一致していません' }];
+    errors.value = [{ message: "確認用パスワードが一致していません" }];
     return;
   }
 
@@ -166,13 +165,14 @@ const resetPassword = async () => {
     const response = await $fetch(
       `${config.public.kurocoApiDomain}/rcms-api/1/reminder`,
       {
-        method: 'POST',
-        credentials: 'include',
+        method: "POST",
+        credentials: "include",
         body: {
           token,
           temp_pwd: formData.temporaryPassword,
           login_pwd: formData.password,
         },
+        server: false,
       }
     );
     errors.value = [];
@@ -182,8 +182,8 @@ const resetPassword = async () => {
     errors.value = e?.data?.errors || [];
     nextTick(() => {
       errorRef.value.errorWrapperRef.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
+        behavior: "smooth",
+        block: "center",
       });
     });
   }

@@ -1,7 +1,6 @@
 <template>
   <div>
     <UiPageHeader subject="マイページ" subheading="Mypage" />
-
     <section>
       <div class="l-container--col-2 l-container--contents">
         <div class="l-container--col-2__main">
@@ -166,47 +165,49 @@ const { authUser, profile, logout } = useAuth();
 const error = ref(null);
 const Popup = ref(false);
 const groupUpdate = ref(false);
-const message = '会員種別の変更申請を受け付けました。メールをご確認ください。';
+const message = "会員種別の変更申請を受け付けました。メールをご確認ください。";
 
 const loading = ref(false);
 
 const statusText = computed(() => {
   if (authUser.value.isPremiumUser) {
-    return 'プレミアム会員';
+    return "プレミアム会員";
   }
   if (authUser.value.isRegularUser) {
-    return '通常会員';
+    return "通常会員";
   }
-  return '';
+  return "";
 });
 
 const buttonText = computed(() => {
   if (authUser.value.isPremiumUser) {
-    return '通常会員にもどる';
+    return "通常会員にもどる";
   }
   if (authUser.value.isRegularUser) {
-    return 'プレミアム会員にアップデートする';
+    return "プレミアム会員にアップデートする";
   }
-  return '';
+  return "";
 });
 
 const updateStatus = async (status) => {
   loading.value = true;
   try {
     await $fetch(`${config.public.kurocoApiDomain}/rcms-api/1/inquiry/3`, {
-      credentials: 'include',
-      method: 'POST',
+      credentials: "include",
+      method: "POST",
       body: {
         name: `${authUser.value.name1} ${authUser.value.name2}`,
         email: authUser.value.email,
         ext_01: status,
       },
+      server: false,
     });
     // for refreshing user's group_id with new session, instead of logout and login.
     await $fetch(`${config.public.kurocoApiDomain}/rcms-api/1/member/update`, {
-      credentials: 'include',
-      method: 'POST',
+      credentials: "include",
+      method: "POST",
       body: {},
+      server: false,
     });
     await profile();
     error.value = null;

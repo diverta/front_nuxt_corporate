@@ -1,7 +1,6 @@
 <template>
   <div class="l-container--wrap">
     <UiPageHeader subject="会員限定コンテンツ" subheading="For Members" />
-
     <section>
       <div class="l-container--large">
         <div class="l-container--contents c-article">
@@ -54,10 +53,10 @@ const { authUser } = useAuth();
 
 const group = computed(() => {
   if (authUser.value.isPremiumUser) {
-    return '通常会員へ戻す';
+    return "通常会員へ戻す";
   }
   if (authUser.value.isRegularUser) {
-    return 'プレミアム会員へアップグレードする';
+    return "プレミアム会員へアップグレードする";
   }
   return null;
 });
@@ -65,7 +64,7 @@ const group = computed(() => {
 const { data: ltdNews } = await useFetch(
   `${config.public.kurocoApiDomain}/rcms-api/1/ltd-news/list`,
   {
-    credentials: 'include',
+    credentials: "include",
     params: { cnt: 12 },
     server: false,
   }

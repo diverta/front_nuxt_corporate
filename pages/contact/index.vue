@@ -1,7 +1,6 @@
 <template>
   <div>
     <UiPageHeader subject="お問い合わせ" subheading="Contact" />
-
     <section>
       <div class="l-container--small l-container--contents">
         <template v-if="submitted">
@@ -328,26 +327,27 @@ const errorRef = ref(null);
 const disabled = ref(true);
 const submitData = reactive({});
 const thanksText = ref(null);
-const y = ref('');
-const m = ref('');
-const d = ref('');
+const y = ref("");
+const m = ref("");
+const d = ref("");
 const loading = ref(false);
 
 const { data: response } = await useFetch(
   `${config.public.kurocoApiDomain}/rcms-api/1/inquiry/1`,
   {
-    credentials: 'include',
+    credentials: "include",
+    server: false,
   }
 );
 
-Object.keys(response.value.details.cols).forEach((key) => {
-  const object = response.value.details.cols[key];
+Object.keys(response.details.cols).forEach((key) => {
+  const object = response.details.cols[key];
 
   if (object.type === 5 || object.type === 10) {
     submitData[object.key] = ref([]);
   }
 
-  if (object.type === 10 && object.attribute.selection_type === 'multiple') {
+  if (object.type === 10 && object.attribute.selection_type === "multiple") {
     Object.keys(object.options[1].value).forEach((key) => {
       if (!submitData[object.key]) {
         submitData[object.key] = [];
@@ -369,15 +369,16 @@ const setYMD = (key) => {
 
 const handleFileChange = async (e) => {
   const fm = new FormData();
-  fm.append('file', e.target.files[0]);
+  fm.append("file", e.target.files[0]);
 
   try {
     const response = await $fetch(
       `${config.public.kurocoApiDomain}/rcms-api/1/upload`,
       {
-        credentials: 'include',
-        method: 'POST',
+        credentials: "include",
+        method: "POST",
         body: fm,
+        server: false,
       }
     );
     error.value = [];
@@ -387,8 +388,8 @@ const handleFileChange = async (e) => {
     errors.value = e?.data?.errors || [];
     nextTick(() => {
       errorRef.value.errorWrapperRef.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
+        behavior: "smooth",
+        block: "center",
       });
     });
   }
@@ -400,9 +401,10 @@ const handleOnSubmit = async () => {
     const response = await $fetch(
       `${config.public.kurocoApiDomain}/rcms-api/1/inquiry/1`,
       {
-        credentials: 'include',
-        method: 'POST',
+        credentials: "include",
+        method: "POST",
         body: submitData,
+        server: false,
       }
     );
     submitted.value = true;
@@ -411,8 +413,8 @@ const handleOnSubmit = async () => {
     errors.value = e?.data?.errors || [];
     nextTick(() => {
       errorRef.value.errorWrapperRef.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
+        behavior: "smooth",
+        block: "center",
       });
     });
   }

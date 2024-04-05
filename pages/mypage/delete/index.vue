@@ -40,10 +40,10 @@ const config = useRuntimeConfig();
 
 const { logout } = useAuth();
 
-const path = [{ label: 'マイページ', to: '/mypage/' }];
-const subject = '退会';
-const subheading = 'Delete';
-const message = '退会が完了しました。';
+const path = [{ label: "マイページ", to: "/mypage/" }];
+const subject = "退会";
+const subheading = "Delete";
+const message = "退会が完了しました。";
 const deleteDone = ref(false);
 const error = ref(null);
 
@@ -53,9 +53,10 @@ const handleDeleteProfile = async () => {
   loading.value = true;
   try {
     await $fetch(`${config.public.kurocoApiDomain}/rcms-api/1/member/delete`, {
-      credentials: 'include',
-      method: 'POST',
+      credentials: "include",
+      method: "POST",
       body: {},
+      server: false,
     });
     await logout();
     deleteDone.value = true;

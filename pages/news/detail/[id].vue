@@ -5,7 +5,6 @@
       :subject="news.details.group_nm"
       subheading="News Release"
     />
-
     <div class="l-container--col-2 l-container--contents">
       <div class="l-container--col-2__main">
         <article class="c-article">
@@ -39,19 +38,20 @@
 
 <script setup>
 const config = useRuntimeConfig();
-
 const route = useRoute();
 
 const { data: news } = await useFetch(
   `${config.public.kurocoApiDomain}/rcms-api/1/news/details/${route.params.id}`,
   {
-    credentials: 'include',
+    credentials: "include",
+    server: false,
   }
 );
 const { data: newsConditionMaster } = await useFetch(
   `${config.public.kurocoApiDomain}/rcms-api/1/master`,
   {
-    credentials: 'include',
+    credentials: "include",
+    server: false,
   }
 );
 </script>

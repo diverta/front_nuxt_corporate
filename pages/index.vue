@@ -305,13 +305,14 @@ const config = useRuntimeConfig();
 const { data: news } = await useFetch(
   `${config.public.kurocoApiDomain}/rcms-api/1/news/list`,
   {
-    credentials: 'include',
+    credentials: "include",
+    server: false,
   }
 );
 const { data: ltdNews } = await useFetch(
   `${config.public.kurocoApiDomain}/rcms-api/1/ltd-news/list`,
   {
-    credentials: 'include',
+    credentials: "include",
     server: false,
   }
 );
