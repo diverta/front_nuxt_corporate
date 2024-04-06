@@ -340,8 +340,8 @@ const { data: response } = await useFetch(
   }
 );
 
-Object.keys(response.details.cols).forEach((key) => {
-  const object = response.details.cols[key];
+Object.keys(response.value.details.cols).forEach((key) => {
+  const object = response.value.details.cols[key];
 
   if (object.type === 5 || object.type === 10) {
     submitData[object.key] = ref([]);
