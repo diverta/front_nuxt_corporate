@@ -104,7 +104,13 @@
               </template>
               <!--日付-->
               <template v-if="n.type === 6">
-                <Datepicker v-model="submitData[n.key]" :enable-time-picker="false" :format-locale="ja"/>
+                <Datepicker
+                  v-model="submitData[n.key]"
+                  :enable-time-picker="false"
+                  :format-locale="ja"
+                  :format="formatDate"
+                  week-start="0"
+                />
               </template>
               <!-- ファイル -->
               <template v-if="n.type === 7">
@@ -244,10 +250,10 @@
 </template>
 
 <script setup>
-import Datepicker from '@vuepic/vue-datepicker';
-import '@vuepic/vue-datepicker/dist/main.css';
-import { format } from 'date-fns';
-import { ja } from 'date-fns/locale';
+import Datepicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
+import { format } from "date-fns";
+import { ja } from "date-fns/locale";
 
 const config = useRuntimeConfig();
 const submitted = ref(false);
@@ -262,6 +268,14 @@ const d = ref("");
 const loading = ref(false);
 const date = ref();
 const dateVar = ref(null);
+
+const formatDate = (date) => {
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear();
+
+  return `${year}/${month}/${day}`;
+};
 
 const { data: response } = await useFetch(
   `${config.public.kurocoApiDomain}/rcms-api/1/inquiry/1`,
@@ -327,8 +341,11 @@ const handleFileChange = async (e) => {
 };
 
 const handleOnSubmit = async () => {
-  if(dateVar.value && submitData[dateVar.value]) {
-    const formattedDate = format(new Date(submitData[dateVar.value]), "yyyy-MM-dd");
+  if (dateVar.value && submitData[dateVar.value]) {
+    const formattedDate = format(
+      new Date(submitData[dateVar.value]),
+      "yyyy-MM-dd"
+    );
     submitData[dateVar.value] = formattedDate;
   }
   try {
