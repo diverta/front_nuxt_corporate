@@ -104,7 +104,7 @@
               </template>
               <!--日付-->
               <template v-if="n.type === 6">
-                <Datepicker v-model="submitData[n.key]" :enable-time-picker="false" />
+                <Datepicker v-model="submitData[n.key]" :enable-time-picker="false" :format-locale="ja"/>
               </template>
               <!-- ファイル -->
               <template v-if="n.type === 7">
@@ -247,6 +247,7 @@
 import Datepicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
 import { format } from 'date-fns';
+import { ja } from 'date-fns/locale';
 
 const config = useRuntimeConfig();
 const submitted = ref(false);
