@@ -104,82 +104,13 @@
               </template>
               <!--日付-->
               <template v-if="n.type === 6">
-                <div class="u-display-flex u-display-flex-align-items-center">
-                  <select
-                    v-model="y"
-                    @change="setYMD(n.key)"
-                    :name="n.key + '_y'"
-                    :id="n.key + '_y'"
-                  >
-                    <option label="選択なし" value="">選択なし</option>
-                    <option
-                      v-for="option in n.attribute.arrYear"
-                      :key="option.key"
-                      :label="option"
-                      :value="option"
-                    >
-                      {{ option }}
-                    </option></select
-                  ><label :for="n.key + '_y'" class="u-pa-10">年</label>
-
-                  <select
-                    v-model="m"
-                    @change="setYMD(n.key)"
-                    :name="n.key + '_m'"
-                  >
-                    <option label="選択なし" value="">選択なし</option>
-                    <option label="01" value="01">01</option>
-                    <option label="02" value="02">02</option>
-                    <option label="03" value="03">03</option>
-                    <option label="04" value="04">04</option>
-                    <option label="05" value="05">05</option>
-                    <option label="06" value="06">06</option>
-                    <option label="07" value="07">07</option>
-                    <option label="08" value="08">08</option>
-                    <option label="09" value="09">09</option>
-                    <option label="10" value="10">10</option>
-                    <option label="11" value="11">11</option>
-                    <option label="12" value="12">12</option></select
-                  ><label :for="n.key + '_m'" class="u-pa-10">月</label>
-                  <select
-                    v-model="d"
-                    @change="setYMD(n.key)"
-                    :name="n.key + '_d'"
-                  >
-                    <option label="選択なし" value="">選択なし</option>
-                    <option label="01" value="01">01</option>
-                    <option label="02" value="02">02</option>
-                    <option label="03" value="03">03</option>
-                    <option label="04" value="04">04</option>
-                    <option label="05" value="05">05</option>
-                    <option label="06" value="06">06</option>
-                    <option label="07" value="07">07</option>
-                    <option label="08" value="08">08</option>
-                    <option label="09" value="09">09</option>
-                    <option label="10" value="10">10</option>
-                    <option label="11" value="11">11</option>
-                    <option label="12" value="12">12</option>
-                    <option label="13" value="13">13</option>
-                    <option label="14" value="14">14</option>
-                    <option label="15" value="15">15</option>
-                    <option label="16" value="16">16</option>
-                    <option label="17" value="17">17</option>
-                    <option label="18" value="18">18</option>
-                    <option label="19" value="19">19</option>
-                    <option label="20" value="20">20</option>
-                    <option label="21" value="21">21</option>
-                    <option label="22" value="22">22</option>
-                    <option label="23" value="23">23</option>
-                    <option label="24" value="24">24</option>
-                    <option label="25" value="25">25</option>
-                    <option label="26" value="26">26</option>
-                    <option label="27" value="27">27</option>
-                    <option label="28" value="28">28</option>
-                    <option label="29" value="29">29</option>
-                    <option label="30" value="30">30</option>
-                    <option label="31" value="31">31</option></select
-                  ><label :for="n.key + '_d'" class="u-pa-10">日</label>
-                </div>
+                <Datepicker
+                  v-model="submitData[n.key]"
+                  :enable-time-picker="false"
+                  :format-locale="ja"
+                  :format="formatDate"
+                  week-start="0"
+                />
               </template>
               <!-- ファイル -->
               <template v-if="n.type === 7">
@@ -319,8 +250,12 @@
 </template>
 
 <script setup>
-const config = useRuntimeConfig();
+import Datepicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
+import { format } from "date-fns";
+import { ja } from "date-fns/locale";
 
+const config = useRuntimeConfig();
 const submitted = ref(false);
 const errors = ref([]);
 const errorRef = ref(null);
@@ -331,6 +266,16 @@ const y = ref("");
 const m = ref("");
 const d = ref("");
 const loading = ref(false);
+const date = ref();
+const dateVar = ref(null);
+
+const formatDate = (date) => {
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear();
+
+  return `${year}/${month}/${day}`;
+};
 
 const { data: response } = await useFetch(
   `${config.public.kurocoApiDomain}/rcms-api/1/inquiry/1`,
@@ -345,6 +290,10 @@ Object.keys(response.value.details.cols).forEach((key) => {
 
   if (object.type === 5 || object.type === 10) {
     submitData[object.key] = ref([]);
+  }
+
+  if (object.type === 6) {
+    dateVar.value = object.key;
   }
 
   if (object.type === 10 && object.attribute.selection_type === "multiple") {
@@ -362,10 +311,6 @@ Object.keys(response.value.details.cols).forEach((key) => {
     });
   }
 });
-
-const setYMD = (key) => {
-  submitData[key] = `${y.value}-${m.value}-${d.value}`;
-};
 
 const handleFileChange = async (e) => {
   const fm = new FormData();
@@ -396,6 +341,13 @@ const handleFileChange = async (e) => {
 };
 
 const handleOnSubmit = async () => {
+  if (dateVar.value && submitData[dateVar.value]) {
+    const formattedDate = format(
+      new Date(submitData[dateVar.value]),
+      "yyyy-MM-dd"
+    );
+    submitData[dateVar.value] = formattedDate;
+  }
   try {
     loading.value = true;
     const response = await $fetch(
