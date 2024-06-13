@@ -326,8 +326,8 @@ const handleFileChange = async (e) => {
         server: false,
       }
     );
-    error.value = [];
-    const file_id = response.data.file_id;
+    errors.value = [];
+    const file_id = response.file_id;
     submitData[e.target.id] = { file_id };
   } catch (e) {
     errors.value = e?.data?.errors || [];
