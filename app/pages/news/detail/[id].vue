@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="news?.details">
     <UiPageHeader
       :path="[{ label: 'ニュース', to: '/news' }]"
       :subject="news.details.group_nm"

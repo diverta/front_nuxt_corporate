@@ -37,7 +37,7 @@
         </div>
 
         <div class="u-display-flex-grow-1">
-          <ul v-if="news.list.length > 0" class="c-topics-list">
+          <ul v-if="news?.list?.length > 0" class="c-topics-list">
             <li v-for="news in news.list" :key="news.topics_id">
               <NuxtLink :to="`/news/detail/${news.topics_id}`" class="c-topics">
                 <time class="c-topics__date" :datetime="news.ymd">{{

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="response?.details">
     <UiPageHeader :subject="response.details.subject" subheading="Company" />
     <article class="c-article">
       <div class="l-container--large l-container--contents">
