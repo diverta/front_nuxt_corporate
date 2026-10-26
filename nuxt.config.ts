@@ -1,10 +1,11 @@
 import { defineNuxtConfig } from 'nuxt/config';
 
 export default defineNuxtConfig({
-  compatibilityVersion: 4,
+  compatibilityDate: '2026-10-26',
   ssr: false,
   runtimeConfig: {
     public: {
+      siteUrl: 'https://dev-nuxt-corporate.g.kuroco-front.app',
       kurocoApiDomain: 'https://dev-nuxt-corporate.g.kuroco.app',
     },
   },
@@ -12,12 +13,12 @@ export default defineNuxtConfig({
     head: {
       title: 'front_nuxt_corporate',
       htmlAttrs: {
-        lang: 'en',
+        lang: 'ja',
       },
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { hid: 'description', name: 'description', content: '' },
+        { key: 'description', name: 'description', content: '' },
         { name: 'format-detection', content: 'telephone=no' },
       ],
       link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
