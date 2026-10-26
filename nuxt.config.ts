@@ -35,7 +35,7 @@ export default defineNuxtConfig({
   },
 
   devtools: { enabled: true },
-  css: ['@/assets/scss/style.scss'],
+  css: ['~/assets/scss/style.scss'],
 
   nitro: {
     // FullStaticGeneration
