@@ -7,7 +7,7 @@
           <p class="c-text--pre" v-html="thanksText" />
           <NuxtLink to="/" class="c-button">トップページ</NuxtLink>
         </template>
-        <template v-else>
+        <template v-else-if="response?.details?.cols">
           <div class="c-form-group">
             <p
               class="c-text c-text--pre"
@@ -291,32 +291,36 @@ const { data: response } = await useFetch(
   }
 );
 
-Object.keys(response.value.details.cols).forEach((key) => {
-  const object = response.value.details.cols[key];
+watch(
+  () => response.value?.details?.cols,
+  (cols) => {
+    if (!cols) return;
 
-  if (object.type === 5 || object.type === 10) {
-    submitData[object.key] = ref([]);
-  }
+    Object.values(cols).forEach((object) => {
+      if (object.key in submitData) return;
 
-  if (object.type === 6) {
-    dateVar.value = object.key;
-  }
-
-  if (object.type === 10 && object.attribute.selection_type === "multiple") {
-    Object.keys(object.options[1].value).forEach((key) => {
-      if (!submitData[object.key]) {
+      if (object.type === 5 || object.type === 10) {
         submitData[object.key] = [];
       }
 
-      submitData[object.key].push({
-        ROW: {
-          key: key,
-        },
-        COL: [],
-      });
+      if (object.type === 6) {
+        dateVar.value = object.key;
+      }
+
+      if (object.type === 10 && object.attribute.selection_type === "multiple") {
+        Object.keys(object.options[1].value).forEach((key) => {
+          submitData[object.key].push({
+            ROW: {
+              key: key,
+            },
+            COL: [],
+          });
+        });
+      }
     });
-  }
-});
+  },
+  { immediate: true }
+);
 
 const handleFileChange = async (e) => {
   const fm = new FormData();
