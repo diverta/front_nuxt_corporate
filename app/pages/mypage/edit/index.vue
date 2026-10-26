@@ -55,6 +55,12 @@
 </template>
 
 <script setup>
+useSeoMeta({
+  title: "会員情報の変更 | front_nuxt_corporate",
+  description: "登録している会員情報を変更します。",
+  robots: "noindex, nofollow",
+});
+
 const config = useRuntimeConfig();
 
 const { authUser, profile } = useAuth();

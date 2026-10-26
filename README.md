@@ -1,6 +1,6 @@
-# Nuxt 3 Minimal Starter
+# Nuxt 4 Minimal Starter
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Look at the [Nuxt 4 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
 ## Setup
 
@@ -61,3 +61,8 @@ yarn preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+
+## Page metadata
+
+Pages use Nuxt's built-in `useSeoMeta` for static Japanese titles and descriptions.
+With `ssr: false`, this metadata is applied in the browser after JavaScript runs.

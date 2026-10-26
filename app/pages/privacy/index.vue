@@ -13,6 +13,11 @@
 </template>
 
 <script setup>
+useSeoMeta({
+  title: "プライバシーポリシー | front_nuxt_corporate",
+  description: "個人情報の取り扱いと保護に関する方針をご案内します。",
+});
+
 const config = useRuntimeConfig();
 
 const { data: response } = await useFetch(

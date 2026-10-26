@@ -37,6 +37,11 @@
 </template>
 
 <script setup>
+useSeoMeta({
+  title: "ニュース | front_nuxt_corporate",
+  description: "お知らせとニュースリリースをご案内します。",
+});
+
 const config = useRuntimeConfig();
 const route = useRoute();
 

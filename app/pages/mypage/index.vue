@@ -158,6 +158,12 @@
 </template>
 
 <script setup>
+useSeoMeta({
+  title: "マイページ | front_nuxt_corporate",
+  description: "登録情報の確認や会員メニューをご利用いただけます。",
+  robots: "noindex, nofollow",
+});
+
 const config = useRuntimeConfig();
 
 const { authUser, profile, logout } = useAuth();

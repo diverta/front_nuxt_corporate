@@ -47,6 +47,12 @@
 </template>
 
 <script setup>
+useSeoMeta({
+  title: "会員限定コンテンツ | front_nuxt_corporate",
+  description: "会員向けのお知らせや限定コンテンツをご覧いただけます。",
+  robots: "noindex, nofollow",
+});
+
 const config = useRuntimeConfig();
 
 const { authUser } = useAuth();

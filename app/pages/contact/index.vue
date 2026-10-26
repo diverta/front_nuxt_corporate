@@ -253,6 +253,12 @@
 import Datepicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import { format } from "date-fns";
+
+useSeoMeta({
+  title: "お問い合わせ | front_nuxt_corporate",
+  description: "サービスやその他のご相談について、こちらのフォームからお問い合わせください。",
+});
+
 import { ja } from "date-fns/locale";
 
 const config = useRuntimeConfig();

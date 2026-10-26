@@ -40,6 +40,12 @@
 </template>
 
 <script setup>
+useSeoMeta({
+  title: "ニュース（プレビュー） | front_nuxt_corporate",
+  description: "ニュースのプレビューです。",
+  robots: "noindex, nofollow",
+});
+
 const config = useRuntimeConfig();
 
 const route = useRoute();

@@ -5,7 +5,6 @@ export default defineNuxtConfig({
   ssr: false,
   runtimeConfig: {
     public: {
-      siteUrl: 'https://dev-nuxt-corporate.g.kuroco-front.app',
       kurocoApiDomain: 'https://dev-nuxt-corporate.g.kuroco.app',
     },
   },

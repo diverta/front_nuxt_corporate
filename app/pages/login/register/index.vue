@@ -68,6 +68,12 @@
 </template>
 
 <script setup>
+useSeoMeta({
+  title: "会員登録 | front_nuxt_corporate",
+  description: "会員限定コンテンツをご利用いただくための新規会員登録ページです。",
+  robots: "noindex, nofollow",
+});
+
 const config = useRuntimeConfig();
 
 const { login } = useAuth();

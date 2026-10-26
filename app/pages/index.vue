@@ -300,6 +300,11 @@
 </template>
 
 <script setup>
+useSeoMeta({
+  title: "ホーム | front_nuxt_corporate",
+  description: "会社情報、サービス、ニュースリリース、会員限定コンテンツをご案内します。",
+});
+
 const config = useRuntimeConfig();
 
 const { data: news } = await useFetch(

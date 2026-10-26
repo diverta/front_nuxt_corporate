@@ -10,6 +10,11 @@
 </template>
 
 <script setup>
+useSeoMeta({
+  title: "会社情報 | front_nuxt_corporate",
+  description: "会社概要をご案内します。",
+});
+
 const config = useRuntimeConfig();
 
 const { data: response } = await useFetch(

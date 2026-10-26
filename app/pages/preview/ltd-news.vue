@@ -37,6 +37,12 @@
 </template>
 
 <script setup>
+useSeoMeta({
+  title: "会員限定コンテンツ（プレビュー） | front_nuxt_corporate",
+  description: "会員限定コンテンツのプレビューです。",
+  robots: "noindex, nofollow",
+});
+
 const config = useRuntimeConfig();
 
 const route = useRoute();

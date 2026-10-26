@@ -36,6 +36,12 @@
 </template>
 
 <script setup>
+useSeoMeta({
+  title: "退会 | front_nuxt_corporate",
+  description: "会員アカウントの退会手続きを行います。",
+  robots: "noindex, nofollow",
+});
+
 const config = useRuntimeConfig();
 
 const { logout } = useAuth();

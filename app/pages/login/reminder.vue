@@ -108,6 +108,12 @@
 </template>
 
 <script setup>
+useSeoMeta({
+  title: "パスワード再設定 | front_nuxt_corporate",
+  description: "会員アカウントのパスワードを再設定します。",
+  robots: "noindex, nofollow",
+});
+
 const config = useRuntimeConfig();
 const route = useRoute();
 const token = route.query.token;

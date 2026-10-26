@@ -40,6 +40,12 @@
 </template>
 
 <script setup>
+useSeoMeta({
+  title: "ログイン | front_nuxt_corporate",
+  description: "会員アカウントにログインします。",
+  robots: "noindex, nofollow",
+});
+
 const { login } = useAuth(); // uses the default signIn function provided by nuxt-auth
 
 const formData = reactive({

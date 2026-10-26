@@ -33,6 +33,11 @@
 </template>
 
 <script setup>
+useSeoMeta({
+  title: "ニュース | front_nuxt_corporate",
+  description: "最新のお知らせとニュースリリースをご覧いただけます。",
+});
+
 const config = useRuntimeConfig();
 const route = useRoute();
 const filter = computed(() => route.query.filter);
