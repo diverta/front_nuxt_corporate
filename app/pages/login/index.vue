@@ -46,7 +46,7 @@ useSeoMeta({
   robots: "noindex, nofollow",
 });
 
-const { login } = useAuth(); // uses the default signIn function provided by nuxt-auth
+const { login } = useAuth();
 
 const formData = reactive({
   email: "",
@@ -74,6 +74,6 @@ const handleSubmit = async () => {
 };
 
 const clearErrorMessages = () => {
-  errorMessage.value = "";
+  error.value = null;
 };
 </script>
