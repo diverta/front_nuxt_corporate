@@ -1,6 +1,7 @@
 import { defineNuxtConfig } from 'nuxt/config';
 
 export default defineNuxtConfig({
+  compatibilityDate: '2026-10-26',
   ssr: false,
   runtimeConfig: {
     public: {
@@ -11,12 +12,12 @@ export default defineNuxtConfig({
     head: {
       title: 'front_nuxt_corporate',
       htmlAttrs: {
-        lang: 'en',
+        lang: 'ja',
       },
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { hid: 'description', name: 'description', content: '' },
+        { key: 'description', name: 'description', content: '' },
         { name: 'format-detection', content: 'telephone=no' },
       ],
       link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
@@ -34,7 +35,7 @@ export default defineNuxtConfig({
   },
 
   devtools: { enabled: true },
-  css: ['@/assets/scss/style.scss'],
+  css: ['~/assets/scss/style.scss'],
 
   nitro: {
     // FullStaticGeneration
