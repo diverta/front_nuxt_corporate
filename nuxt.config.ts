@@ -1,6 +1,7 @@
 import { defineNuxtConfig } from 'nuxt/config';
 
 export default defineNuxtConfig({
+  compatibilityVersion: 4,
   ssr: false,
   runtimeConfig: {
     public: {
